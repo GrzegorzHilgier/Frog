@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Frog"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <BitmapImage x:Key="FrogImg" UriSource="resources/FrogImg.png" />
     </Application.Resources>
 </Application>
