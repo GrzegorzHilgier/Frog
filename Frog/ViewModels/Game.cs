@@ -11,13 +11,6 @@ namespace Frog.ViewModels
         Player Player1 { get; set; } = new Player(3, 0, 0, 1);
         public int X { get => Player1.Xcoord; }
         public int Y { get => Player1.Ycoord; }
-        public Game()
-        {
-            Player1.Xcoord = 100;
-            RaisePropertyChangedEvent("X");
-            Player1.Ycoord = 100;
-            RaisePropertyChangedEvent("Y");
-        }
 
         public ICommand MoveLeftCommand
         {
@@ -39,18 +32,22 @@ namespace Frog.ViewModels
         void MoveLeft()
         {
             Player1.Xcoord -= 1*Scale;
+            RaisePropertyChangedEvent("X");
         }
         void MoveRight()
         {
             Player1.Xcoord += 1 * Scale;
+            RaisePropertyChangedEvent("X");
         }
         void MoveUp()
         {
             Player1.Ycoord -= 1 * Scale;
+            RaisePropertyChangedEvent("Y");
         }
         void MoveDown()
         {
             Player1.Ycoord += 1 * Scale;
+            RaisePropertyChangedEvent("Y");
         }
     }
 }

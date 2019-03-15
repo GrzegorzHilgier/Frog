@@ -10,16 +10,18 @@
              Focusable="True"
              d:DataContext="{d:DesignInstance ViewModels:Game}"
              Loaded="UserControl_Loaded">
+    <UserControl.DataContext>
+        <ViewModels:Game/>
+    </UserControl.DataContext>
     
     <UserControl.InputBindings>
-        <KeyBinding Key="W" Command="{Binding MoveUpCommand, Mode=OneTime}"/>
-        <KeyBinding Key="S" Command="{Binding MoveDownCommand, Mode=OneTime}"/>
-        <KeyBinding Key="A" Command="{Binding MoveLeftCommand, Mode=OneTime}"/>
-        <KeyBinding Key="D" Command="{Binding MoveRightCommand, Mode=OneTime}"/>
+        <KeyBinding Key="W" Command="{Binding MoveUpCommand}"/>
+        <KeyBinding Key="S" Command="{Binding MoveDownCommand}"/>
+        <KeyBinding Key="A" Command="{Binding MoveLeftCommand}"/>
+        <KeyBinding Key="D" Command="{Binding MoveRightCommand}"/>
     </UserControl.InputBindings>
 
-    <Canvas >
-        
-        <Image Height="30" Width="30" Source="{StaticResource FrogImg}" Canvas.Left="{Binding X, Mode=TwoWay}" Canvas.Top="{Binding Y, Mode=TwoWay}" ></Image>
+    <Canvas>
+        <Image Height="30" Width="30" Source="{StaticResource FrogImg}" Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}" ></Image>
     </Canvas>
 </UserControl>
