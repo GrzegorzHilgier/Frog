@@ -7,8 +7,19 @@
              xmlns:local="clr-namespace:Frog.Views"
              mc:Ignorable="d" 
              d:DesignHeight="270" d:DesignWidth="400"
-             DataContext="ViewModels:Game">
-    <Grid>
-        <Image Height="30" Width="30" Source="{StaticResource FrogImg}" ></Image>
-    </Grid>
+             Focusable="True"
+             d:DataContext="{d:DesignInstance ViewModels:Game}"
+             Loaded="UserControl_Loaded">
+    
+    <UserControl.InputBindings>
+        <KeyBinding Key="W" Command="{Binding MoveUpCommand, Mode=OneTime}"/>
+        <KeyBinding Key="S" Command="{Binding MoveDownCommand, Mode=OneTime}"/>
+        <KeyBinding Key="A" Command="{Binding MoveLeftCommand, Mode=OneTime}"/>
+        <KeyBinding Key="D" Command="{Binding MoveRightCommand, Mode=OneTime}"/>
+    </UserControl.InputBindings>
+
+    <Canvas >
+        
+        <Image Height="30" Width="30" Source="{StaticResource FrogImg}" Canvas.Left="{Binding X, Mode=TwoWay}" Canvas.Top="{Binding Y, Mode=TwoWay}" ></Image>
+    </Canvas>
 </UserControl>

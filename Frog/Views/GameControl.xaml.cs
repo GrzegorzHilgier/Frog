@@ -23,6 +23,12 @@ namespace Frog.Views
         public GameControl()
         {
             InitializeComponent();
+            
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Focus();
         }
     }
 }

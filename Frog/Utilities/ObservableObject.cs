@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Frog.ViewModels
+namespace Frog.Models
 {
     public abstract class ObservableObject : INotifyPropertyChanged
     {
