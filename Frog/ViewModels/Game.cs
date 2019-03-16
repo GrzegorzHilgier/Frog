@@ -15,8 +15,7 @@ namespace Frog.ViewModels
 
         public Game()
         {
-            Players.Add(new Player(3, 100, 100, 1));
-
+            Players.Add(new Player(3, 100, 100, Scale, Scale));
         }
         public ICommand MoveLeftCommand
         {
