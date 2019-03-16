@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Frog.Models;
+using Frog.Utilities;
 
 namespace Frog.ViewModels
 {
@@ -14,6 +15,12 @@ namespace Frog.ViewModels
         public ushort Lives { get => Player1.Lives; }
         public int Score { get => Player1.Score; }
 
+        public ObservableCollection<DrawableObject> ItemsToDraw { get; private set; } = new ObservableCollection<DrawableObject>();
+
+        public Game()
+        {
+            ItemsToDraw.Add(new Player(3, 0, 0, 1));
+        }
         public ICommand MoveLeftCommand
         {
             get { return new SimpleCommand(MoveLeft); }

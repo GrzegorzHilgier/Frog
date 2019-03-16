@@ -13,6 +13,5 @@ namespace Frog.Utilities
         public int Ycoord { get; set; }
         public int Width { get; set; }
         public int Length { get; set; }
-
     }
 }
