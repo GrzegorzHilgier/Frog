@@ -19,6 +19,7 @@ namespace Frog.ViewModels
 
         public Game()
         {
+
             ItemsToDraw.Add(new Player(3, 0, 0, 1));
         }
         public ICommand MoveLeftCommand

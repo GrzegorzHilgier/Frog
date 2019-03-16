@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using Frog.Utilities;
 
 namespace Frog.Models
@@ -16,7 +13,11 @@ namespace Frog.Models
         {
             Lives = lives;
             Xcoord = xcoord;
-            Ycoord = ycoord; 
+            Ycoord = ycoord;
+            Width = 30;
+            Height = 30;
+            //Uri uri = new Uri("resources/Frog.png");
+            //Image = new BitmapImage(uri);
         }
     }
 }

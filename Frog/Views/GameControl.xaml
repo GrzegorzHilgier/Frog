@@ -20,9 +20,23 @@
     </UserControl.InputBindings>
 
         <Canvas>
-            <Image Height="30" Width="30" Source="{StaticResource FrogImg}" Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}" ></Image>
-        </Canvas>
+            <ItemsControl ItemsSource="{Binding ItemsToDraw}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Image Height="{Binding Height}" Width="{Binding Width}" Source="{StaticResource FrogImg}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Top" Value="{Binding Xcoord}"/>
+                    <Setter Property="Canvas.Left" Value="{Binding Ycoord}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+        <Image Name="Player" Height="30" Width="30" Source="{StaticResource FrogImg}" Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}" ></Image>
+    </Canvas>
 
+       
 
 
 </UserControl>
