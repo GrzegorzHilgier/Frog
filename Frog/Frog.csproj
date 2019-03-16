@@ -58,6 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Utilities\DrawableObject.cs" />
     <Compile Include="Utilities\ObservableObject.cs" />
     <Compile Include="Utilities\SimpleCommad.cs" />
     <Compile Include="ViewModels\Difficulty.cs" />
