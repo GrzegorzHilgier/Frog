@@ -6,13 +6,11 @@
              xmlns:ViewModels="clr-namespace:Frog.ViewModels"
              xmlns:local="clr-namespace:Frog.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="270" d:DesignWidth="400"
+             d:DesignHeight="300" d:DesignWidth="400"
              Focusable="True"
              d:DataContext="{d:DesignInstance ViewModels:Game}"
              Loaded="UserControl_Loaded">
-    <UserControl.DataContext>
-        <ViewModels:Game/>
-    </UserControl.DataContext>
+
     
     <UserControl.InputBindings>
         <KeyBinding Key="W" Command="{Binding MoveUpCommand}"/>
@@ -21,7 +19,10 @@
         <KeyBinding Key="D" Command="{Binding MoveRightCommand}"/>
     </UserControl.InputBindings>
 
-    <Canvas>
-        <Image Height="30" Width="30" Source="{StaticResource FrogImg}" Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}" ></Image>
-    </Canvas>
+        <Canvas>
+            <Image Height="30" Width="30" Source="{StaticResource FrogImg}" Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}" ></Image>
+        </Canvas>
+
+
+
 </UserControl>

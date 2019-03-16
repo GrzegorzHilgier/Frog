@@ -11,6 +11,8 @@ namespace Frog.ViewModels
         Player Player1 { get; set; } = new Player(3, 0, 0, 1);
         public int X { get => Player1.Xcoord; }
         public int Y { get => Player1.Ycoord; }
+        public ushort Lives { get => Player1.Lives; }
+        public int Score { get => Player1.Score; }
 
         public ICommand MoveLeftCommand
         {

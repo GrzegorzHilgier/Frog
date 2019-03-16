@@ -7,9 +7,22 @@
         xmlns:ViewModels="clr-namespace:Frog.ViewModels"
         xmlns:local="clr-namespace:Frog"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="400">
- 
-        <Views:GameControl></Views:GameControl>
-  
+        Title="MainWindow" Height="400" Width="400">
+    <Window.DataContext>
+        <ViewModels:Game/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO"></RowDefinition>
+            <RowDefinition Height="AUTO"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Views:GameControl/>
+        <Views:BoardControl Grid.Row="1"/>
+    </Grid>
+
+
+
+
 
 </Window>
