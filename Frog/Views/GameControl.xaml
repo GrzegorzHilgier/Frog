@@ -19,8 +19,13 @@
         <KeyBinding Key="D" Command="{Binding MoveRightCommand}"/>
     </UserControl.InputBindings>
 
-        <Canvas>
-            <ItemsControl ItemsSource="{Binding ItemsToDraw}">
+    <Grid>
+        <ItemsControl ItemsSource="{Binding Players}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Image Height="{Binding Height}" Width="{Binding Width}" Source="{StaticResource FrogImg}"/>
@@ -28,15 +33,11 @@
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerStyle>
                 <Style>
-                    <Setter Property="Canvas.Top" Value="{Binding Xcoord}"/>
-                    <Setter Property="Canvas.Left" Value="{Binding Ycoord}"/>
+                    <Setter Property="Canvas.Top" Value="{Binding Ycoord}"/>
+                    <Setter Property="Canvas.Left" Value="{Binding Xcoord}"/>
                 </Style>
             </ItemsControl.ItemContainerStyle>
-            </ItemsControl>
-        <Image Name="Player" Height="30" Width="30" Source="{StaticResource FrogImg}" Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}" ></Image>
-    </Canvas>
-
-       
-
+        </ItemsControl>
+    </Grid>
 
 </UserControl>

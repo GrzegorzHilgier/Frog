@@ -9,11 +9,11 @@ namespace Frog.Models
         public ushort Lives { get; private set; }
         public int Score { get; private set; } = 0;
 
-        public Player(ushort lives, int xcoord, int ycoord, int size)
+        public Player(ushort lives, int x, int y, int size)
         {
             Lives = lives;
-            Xcoord = xcoord;
-            Ycoord = ycoord;
+            Xcoord = x;
+            Ycoord = y;
             Width = 30;
             Height = 30;
             //Uri uri = new Uri("resources/Frog.png");

@@ -10,10 +10,28 @@ using System.Windows.Media.Imaging;
 
 namespace Frog.Utilities
 {
-    class DrawableObject
-    {
-        public int Xcoord { get; set; }
-        public int Ycoord { get; set; }
+    class DrawableObject:ObservableObject
+    {   private int xcoord;
+        public int Xcoord
+        {
+            get => xcoord;
+            set
+            {
+                xcoord = value;
+                RaisePropertyChangedEvent("Xcoord");
+
+            }
+        }
+        private int ycoord;
+        public int Ycoord
+        {
+            get => ycoord;
+            set
+            {
+                ycoord = value;
+                RaisePropertyChangedEvent("Ycoord");
+            }
+        }
         public int Width { get; set; }
         public int Height { get; set; }
         //public BitmapImage Image { get; set; }

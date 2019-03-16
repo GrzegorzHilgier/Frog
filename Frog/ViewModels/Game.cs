@@ -9,18 +9,14 @@ namespace Frog.ViewModels
     class Game : ObservableObject
     {
         public static int Scale = 30;
-        Player Player1 { get; set; } = new Player(3, 0, 0, 1);
-        public int X { get => Player1.Xcoord; }
-        public int Y { get => Player1.Ycoord; }
-        public ushort Lives { get => Player1.Lives; }
-        public int Score { get => Player1.Score; }
 
-        public ObservableCollection<DrawableObject> ItemsToDraw { get; private set; } = new ObservableCollection<DrawableObject>();
+        public ObservableCollection<DrawableObject> Players { get; private set; } = new ObservableCollection<DrawableObject>();
+        public ObservableCollection<DrawableObject> Enemies { get; private set; } = new ObservableCollection<DrawableObject>();
 
         public Game()
         {
+            Players.Add(new Player(3, 100, 100, 1));
 
-            ItemsToDraw.Add(new Player(3, 0, 0, 1));
         }
         public ICommand MoveLeftCommand
         {
@@ -41,23 +37,22 @@ namespace Frog.ViewModels
 
         void MoveLeft()
         {
-            Player1.Xcoord -= 1*Scale;
-            RaisePropertyChangedEvent("X");
+            Players[0].Xcoord -= 1*Scale;
+
         }
         void MoveRight()
         {
-            Player1.Xcoord += 1 * Scale;
-            RaisePropertyChangedEvent("X");
+            Players[0].Xcoord += 1 * Scale;
+
         }
         void MoveUp()
         {
-            Player1.Ycoord -= 1 * Scale;
-            RaisePropertyChangedEvent("Y");
+            Players[0].Ycoord -= 1 * Scale;
+
         }
         void MoveDown()
         {
-            Player1.Ycoord += 1 * Scale;
-            RaisePropertyChangedEvent("Y");
+            Players[0].Ycoord += 1 * Scale;
         }
     }
 }
