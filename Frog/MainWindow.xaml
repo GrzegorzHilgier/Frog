@@ -12,14 +12,11 @@
         <ViewModels:Game/>
     </Window.DataContext>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="AUTO"></RowDefinition>
-            <RowDefinition Height="AUTO"></RowDefinition>
-        </Grid.RowDefinitions>
+    <StackPanel>
+        <Views:DifficultyControl></Views:DifficultyControl>
+        <Views:BoardControl></Views:BoardControl>
         <Views:GameControl/>
-        <Views:BoardControl Grid.Row="1"/>
-    </Grid>
+    </StackPanel>
 
 
 
