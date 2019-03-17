@@ -5,13 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Windows.Media.Imaging;
+using System.Drawing;
 
 
 
 namespace Frog.Utilities
 {
     class DrawableObject:ObservableObject
-    {   private int xcoord;
+    {
+        public String ImagePath { get; protected set; }
+        public BitmapImage BitmapImg { get; protected set; }
+        public Image Img { get; protected set; }
+
+        private int xcoord;
         public virtual int Xcoord
         {
             get => xcoord;

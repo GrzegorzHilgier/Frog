@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Media.Imaging;
+using System.Drawing;
 using Frog.Utilities;
 
 namespace Frog.Models
@@ -8,6 +9,7 @@ namespace Frog.Models
     {
         public ushort Lives { get; private set; }
         public int Score { get; private set; } = 0;
+        
 
         public Player(ushort lives, int x, int y, int width, int height)
         {
@@ -16,8 +18,13 @@ namespace Frog.Models
             Ycoord = y;
             Width = width;
             Height = height;
-            //Uri uri = new Uri("resources/Frog.png");
-            //Image = new BitmapImage(uri);
+            ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/FrogImg.png";
+            // Uri uri = new Uri("FrogImg.png", UriKind.Relative);
+            //BitmapImg = new BitmapImage(uri);
+            //ImagePath = "FrogImg.png";
+            Img = Image.FromFile("C:/programming/c#/projects/Frog/Frog/Frog/resources/FrogImg.png");
+
+
 
         }
     }

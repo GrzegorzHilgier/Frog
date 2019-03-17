@@ -28,7 +28,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Image Height="{Binding Height}" Width="{Binding Width}" Source="{StaticResource FrogImg}"/>
+                    <Image Height="{Binding Height}" Width="{Binding Width}" Source="{Binding ImagePath}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerStyle>
