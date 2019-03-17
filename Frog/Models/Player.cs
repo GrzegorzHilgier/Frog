@@ -19,12 +19,6 @@ namespace Frog.Models
             Width = width;
             Height = height;
             ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/FrogImg.png";
-            // Uri uri = new Uri("FrogImg.png", UriKind.Relative);
-            //BitmapImg = new BitmapImage(uri);
-            //ImagePath = "FrogImg.png";
-            Img = Image.FromFile("C:/programming/c#/projects/Frog/Frog/Frog/resources/FrogImg.png");
-
-
 
         }
     }

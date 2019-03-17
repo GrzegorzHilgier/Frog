@@ -8,15 +8,20 @@ namespace Frog.ViewModels
 {
     class Game : ObservableObject
     {
-        public static int Scale = 30;
+        const int MAP_HEIGHT = 270;
+        const int MAP_WIDTH = 390;
+        const int Scale = 30;
 
-        public ObservableCollection<DrawableObject> Players { get; private set; } = new ObservableCollection<DrawableObject>();
+        public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
         public ObservableCollection<DrawableObject> Enemies { get; private set; } = new ObservableCollection<DrawableObject>();
 
         public Game()
         {
-            Players.Add(new Player(3, 0, 0, Scale, Scale));
+           Players.Add(new Player(3, Scale*6, Scale*8, Scale, Scale));
+           Enemies.Add(new Water(0, Scale, MAP_WIDTH, Scale*3));
         }
+
+
         public ICommand MoveLeftCommand
         {
             get { return new SimpleCommand(MoveLeft); }
@@ -48,9 +53,9 @@ namespace Frog.ViewModels
             {
                 Players[0].Xcoord += 1 * Scale;
             }
- 
 
         }
+
         void MoveUp()
         {
             if(Players[0].Ycoord >= Players[0].Height)
@@ -59,9 +64,9 @@ namespace Frog.ViewModels
             }
 
         }
+
         void MoveDown()
         {
-
             if (Players[0].Ycoord <= 240 - Players[0].Height)
             {
                 Players[0].Ycoord += 1 * Scale;

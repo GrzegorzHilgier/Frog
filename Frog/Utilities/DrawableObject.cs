@@ -14,8 +14,6 @@ namespace Frog.Utilities
     class DrawableObject:ObservableObject
     {
         public String ImagePath { get; protected set; }
-        public BitmapImage BitmapImg { get; protected set; }
-        public Image Img { get; protected set; }
 
         private int xcoord;
         public virtual int Xcoord

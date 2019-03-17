@@ -20,6 +20,24 @@
     </UserControl.InputBindings>
 
     <Grid>
+        <ItemsControl ItemsSource="{Binding Enemies}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Image Stretch="Fill" Height="{Binding Height}" Width="{Binding Width}" Source="{Binding ImagePath}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Top" Value="{Binding Ycoord}"/>
+                    <Setter Property="Canvas.Left" Value="{Binding Xcoord}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
         <ItemsControl ItemsSource="{Binding Players}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -28,7 +46,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Image Height="{Binding Height}" Width="{Binding Width}" Source="{Binding ImagePath}"/>
+                    <Image Stretch="Fill" Height="{Binding Height}" Width="{Binding Width}" Source="{Binding ImagePath}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerStyle>
