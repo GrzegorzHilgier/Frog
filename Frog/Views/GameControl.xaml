@@ -6,7 +6,7 @@
              xmlns:ViewModels="clr-namespace:Frog.ViewModels"
              xmlns:local="clr-namespace:Frog.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="400"
+             d:DesignHeight="300" d:DesignWidth="470"
              Focusable="True"
              d:DataContext="{d:DesignInstance ViewModels:Game}"
              Loaded="UserControl_Loaded">

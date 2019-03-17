@@ -6,7 +6,7 @@
              xmlns:ViewModels="clr-namespace:Frog.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="60"
-             d:DesignWidth="400"
+             d:DesignWidth="470"
              d:DataContext="{d:DesignInstance ViewModels:Game}">
 
     <Grid>

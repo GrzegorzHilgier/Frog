@@ -6,7 +6,7 @@
              xmlns:ViewModels="clr-namespace:Frog.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="100"
-             d:DesignWidth="500">
+             d:DesignWidth="470">
     <StackPanel>
         <Label Foreground="Blue" Margin="5,5,5,0">Difficulty</Label>
         <Grid>

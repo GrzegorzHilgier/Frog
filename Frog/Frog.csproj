@@ -58,6 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\Pod.cs" />
     <Compile Include="Models\Water.cs" />
     <Compile Include="Utilities\DrawableObject.cs" />
     <Compile Include="Utilities\ObservableObject.cs" />
@@ -133,6 +134,9 @@
     <Resource Include="resources\Water.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\PodEmpty.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

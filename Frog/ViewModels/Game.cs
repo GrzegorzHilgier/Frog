@@ -8,19 +8,24 @@ namespace Frog.ViewModels
 {
     class Game : ObservableObject
     {
-        const int MAP_HEIGHT = 270;
-        const int MAP_WIDTH = 390;
+
         const int Scale = 30;
+        const int MAP_HEIGHT = Scale * 9;
+        const int MAP_WIDTH = Scale * 15;
 
         public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
         public ObservableCollection<DrawableObject> Enemies { get; private set; } = new ObservableCollection<DrawableObject>();
 
         public Game()
         {
-           Players.Add(new Player(3, Scale*6, Scale*8, Scale, Scale));
-           Enemies.Add(new Water(0, Scale, MAP_WIDTH, Scale*3));
+            Players.Add(new Player(3, Scale*6, Scale*8, Scale, Scale));
+            Enemies.Add(new Water(0, Scale, MAP_WIDTH, Scale*3));
+            Enemies.Add(new Pod(Scale, 0, Scale, Scale));
+            Enemies.Add(new Pod(Scale * 4, 0, Scale, Scale));
+            Enemies.Add(new Pod(Scale * 7, 0, Scale, Scale));
+            Enemies.Add(new Pod(Scale * 10, 0, Scale, Scale));
+            Enemies.Add(new Pod(Scale * 13, 0, Scale, Scale));
         }
-
 
         public ICommand MoveLeftCommand
         {
@@ -49,7 +54,7 @@ namespace Frog.ViewModels
 
         void MoveRight()
         {
-            if(Players[0].Xcoord <= 360 - Players[0].Width)
+            if(Players[0].Xcoord < MAP_WIDTH - Players[0].Width)
             {
                 Players[0].Xcoord += 1 * Scale;
             }
@@ -67,7 +72,7 @@ namespace Frog.ViewModels
 
         void MoveDown()
         {
-            if (Players[0].Ycoord <= 240 - Players[0].Height)
+            if (Players[0].Ycoord < MAP_HEIGHT- Players[0].Height)
             {
                 Players[0].Ycoord += 1 * Scale;
             }
