@@ -7,7 +7,7 @@
         xmlns:ViewModels="clr-namespace:Frog.ViewModels"
         xmlns:local="clr-namespace:Frog"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="400">
+        Title="MainWindow" Height="450" Width="410">
     <Window.DataContext>
         <ViewModels:Game/>
     </Window.DataContext>
@@ -17,9 +17,5 @@
         <Views:BoardControl></Views:BoardControl>
         <Views:GameControl/>
     </StackPanel>
-
-
-
-
 
 </Window>

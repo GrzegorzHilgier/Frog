@@ -12,28 +12,43 @@ namespace Frog.Utilities
 {
     class DrawableObject:ObservableObject
     {   private int xcoord;
-        public int Xcoord
+        public virtual int Xcoord
         {
             get => xcoord;
             set
             {
-                xcoord = value;
-                RaisePropertyChangedEvent("Xcoord");
-
+                if(CheckIfXMovePossible(value))
+                {
+                    xcoord = value;
+                    RaisePropertyChangedEvent("Xcoord");
+                }
             }
         }
         private int ycoord;
-        public int Ycoord
+        public virtual int Ycoord
         {
             get => ycoord;
             set
             {
-                ycoord = value;
-                RaisePropertyChangedEvent("Ycoord");
+                if (CheckIfYMovePossible(value))
+                {
+                    ycoord = value;
+                    RaisePropertyChangedEvent("Ycoord");
+                }
             }
         }
         public int Width { get; set; }
         public int Height { get; set; }
         //public BitmapImage Image { get; set; }
+
+        public virtual bool CheckIfXMovePossible(int value)
+        {
+            return true;
+        }
+        public virtual bool CheckIfYMovePossible(int value)
+        {
+            return true;
+        }
+
     }
 }

@@ -15,7 +15,7 @@ namespace Frog.ViewModels
 
         public Game()
         {
-            Players.Add(new Player(3, 100, 100, Scale, Scale));
+            Players.Add(new Player(3, 0, 0, Scale, Scale));
         }
         public ICommand MoveLeftCommand
         {
@@ -36,22 +36,36 @@ namespace Frog.ViewModels
 
         void MoveLeft()
         {
-            Players[0].Xcoord -= 1*Scale;
-
+            if(Players[0].Xcoord >= Players[0].Width)
+            {
+                Players[0].Xcoord -= 1 * Scale;
+            }
         }
+
         void MoveRight()
         {
-            Players[0].Xcoord += 1 * Scale;
+            if(Players[0].Xcoord <= 360 - Players[0].Width)
+            {
+                Players[0].Xcoord += 1 * Scale;
+            }
+ 
 
         }
         void MoveUp()
         {
-            Players[0].Ycoord -= 1 * Scale;
+            if(Players[0].Ycoord >= Players[0].Height)
+            {
+                Players[0].Ycoord -= 1 * Scale;
+            }
 
         }
         void MoveDown()
         {
-            Players[0].Ycoord += 1 * Scale;
+
+            if (Players[0].Ycoord <= 240 - Players[0].Height)
+            {
+                Players[0].Ycoord += 1 * Scale;
+            }
         }
     }
 }

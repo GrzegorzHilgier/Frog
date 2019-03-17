@@ -18,6 +18,7 @@ namespace Frog.Models
             Height = height;
             //Uri uri = new Uri("resources/Frog.png");
             //Image = new BitmapImage(uri);
+
         }
     }
 }
