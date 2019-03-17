@@ -21,5 +21,11 @@ namespace Frog.Models
             ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/FrogImg.png";
 
         }
+        public event Action<DrawableObject> PlayerMoved;
+        public void RaisePlayerIsMovingEvent()
+        {
+            PlayerMoved(this);
+        }
+            
     }
 }

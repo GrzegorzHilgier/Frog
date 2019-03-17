@@ -17,6 +17,15 @@ namespace Frog.Models
             Height = height;
             ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/PodEmpty.bmp";
         }
+        public override void CheckIfOn(DrawableObject item)
+        {
+            if (item.Xcoord >= Xcoord && item.Xcoord <= Xcoord + Width && item.Ycoord >= Ycoord && item.Ycoord <= Ycoord + Height)
+            {
+                ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/PodOccupied.bmp";
+                RaisePropertyChangedEvent("ImagePath");
+            }
+
+        }
 
     }
 }

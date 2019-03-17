@@ -13,7 +13,16 @@ namespace Frog.Utilities
 {
     class DrawableObject:ObservableObject
     {
-        public String ImagePath { get; protected set; }
+        private String imagePath;
+        public String ImagePath
+        {
+            get => imagePath;
+            protected set
+            {
+                imagePath = value;
+                RaisePropertyChangedEvent("ImagePath");
+            }
+        }
 
         private int xcoord;
         public virtual int Xcoord
@@ -53,6 +62,7 @@ namespace Frog.Utilities
         {
             return true;
         }
+        public virtual void CheckIfOn(DrawableObject item) { }
 
     }
 }
