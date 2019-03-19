@@ -33,6 +33,7 @@ namespace Frog.ViewModels
             ItemsOnScreen.Add(new Pod(Scale * 7, 0, Scale - 1, Scale - 1, players));
             ItemsOnScreen.Add(new Pod(Scale * 10, 0, Scale - 1, Scale - 1, players));
             ItemsOnScreen.Add(new Pod(Scale * 13, 0, Scale - 1, Scale - 1, players));
+            ItemsOnScreen.Add(new Car(130, 130, Scale - 1, Scale - 1, players));
         }
 
 

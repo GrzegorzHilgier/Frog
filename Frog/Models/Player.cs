@@ -7,7 +7,16 @@ namespace Frog.Models
 {
     class Player: DrawableObject
     {
-        public ushort Lives { get; set; }
+        private ushort lives;
+        public ushort Lives
+        {
+            get => lives;
+            set
+            {
+                lives = value;
+                RaisePropertyChangedEvent("Lives");
+            }
+        }
         private int score;
         public int Score
         {
