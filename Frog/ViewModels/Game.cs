@@ -58,8 +58,10 @@ namespace Frog.ViewModels
         {
             if(Players[0].Xcoord >= Players[0].Width)
             {
-                Players[0].Xcoord -= 1 * Scale;
-                Players[0].RaiseObjectMovedEvent();
+                //Players[0].Xcoord -= 1 * Scale;
+                //Players[0].RaiseObjectMovedEvent();
+
+                Players[0].TryToMove(Direction.LEFT, Scale);
             }
         }
 
@@ -67,8 +69,10 @@ namespace Frog.ViewModels
         {
             if(Players[0].Xcoord < MAP_WIDTH - Players[0].Width)
             {
-                Players[0].Xcoord += 1 * Scale;
-                Players[0].RaiseObjectMovedEvent();
+                //Players[0].Xcoord += 1 * Scale;
+                //Players[0].RaiseObjectMovedEvent();
+
+                Players[0].TryToMove(Direction.RIGHT, Scale);
             }
 
         }
@@ -77,8 +81,10 @@ namespace Frog.ViewModels
         {
             if(Players[0].Ycoord >= Players[0].Height)
             {
-                Players[0].Ycoord -= 1 * Scale;
-                Players[0].RaiseObjectMovedEvent();
+                //Players[0].Ycoord -= 1 * Scale;
+                //Players[0].RaiseObjectMovedEvent();
+
+                Players[0].TryToMove(Direction.UP, Scale);
             }
 
         }
@@ -87,8 +93,10 @@ namespace Frog.ViewModels
         {
             if (Players[0].Ycoord < MAP_HEIGHT- Players[0].Height)
             {
-                Players[0].Ycoord += 1 * Scale;
-                Players[0].RaiseObjectMovedEvent();
+                //Players[0].Ycoord += 1 * Scale;
+                //Players[0].RaiseObjectMovedEvent();
+
+                Players[0].TryToMove(Direction.DOWN, Scale);
             }
         }
     }

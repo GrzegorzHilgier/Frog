@@ -82,7 +82,7 @@ namespace Frog.Utilities
         public virtual void CheckIfCollisionWith(DrawableObject item) { }
 
         public event Action<DrawableObject> ObjectMoved;
-        public event Action<DrawableObject,Direction,Action<bool>> ObjectTryingToMove;
+        public event Action<DrawableObject, Direction, Action<bool>> ObjectTryingToMove;
         public void RaiseObjectMovedEvent()
         {
             ObjectMoved(this);
@@ -92,8 +92,8 @@ namespace Frog.Utilities
             bool finalResult = true;
             //checks if any subscriber will block movement
             var results = new List<bool>();
-            ObjectTryingToMove(this, direction, val =>results.Add(val));
-            foreach(bool result in results)
+            ObjectTryingToMove?.Invoke(this, direction, val => results.Add(val));
+            foreach (bool result in results)
             {
                 if (!result)
                 {
@@ -116,7 +116,7 @@ namespace Frog.Utilities
                         Xcoord -= value;
                         break;
                     case Direction.RIGHT:
-                        Ycoord += value;
+                        Xcoord += value;
                         break;
                 }
 
