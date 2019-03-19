@@ -19,7 +19,7 @@ namespace Frog.ViewModels
         public Game()
         {
             //TODO add more players
-            Players.Add(new Player(3, Scale*6, Scale*8, Scale, Scale));
+            Players.Add(new Player(3, Scale*6, Scale*8, Scale-1, Scale-1));
 
             List <Player> players = new List<Player>();
             foreach(Player player in Players)
@@ -27,12 +27,12 @@ namespace Frog.ViewModels
                 players.Add(player);
             }
 
-            ItemsOnScreen.Add(new Water(0, Scale, MAP_WIDTH, Scale*3));
-            ItemsOnScreen.Add(new Pod(Scale, 0, Scale, Scale,players));
-            ItemsOnScreen.Add(new Pod(Scale * 4, 0, Scale, Scale,players));
-            ItemsOnScreen.Add(new Pod(Scale * 7, 0, Scale, Scale,players));
-            ItemsOnScreen.Add(new Pod(Scale * 10, 0, Scale, Scale,players));
-            ItemsOnScreen.Add(new Pod(Scale * 13, 0, Scale, Scale,players));
+            ItemsOnScreen.Add(new Water(0, Scale, MAP_WIDTH, (Scale*3)-1));
+            ItemsOnScreen.Add(new Pod(Scale, 0, Scale-1, Scale-1,players));
+            ItemsOnScreen.Add(new Pod(Scale * 4, 0, Scale - 1, Scale - 1, players));
+            ItemsOnScreen.Add(new Pod(Scale * 7, 0, Scale - 1, Scale - 1, players));
+            ItemsOnScreen.Add(new Pod(Scale * 10, 0, Scale - 1, Scale - 1, players));
+            ItemsOnScreen.Add(new Pod(Scale * 13, 0, Scale - 1, Scale - 1, players));
         }
 
 

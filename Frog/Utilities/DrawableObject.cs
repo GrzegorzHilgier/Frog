@@ -33,15 +33,20 @@ namespace Frog.Utilities
             get => xcoord;
             set
             {
-                if(CheckIfXMovePossible(value))
-                {
                     xcoord = value;
                     RaisePropertyChangedEvent("Xcoord");
-                }
             }
         }
         private int ycoord;
-
+        public virtual int Ycoord
+        {
+            get => ycoord;
+            set
+            {
+                ycoord = value;
+                RaisePropertyChangedEvent("Ycoord");
+            }
+        }
         public DrawableObject( int x, int y, int width, int height)
         {           
             Width = width;
@@ -52,33 +57,13 @@ namespace Frog.Utilities
             StartYcoord = y;
         }
 
-        public virtual int Ycoord
-        {
-            get => ycoord;
-            set
-            {
-                if (CheckIfYMovePossible(value))
-                {
-                    ycoord = value;
-                    RaisePropertyChangedEvent("Ycoord");
-                }
-            }
-        }
+
         public int Width { get; set; }
         public int Height { get; set; }
         public int StartXcoord { get; set; } = 0;
         public int StartYcoord { get; set; } = 0;
         //public BitmapImage Image { get; set; }
 
-
-        public virtual bool CheckIfXMovePossible(int value)
-        {
-            return true;
-        }
-        public virtual bool CheckIfYMovePossible(int value)
-        {
-            return true;
-        }
         public virtual void CheckIfCollisionWith(DrawableObject item) { }
 
         public event Action<DrawableObject> ObjectMoved;
@@ -119,7 +104,7 @@ namespace Frog.Utilities
                         Xcoord += value;
                         break;
                 }
-
+                ObjectMoved(this);
             }
 
         }
