@@ -14,24 +14,28 @@ namespace Frog.ViewModels
         const int MAP_WIDTH = Scale * 15;
 
         public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
-        public ObservableCollection<DrawableObject> Enemies { get; private set; } = new ObservableCollection<DrawableObject>();
+        public ObservableCollection<DrawableObject> ItemsOnScreen { get; private set; } = new ObservableCollection<DrawableObject>();
 
         public Game()
         {
+            //TODO add more players
             Players.Add(new Player(3, Scale*6, Scale*8, Scale, Scale));
-            Enemies.Add(new Water(0, Scale, MAP_WIDTH, Scale*3));
-            Enemies.Add(new Pod(Scale, 0, Scale, Scale));
-            Players[0].PlayerMoved += Enemies[Enemies.Count-1].CheckIfOn;
-            Enemies.Add(new Pod(Scale * 4, 0, Scale, Scale));
-            Players[0].PlayerMoved += Enemies[Enemies.Count-1].CheckIfOn;
-            Enemies.Add(new Pod(Scale * 7, 0, Scale, Scale));
-            Players[0].PlayerMoved += Enemies[Enemies.Count-1].CheckIfOn;
-            Enemies.Add(new Pod(Scale * 10, 0, Scale, Scale));
-            Players[0].PlayerMoved += Enemies[Enemies.Count-1].CheckIfOn;
-            Enemies.Add(new Pod(Scale * 13, 0, Scale, Scale));
-            Players[0].PlayerMoved += Enemies[Enemies.Count-1].CheckIfOn;
 
+            List <Player> players = new List<Player>();
+            foreach(Player player in Players)
+            {
+                players.Add(player);
+            }
+
+            ItemsOnScreen.Add(new Water(0, Scale, MAP_WIDTH, Scale*3));
+            ItemsOnScreen.Add(new Pod(Scale, 0, Scale, Scale,players));
+            ItemsOnScreen.Add(new Pod(Scale * 4, 0, Scale, Scale,players));
+            ItemsOnScreen.Add(new Pod(Scale * 7, 0, Scale, Scale,players));
+            ItemsOnScreen.Add(new Pod(Scale * 10, 0, Scale, Scale,players));
+            ItemsOnScreen.Add(new Pod(Scale * 13, 0, Scale, Scale,players));
         }
+
+
 
         public ICommand MoveLeftCommand
         {
@@ -55,7 +59,7 @@ namespace Frog.ViewModels
             if(Players[0].Xcoord >= Players[0].Width)
             {
                 Players[0].Xcoord -= 1 * Scale;
-                Players[0].RaisePlayerIsMovingEvent();
+                Players[0].RaiseObjectMovedEvent();
             }
         }
 
@@ -64,7 +68,7 @@ namespace Frog.ViewModels
             if(Players[0].Xcoord < MAP_WIDTH - Players[0].Width)
             {
                 Players[0].Xcoord += 1 * Scale;
-                Players[0].RaisePlayerIsMovingEvent();
+                Players[0].RaiseObjectMovedEvent();
             }
 
         }
@@ -74,7 +78,7 @@ namespace Frog.ViewModels
             if(Players[0].Ycoord >= Players[0].Height)
             {
                 Players[0].Ycoord -= 1 * Scale;
-                Players[0].RaisePlayerIsMovingEvent();
+                Players[0].RaiseObjectMovedEvent();
             }
 
         }
@@ -84,7 +88,7 @@ namespace Frog.ViewModels
             if (Players[0].Ycoord < MAP_HEIGHT- Players[0].Height)
             {
                 Players[0].Ycoord += 1 * Scale;
-                Players[0].RaisePlayerIsMovingEvent();
+                Players[0].RaiseObjectMovedEvent();
             }
         }
     }

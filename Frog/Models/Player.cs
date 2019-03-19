@@ -9,23 +9,17 @@ namespace Frog.Models
     {
         public ushort Lives { get; private set; }
         public int Score { get; private set; } = 0;
-        
+       
 
-        public Player(ushort lives, int x, int y, int width, int height)
+
+        public Player(ushort lives, int x, int y, int width, int height):base(x,y,width,height)
         {
             Lives = lives;
-            Xcoord = x;
-            Ycoord = y;
-            Width = width;
-            Height = height;
+           
             ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/FrogImg.png";
+            
 
         }
-        public event Action<DrawableObject> PlayerMoved;
-        public void RaisePlayerIsMovingEvent()
-        {
-            PlayerMoved(this);
-        }
-            
+       
     }
 }

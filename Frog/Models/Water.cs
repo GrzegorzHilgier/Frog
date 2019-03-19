@@ -9,12 +9,8 @@ namespace Frog.Models
 {
     class Water: DrawableObject
     {
-        public Water(int x, int y, int width, int height)
+        public Water(int x, int y, int width, int height):base(x,y,width,height)
         {
-            Xcoord = x;
-            Ycoord = y;
-            Width = width;
-            Height = height;
             ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/Water.bmp";
         }
     }

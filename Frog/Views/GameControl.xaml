@@ -20,7 +20,7 @@
     </UserControl.InputBindings>
 
     <Grid>
-        <ItemsControl ItemsSource="{Binding Enemies}">
+        <ItemsControl ItemsSource="{Binding ItemsOnScreen}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas/>
