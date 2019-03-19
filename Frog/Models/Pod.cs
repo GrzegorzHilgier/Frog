@@ -10,10 +10,14 @@ namespace Frog.Models
 {
     class Pod : DrawableObject
     {
+        static ushort CreatedPods = 0;
+        static ushort OccupiedPods = 0;
         private List<Player> Players { get; set; }
         public bool IsChecked { get; private set; } = false;
+        static event Action AllPodsOccupied;
         public Pod(int x, int y, int width, int height, List<Player> players):base(x,y,width,height)
         {
+            CreatedPods ++;
             ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/PodEmpty.bmp";
             Players = players;
             foreach(Player player in Players)
@@ -32,8 +36,18 @@ namespace Frog.Models
                 {
                     IsChecked = true;
                     ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/PodOccupied.bmp";
+                    OccupiedPods++;
                     RaisePropertyChangedEvent("ImagePath");
-                    player.GoToStartPosition();
+                    if (OccupiedPods == CreatedPods)
+                    {
+                        AllPodsOccupied?.Invoke();
+                    }
+                    else
+                    {
+                        player.Score += 100;
+                        player.GoToStartPosition();
+
+                    }
                 }
             }
         }
