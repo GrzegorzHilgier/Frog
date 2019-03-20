@@ -1,43 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
+using System.Drawing;
+using Frog.Utilities;
+
 
 namespace Frog.Models
 {
-    class Player:ObservableObject
+    class Player: DrawableObject
     {
-        public Player(ushort lives, int xcoord, int ycoord, int size)
+
+        private ushort lives;
+        public ushort Lives
+        {
+            get => lives;
+            set
+            {
+                lives = value;
+                RaisePropertyChangedEvent("Lives");
+            }
+        }
+        private int score;
+        public int Score
+        {
+            get => score;
+            set
+            {
+                score = value;
+                RaisePropertyChangedEvent("Score");
+            }
+        } 
+       
+
+
+        public Player(ushort lives, int x, int y, int width, int height):base(x,y,width,height)
         {
             Lives = lives;
-            Xcoord = xcoord;
-            Ycoord = ycoord;
-            Size = size;
-        }
+            Score = 0;
+           
+            ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/FrogImg.png";
 
-        public ushort Lives { get; private set; }
-        public int Score { get; private set; } = 0;
-        private int xcoord;
-        public int Xcoord
-        {
-            get => xcoord;
-            set
-            {
-                xcoord = value;
-                RaisePropertyChangedEvent("Xcoord");
-            }
+
         }
-        private int ycoord;
-        public int Ycoord
-        {
-            get => ycoord;
-            set
-            {
-                ycoord = value;
-                RaisePropertyChangedEvent("Ycoord");
-            }
-        }
-        public int Size { get; private set; }
+       
     }
 }

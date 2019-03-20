@@ -2,21 +2,35 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Frog.Models;
+using Frog.Utilities;
+
 
 namespace Frog.ViewModels
 {
     class Game : ObservableObject
     {
-        public static int Scale = 30;
-        Player Player1 { get; set; } = new Player(3, 0, 0, 1);
-        public int X { get => Player1.Xcoord; }
-        public int Y { get => Player1.Ycoord; }
+        MapInfo mapInfo = new MapInfo(30, 9, 15);
+        public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
+        public ObservableCollection<DrawableObject> ItemsOnScreen { get; private set; } = new ObservableCollection<DrawableObject>();
+
         public Game()
         {
-            Player1.Xcoord = 100;
-            RaisePropertyChangedEvent("X");
-            Player1.Ycoord = 100;
-            RaisePropertyChangedEvent("Y");
+            //TODO add more players
+            Players.Add(new Player(3, mapInfo.Scale *7, mapInfo.Scale *8, mapInfo.Scale -1, mapInfo.Scale -1));
+
+            List <Player> players = new List<Player>();
+            foreach(Player player in Players)
+            {
+                players.Add(player);
+            }
+
+
+            ItemsFactory itemsFactory = new ItemsFactory(players, AddItemOnScreen, mapInfo);
+        }
+
+        public void AddItemOnScreen(DrawableObject item)
+        {
+            ItemsOnScreen.Add(item);
         }
 
         public ICommand MoveLeftCommand
@@ -38,19 +52,36 @@ namespace Frog.ViewModels
 
         void MoveLeft()
         {
-            Player1.Xcoord -= 1*Scale;
+            if(Players[0].Xcoord >= Players[0].Width)
+            {
+                Players[0].TryToMove(Direction.LEFT, mapInfo.Scale);
+            }
         }
+
         void MoveRight()
         {
-            Player1.Xcoord += 1 * Scale;
+            if(Players[0].Xcoord < mapInfo.Width-mapInfo.Scale)
+            {
+                Players[0].TryToMove(Direction.RIGHT, mapInfo.Scale);
+            }
+
         }
+
         void MoveUp()
         {
-            Player1.Ycoord -= 1 * Scale;
+            if(Players[0].Ycoord >= Players[0].Height)
+            {
+                Players[0].TryToMove(Direction.UP, mapInfo.Scale);
+            }
+
         }
+
         void MoveDown()
         {
-            Player1.Ycoord += 1 * Scale;
+            if (Players[0].Ycoord < mapInfo.Height- mapInfo.Scale)
+            {
+                Players[0].TryToMove(Direction.DOWN, mapInfo.Scale);
+            }
         }
     }
 }

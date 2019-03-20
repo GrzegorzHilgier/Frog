@@ -6,20 +6,60 @@
              xmlns:ViewModels="clr-namespace:Frog.ViewModels"
              xmlns:local="clr-namespace:Frog.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="270" d:DesignWidth="400"
+             d:DesignHeight="300" d:DesignWidth="470"
              Focusable="True"
              d:DataContext="{d:DesignInstance ViewModels:Game}"
              Loaded="UserControl_Loaded">
+
     
     <UserControl.InputBindings>
-        <KeyBinding Key="W" Command="{Binding MoveUpCommand, Mode=OneTime}"/>
-        <KeyBinding Key="S" Command="{Binding MoveDownCommand, Mode=OneTime}"/>
-        <KeyBinding Key="A" Command="{Binding MoveLeftCommand, Mode=OneTime}"/>
-        <KeyBinding Key="D" Command="{Binding MoveRightCommand, Mode=OneTime}"/>
+        <KeyBinding Key="W" Command="{Binding MoveUpCommand}"/>
+        <KeyBinding Key="S" Command="{Binding MoveDownCommand}"/>
+        <KeyBinding Key="A" Command="{Binding MoveLeftCommand}"/>
+        <KeyBinding Key="D" Command="{Binding MoveRightCommand}"/>
+        <KeyBinding Key="Up" Command="{Binding MoveUpCommand}"/>
+        <KeyBinding Key="Down" Command="{Binding MoveDownCommand}"/>
+        <KeyBinding Key="Left" Command="{Binding MoveLeftCommand}"/>
+        <KeyBinding Key="Right" Command="{Binding MoveRightCommand}"/>
     </UserControl.InputBindings>
 
-    <Canvas >
-        
-        <Image Height="30" Width="30" Source="{StaticResource FrogImg}" Canvas.Left="{Binding X, Mode=TwoWay}" Canvas.Top="{Binding Y, Mode=TwoWay}" ></Image>
-    </Canvas>
+    <Grid>
+        <ItemsControl ItemsSource="{Binding ItemsOnScreen}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Image Stretch="Fill" Height="{Binding Height}" Width="{Binding Width}" Source="{Binding ImagePath}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Top" Value="{Binding Ycoord}"/>
+                    <Setter Property="Canvas.Left" Value="{Binding Xcoord}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+        <ItemsControl ItemsSource="{Binding Players}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Image Stretch="Fill" Height="{Binding Height}" Width="{Binding Width}" Source="{Binding ImagePath}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Top" Value="{Binding Ycoord}"/>
+                    <Setter Property="Canvas.Left" Value="{Binding Xcoord}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+    </Grid>
+
 </UserControl>

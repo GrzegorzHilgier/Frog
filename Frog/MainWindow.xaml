@@ -4,13 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Views="clr-namespace:Frog.Views"
- 
+        xmlns:ViewModels="clr-namespace:Frog.ViewModels"
         xmlns:local="clr-namespace:Frog"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="400">
+        Title="MainWindow" Height="450" Width="470">
+    <Window.DataContext>
+        <ViewModels:Game/>
+    </Window.DataContext>
 
     <StackPanel>
-        
+        <Views:DifficultyControl></Views:DifficultyControl>
+        <Views:BoardControl></Views:BoardControl>
         <Views:GameControl/>
     </StackPanel>
 

@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Frog.Views.BoardControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ViewModels="clr-namespace:Frog.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="60"
+             d:DesignWidth="470"
+             d:DataContext="{d:DesignInstance ViewModels:Game}">
+
+    <Grid>
+        <ItemsControl ItemsSource="{Binding Players}">
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <TextBlock Margin="5" Text="{Binding Lives}"/>
+                        <TextBlock Margin="5" Text="{Binding Score}"/>
+                        <TextBlock Margin="5" Text="{Binding Xcoord}"/>
+                        <TextBlock Margin="5" Text="{Binding Ycoord}"/>
+                    </WrapPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+           
+        </ItemsControl>
+    </Grid>
+
+</UserControl>
