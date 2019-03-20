@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Frog.ViewModels
 {
-    class Difficulty
+    class Init
     {
     }
 }

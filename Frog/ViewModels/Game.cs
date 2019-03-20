@@ -9,14 +9,19 @@ namespace Frog.ViewModels
 {
     class Game : ObservableObject
     {
+
         MapInfo mapInfo = new MapInfo(30, 9, 15);
         public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
         public ObservableCollection<DrawableObject> ItemsOnScreen { get; private set; } = new ObservableCollection<DrawableObject>();
 
-        public Game()
+        public Game(Difficulty difficulty, bool twoPlayers = false)
         {
             //TODO add more players
-            Players.Add(new Player(3, mapInfo.Scale *7, mapInfo.Scale *8, mapInfo.Scale -1, mapInfo.Scale -1));
+            Players.Add(new Player("Green",3, mapInfo.Scale *7, mapInfo.Scale *8, mapInfo.Scale -1, mapInfo.Scale -1));
+            if(twoPlayers)
+            {
+                Players.Add(new Player("Yellow", 3, mapInfo.Scale * 8, mapInfo.Scale * 8, mapInfo.Scale - 1, mapInfo.Scale - 1));
+            }
 
             List <Player> players = new List<Player>();
             foreach(Player player in Players)
@@ -25,7 +30,7 @@ namespace Frog.ViewModels
             }
 
 
-            ItemsFactory itemsFactory = new ItemsFactory(players, AddItemOnScreen, mapInfo);
+            ItemsFactory itemsFactory = new ItemsFactory(players,difficulty, mapInfo, AddItemOnScreen);
         }
 
         public void AddItemOnScreen(DrawableObject item)

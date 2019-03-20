@@ -11,41 +11,105 @@ namespace Frog.Models
 {
     class ItemsFactory
     {
-        public ItemsFactory(List<Player> players, Action<DrawableObject> ItemsOnScreen,MapInfo mapInfo)
+        private Action<DrawableObject>ItemsOnScreen { get; set; }
+        private int MapWidth { get; set; }
+        private List<Player> Players { get; set; }
+        public ItemsFactory(List<Player> players, Difficulty difficulty, MapInfo mapInfo, Action<DrawableObject> ItemsOnScreen)
         {
+
+            this.ItemsOnScreen = ItemsOnScreen;
+            MapWidth = mapInfo.Width;
+            Players = players;
+
+            List<int> Xposittions = new List<int>();
+            int rowPosition ;
+            int movement;
+            int width;
+            int height;
+
             ItemsOnScreen(new Water(0, mapInfo.Scale, mapInfo.Width - 1, (mapInfo.Scale * 3) - 1, players));
-            ItemsOnScreen(new Pod(mapInfo.Scale, 0, mapInfo.Scale - 1, mapInfo.Scale - 1, players));
-            ItemsOnScreen(new Pod(mapInfo.Scale * 4, 0, mapInfo.Scale - 1, mapInfo.Scale - 1, players));
-            ItemsOnScreen(new Pod(mapInfo.Scale * 7, 0, mapInfo.Scale - 1, mapInfo.Scale - 1, players));
-            ItemsOnScreen(new Pod(mapInfo.Scale * 10, 0, mapInfo.Scale - 1, mapInfo.Scale - 1, players));
-            ItemsOnScreen(new Pod(mapInfo.Scale * 13, 0, mapInfo.Scale - 1, mapInfo.Scale - 1, players));
+            int PodSize = mapInfo.Scale - 1;
+            ItemsOnScreen(new Pod(mapInfo.Scale, 0, PodSize, PodSize, players));
+            ItemsOnScreen(new Pod(mapInfo.Scale * 4, 0, PodSize, PodSize, players));
+            ItemsOnScreen(new Pod(mapInfo.Scale * 7, 0, PodSize, PodSize, players));
+            ItemsOnScreen(new Pod(mapInfo.Scale * 10, 0, PodSize, PodSize, players));
+            ItemsOnScreen(new Pod(mapInfo.Scale * 13, 0, PodSize, PodSize, players));
 
-            ItemsOnScreen(new Wood(mapInfo.Scale * 2, mapInfo.Scale, mapInfo.Scale * 2 - 1, mapInfo.Scale - 1, -2, 0, mapInfo.Width, players));
-            ItemsOnScreen(new Wood(mapInfo.Scale * 7, mapInfo.Scale, mapInfo.Scale * 2 - 1, mapInfo.Scale - 1, -2, 0, mapInfo.Width, players));
-            ItemsOnScreen(new Wood(mapInfo.Scale * 12, mapInfo.Scale, mapInfo.Scale * 2 - 1, mapInfo.Scale - 1, -2, 0, mapInfo.Width, players));
+            rowPosition = mapInfo.Scale;
+            movement = (int)difficulty;
+            width = mapInfo.Scale * 2 - 1;
+            height = mapInfo.Scale - 1;
+            Xposittions.Add(mapInfo.Scale * 2);
+            Xposittions.Add(mapInfo.Scale * 6);
+            Xposittions.Add(mapInfo.Scale * 12);
+            GenerateWoodRow(rowPosition, movement, width, height, Xposittions);
 
-            ItemsOnScreen(new Wood(mapInfo.Scale * 2, mapInfo.Scale * 2, mapInfo.Scale * 4 - 1, mapInfo.Scale - 1, 3, 0, mapInfo.Width, players));
-            ItemsOnScreen(new Wood(mapInfo.Scale * 10, mapInfo.Scale * 2, mapInfo.Scale * 4 - 1, mapInfo.Scale - 1, 3, 0, mapInfo.Width, players));
+            rowPosition = mapInfo.Scale*2;
+            movement = -((int)difficulty + 1);
+            width = mapInfo.Scale * 4 - 1;
+            height = mapInfo.Scale - 1;
+            Xposittions.Clear();
+            Xposittions.Add(mapInfo.Scale * 2);
+            Xposittions.Add(mapInfo.Scale * 10);
+            GenerateWoodRow(rowPosition, movement, width, height, Xposittions);
 
-            ItemsOnScreen(new Wood(mapInfo.Scale * 2, mapInfo.Scale * 3, mapInfo.Scale * 2 - 1, mapInfo.Scale - 1, -2, 0, mapInfo.Width, players));
-            ItemsOnScreen(new Wood(mapInfo.Scale * 7, mapInfo.Scale * 3, mapInfo.Scale * 2 - 1, mapInfo.Scale - 1, -2, 0, mapInfo.Width, players));
-            ItemsOnScreen(new Wood(mapInfo.Scale * 12, mapInfo.Scale * 3, mapInfo.Scale * 2 - 1, mapInfo.Scale - 1, -2, 0, mapInfo.Width, players));
+            rowPosition = mapInfo.Scale * 3;
+            movement = (int)difficulty;
+            width = mapInfo.Scale * 2 - 1;
+            height = mapInfo.Scale - 1;
+            Xposittions.Clear();
+            Xposittions.Add(mapInfo.Scale * 1);
+            Xposittions.Add(mapInfo.Scale * 5);
+            Xposittions.Add(mapInfo.Scale * 13);
+            GenerateWoodRow(rowPosition, movement, width, height, Xposittions);
 
-            ItemsOnScreen(new Car(mapInfo.Scale, mapInfo.Scale *5, mapInfo.Scale - 1, mapInfo.Scale - 1, -2,0 ,mapInfo.Width, players));
-            ItemsOnScreen(new Car(mapInfo.Scale *5, mapInfo.Scale * 5, mapInfo.Scale - 1, mapInfo.Scale - 1, -2, 0, mapInfo.Width, players));
-            ItemsOnScreen(new Car(mapInfo.Scale *9, mapInfo.Scale * 5, mapInfo.Scale - 1, mapInfo.Scale - 1, -2, 0, mapInfo.Width, players));
-            ItemsOnScreen(new Car(mapInfo.Scale * 13, mapInfo.Scale * 5, mapInfo.Scale - 1, mapInfo.Scale - 1, -2, 0, mapInfo.Width, players));
+            rowPosition = mapInfo.Scale * 5;
+            movement = -((int)difficulty);
+            width = mapInfo.Scale - 1;
+            height = mapInfo.Scale - 1;
+            Xposittions.Clear();
+            Xposittions.Add(mapInfo.Scale);
+            Xposittions.Add(mapInfo.Scale * 5);
+            Xposittions.Add(mapInfo.Scale * 9);
+            Xposittions.Add(mapInfo.Scale * 13);
+            GenerateCarRow(rowPosition, movement, width, height, Xposittions);
 
-            ItemsOnScreen(new Car(mapInfo.Scale, mapInfo.Scale * 6, mapInfo.Scale - 1, mapInfo.Scale - 1, 3, 0, mapInfo.Width, players));
-            ItemsOnScreen(new Car(mapInfo.Scale * 5, mapInfo.Scale * 6, mapInfo.Scale - 1, mapInfo.Scale - 1, 3, 0, mapInfo.Width, players));
-            ItemsOnScreen(new Car(mapInfo.Scale * 9, mapInfo.Scale * 6, mapInfo.Scale - 1, mapInfo.Scale - 1, 3, 0, mapInfo.Width, players));
-            ItemsOnScreen(new Car(mapInfo.Scale * 13, mapInfo.Scale * 6, mapInfo.Scale - 1, mapInfo.Scale - 1, 3, 0, mapInfo.Width, players));
+            rowPosition = mapInfo.Scale * 6;
+            movement = (int)difficulty + 1;
+            width = mapInfo.Scale - 1;
+            height = mapInfo.Scale - 1;
+            Xposittions.Clear();
+            Xposittions.Add(mapInfo.Scale);
+            Xposittions.Add(mapInfo.Scale * 5);
+            Xposittions.Add(mapInfo.Scale * 9);
+            Xposittions.Add(mapInfo.Scale * 13);
+            GenerateCarRow(rowPosition, movement, width, height, Xposittions);
 
-            ItemsOnScreen(new Car(mapInfo.Scale * 2, mapInfo.Scale * 7, mapInfo.Scale*2 - 1, mapInfo.Scale - 1, -2, 0, mapInfo.Width, players));
-            ItemsOnScreen(new Car(mapInfo.Scale * 7, mapInfo.Scale * 7, mapInfo.Scale*2 - 1, mapInfo.Scale - 1, -2, 0, mapInfo.Width, players));
-            ItemsOnScreen(new Car(mapInfo.Scale * 12, mapInfo.Scale * 7, mapInfo.Scale*2 - 1, mapInfo.Scale - 1, -2, 0, mapInfo.Width, players));
+            rowPosition = mapInfo.Scale * 7;
+            movement = -((int)difficulty);
+            width = mapInfo.Scale * (int)difficulty - 1;
+            height = mapInfo.Scale - 1;
+            Xposittions.Clear();
+            Xposittions.Add(mapInfo.Scale * 2);
+            Xposittions.Add(mapInfo.Scale * 7);
+            Xposittions.Add(mapInfo.Scale * 12);
+            GenerateCarRow(rowPosition, movement, width, height, Xposittions);
 
+        }
+        void GenerateWoodRow(int RowPosition, int movement, int width, int height, List<int> Xpositions)
+        {
+            foreach (int x in Xpositions)
+            {
+                ItemsOnScreen(new Wood(x, RowPosition,width,height,movement,0,MapWidth,Players));
+            }
 
+        }
+        void GenerateCarRow(int RowPosition, int movement, int width, int height, List<int> Xpositions)
+        {
+            foreach (int x in Xpositions)
+            {
+                ItemsOnScreen(new Car(x, RowPosition, width, height, movement, 0, MapWidth, Players));
+            }
         }
 
     }

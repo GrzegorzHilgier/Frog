@@ -60,6 +60,7 @@
     <Compile Include="Models\Car.cs" />
     <Compile Include="Models\ItemsFactory.cs" />
     <Compile Include="Models\Wood.cs" />
+    <Compile Include="Utilities\Difficulty.cs" />
     <Compile Include="Utilities\Map.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Pod.cs" />
@@ -67,7 +68,7 @@
     <Compile Include="Utilities\DrawableObject.cs" />
     <Compile Include="Utilities\ObservableObject.cs" />
     <Compile Include="Utilities\SimpleCommad.cs" />
-    <Compile Include="ViewModels\Difficulty.cs" />
+    <Compile Include="ViewModels\Init.cs" />
     <Compile Include="ViewModels\Game.cs" />
     <Compile Include="Views\BoardControl.xaml.cs">
       <DependentUpon>BoardControl.xaml</DependentUpon>

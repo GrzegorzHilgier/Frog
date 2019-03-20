@@ -120,7 +120,7 @@ namespace Frog.Utilities
 
         protected virtual void TimerTick(object sender, EventArgs e)
         {
-            ushort stepDistance = 3;
+            ushort stepDistance = 5;
             if(distanceToDestination>0)
             {
                 switch(actualDirection)

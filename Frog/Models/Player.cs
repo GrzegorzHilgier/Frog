@@ -8,7 +8,7 @@ namespace Frog.Models
 {
     class Player: DrawableObject
     {
-
+        public string Name { get; private set; }
         private ushort lives;
         public ushort Lives
         {
@@ -32,11 +32,11 @@ namespace Frog.Models
        
 
 
-        public Player(ushort lives, int x, int y, int width, int height):base(x,y,width,height)
+        public Player(string name, ushort lives, int x, int y, int width, int height):base(x,y,width,height)
         {
             Lives = lives;
             Score = 0;
-           
+            Name = name;
             ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/FrogImg.png";
 
 
