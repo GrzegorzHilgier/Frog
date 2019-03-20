@@ -3,10 +3,12 @@ using System.Windows.Media.Imaging;
 using System.Drawing;
 using Frog.Utilities;
 
+
 namespace Frog.Models
 {
     class Player: DrawableObject
     {
+
         private ushort lives;
         public ushort Lives
         {
@@ -36,7 +38,7 @@ namespace Frog.Models
             Score = 0;
            
             ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/FrogImg.png";
-            
+
 
         }
        

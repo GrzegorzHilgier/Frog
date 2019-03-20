@@ -22,17 +22,17 @@ namespace Frog.Models
             Players = players;
             foreach(Player player in Players)
             {
-                player.ObjectMoved += CheckIfCollisionWith;
+                player.ObjectMoved += (DrawableObject item)=> { CheckIfCollisionWith(item); };
                 player.ObjectTryingToMove += CheckIfPlayerCanGetIn;
                // player.ObjectTryingToMove+=
             }
         }
-        public override void CheckIfCollisionWith(DrawableObject item)
+        public override bool CheckIfCollisionWith(DrawableObject item)
         {
             Player player = item as Player;
             if(!IsChecked)
             {
-                if (item.Xcoord >= Xcoord && item.Xcoord < Xcoord + Width && item.Ycoord >= Ycoord && item.Ycoord <= Ycoord + Height)
+                if (base.CheckIfCollisionWith(item))
                 {
                     IsChecked = true;
                     ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/PodOccupied.bmp";
@@ -48,8 +48,10 @@ namespace Frog.Models
                         player.GoToStartPosition();
 
                     }
-                }
+                    return true;
+                }               
             }
+            return false;
         }
 
         public void CheckIfPlayerCanGetIn(DrawableObject item, Direction direction, Action<bool> action)

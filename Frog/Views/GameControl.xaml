@@ -17,6 +17,10 @@
         <KeyBinding Key="S" Command="{Binding MoveDownCommand}"/>
         <KeyBinding Key="A" Command="{Binding MoveLeftCommand}"/>
         <KeyBinding Key="D" Command="{Binding MoveRightCommand}"/>
+        <KeyBinding Key="Up" Command="{Binding MoveUpCommand}"/>
+        <KeyBinding Key="Down" Command="{Binding MoveDownCommand}"/>
+        <KeyBinding Key="Left" Command="{Binding MoveLeftCommand}"/>
+        <KeyBinding Key="Right" Command="{Binding MoveRightCommand}"/>
     </UserControl.InputBindings>
 
     <Grid>

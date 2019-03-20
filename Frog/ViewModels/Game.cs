@@ -4,22 +4,19 @@ using System.Windows.Input;
 using Frog.Models;
 using Frog.Utilities;
 
+
 namespace Frog.ViewModels
 {
     class Game : ObservableObject
     {
-
-        const int Scale = 30;
-        const int MAP_HEIGHT = Scale * 9;
-        const int MAP_WIDTH = Scale * 15;
-
+        MapInfo mapInfo = new MapInfo(30, 9, 15);
         public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
         public ObservableCollection<DrawableObject> ItemsOnScreen { get; private set; } = new ObservableCollection<DrawableObject>();
 
         public Game()
         {
             //TODO add more players
-            Players.Add(new Player(3, Scale*6, Scale*8, Scale-1, Scale-1));
+            Players.Add(new Player(3, mapInfo.Scale *7, mapInfo.Scale *8, mapInfo.Scale -1, mapInfo.Scale -1));
 
             List <Player> players = new List<Player>();
             foreach(Player player in Players)
@@ -27,16 +24,14 @@ namespace Frog.ViewModels
                 players.Add(player);
             }
 
-            ItemsOnScreen.Add(new Water(0, Scale, MAP_WIDTH, (Scale*3)-1));
-            ItemsOnScreen.Add(new Pod(Scale, 0, Scale-1, Scale-1,players));
-            ItemsOnScreen.Add(new Pod(Scale * 4, 0, Scale - 1, Scale - 1, players));
-            ItemsOnScreen.Add(new Pod(Scale * 7, 0, Scale - 1, Scale - 1, players));
-            ItemsOnScreen.Add(new Pod(Scale * 10, 0, Scale - 1, Scale - 1, players));
-            ItemsOnScreen.Add(new Pod(Scale * 13, 0, Scale - 1, Scale - 1, players));
-            ItemsOnScreen.Add(new Car(130, 130, Scale - 1, Scale - 1, players));
+
+            ItemsFactory itemsFactory = new ItemsFactory(players, AddItemOnScreen, mapInfo);
         }
 
-
+        public void AddItemOnScreen(DrawableObject item)
+        {
+            ItemsOnScreen.Add(item);
+        }
 
         public ICommand MoveLeftCommand
         {
@@ -59,21 +54,15 @@ namespace Frog.ViewModels
         {
             if(Players[0].Xcoord >= Players[0].Width)
             {
-                //Players[0].Xcoord -= 1 * Scale;
-                //Players[0].RaiseObjectMovedEvent();
-
-                Players[0].TryToMove(Direction.LEFT, Scale);
+                Players[0].TryToMove(Direction.LEFT, mapInfo.Scale);
             }
         }
 
         void MoveRight()
         {
-            if(Players[0].Xcoord < MAP_WIDTH - Players[0].Width)
+            if(Players[0].Xcoord < mapInfo.Width-mapInfo.Scale)
             {
-                //Players[0].Xcoord += 1 * Scale;
-                //Players[0].RaiseObjectMovedEvent();
-
-                Players[0].TryToMove(Direction.RIGHT, Scale);
+                Players[0].TryToMove(Direction.RIGHT, mapInfo.Scale);
             }
 
         }
@@ -82,22 +71,16 @@ namespace Frog.ViewModels
         {
             if(Players[0].Ycoord >= Players[0].Height)
             {
-                //Players[0].Ycoord -= 1 * Scale;
-                //Players[0].RaiseObjectMovedEvent();
-
-                Players[0].TryToMove(Direction.UP, Scale);
+                Players[0].TryToMove(Direction.UP, mapInfo.Scale);
             }
 
         }
 
         void MoveDown()
         {
-            if (Players[0].Ycoord < MAP_HEIGHT- Players[0].Height)
+            if (Players[0].Ycoord < mapInfo.Height- mapInfo.Scale)
             {
-                //Players[0].Ycoord += 1 * Scale;
-                //Players[0].RaiseObjectMovedEvent();
-
-                Players[0].TryToMove(Direction.DOWN, Scale);
+                Players[0].TryToMove(Direction.DOWN, mapInfo.Scale);
             }
         }
     }
