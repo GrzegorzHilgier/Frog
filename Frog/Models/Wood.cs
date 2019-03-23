@@ -21,7 +21,7 @@ namespace Frog.Models
                 Players = players;
                 foreach (Player player in Players)
                 {
-                    player.ObjectMoved += (PlayableObject item) => { CheckIfCollisionWith(item); };
+                    player.ObjectMoved +=  CheckIfCollisionWithPlayer; 
                 }
                 Xmovement = xmovement;
                 Ymovement = ymovement;
@@ -31,7 +31,7 @@ namespace Frog.Models
                 timer.Start();
             }
 
-            public override bool CheckIfCollisionWith(PlayableObject item)
+            public void CheckIfCollisionWithPlayer(PlayableObject item)
             {
                 Player player = item as Player;
 
@@ -47,9 +47,8 @@ namespace Frog.Models
                             player.Die();
                         }
                     }
-                    return true;
+
                 }
-                else return false;
             }
 
             protected override void TimerTick(object sender, EventArgs e)
@@ -60,9 +59,20 @@ namespace Frog.Models
                 if (Xcoord > MapWidth) Xcoord = -1 * Width;
                 foreach (Player player in Players)
                 {
-                    CheckIfCollisionWith(player);
+                    CheckIfCollisionWithPlayer(player);
                 }
             }
+        public override void Die()
+        {
+            timer.Tick -= TimerTick;
+            timer.Stop();
+            foreach (Player player in Players)
+            {
+                player.ObjectMoved -= CheckIfCollisionWithPlayer;
+            }
+            Players = null;
+            base.Die();
         }
+    }
     
 }

@@ -10,7 +10,7 @@ namespace Frog.Models
     {
         public string Name { get; private set; }
 
-        public event Action GameOverEvent;
+        public event Action<int> GameOverEvent;
         private ushort lives;
         public ushort Lives
         {
@@ -38,16 +38,14 @@ namespace Frog.Models
             Score = 0;
             Name = name;
             ImagePath = "FrogImg.png";
-
-
         }
 
-        public void Die()
+        public override void Die()
         {
             Lives -= 1;
             if(Lives==0)
             {
-                GameOverEvent?.Invoke();
+                GameOverEvent?.Invoke(Score);
             }
             GoToStartPosition();
         }

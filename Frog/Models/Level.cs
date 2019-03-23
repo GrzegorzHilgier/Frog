@@ -11,16 +11,22 @@ namespace Frog.Models
 {
     class Level
     {
-        private Action<PlayableObject>ItemsOnScreen { get; set; }
+        private Action<PlayableObject>AddItemOnScreen { get; set; }
         private int MapWidth { get; set; }
         private List<Player> Players { get; set; }
-        public event Action GameOverEvent;
+        private List<PlayableObject> ItemsInGame { get; set; } = new List<PlayableObject>();
+        public event Action LevelFinishedEvent;
         public Level(List<Player> players, Difficulty difficulty, MapInfo mapInfo, Action<PlayableObject> ItemsOnScreen)
         {
 
-            this.ItemsOnScreen = ItemsOnScreen;
+            this.AddItemOnScreen = ItemsOnScreen;
             MapWidth = mapInfo.Width;
             Players = players;
+            foreach(Player player in Players)
+            {
+                player.GoToStartPosition();
+            }
+
 
             List<int> Xposittions = new List<int>();
             int rowPosition ;
@@ -28,15 +34,15 @@ namespace Frog.Models
             int width;
             int height;
 
-            ItemsOnScreen(new Water(0, mapInfo.Scale, mapInfo.Width - 1, (mapInfo.Scale * 3) - 1, players));
+            AddItem(new Water(0, mapInfo.Scale, mapInfo.Width - 1, (mapInfo.Scale * 3) - 1, players));
             int PodSize = mapInfo.Scale - 1;
-            ItemsOnScreen(new Pod(mapInfo.Scale, 0, PodSize, PodSize, players));
-            ItemsOnScreen(new Pod(mapInfo.Scale * 4, 0, PodSize, PodSize, players));
-            ItemsOnScreen(new Pod(mapInfo.Scale * 7, 0, PodSize, PodSize, players));
-            ItemsOnScreen(new Pod(mapInfo.Scale * 10, 0, PodSize, PodSize, players));
-            ItemsOnScreen(new Pod(mapInfo.Scale * 13, 0, PodSize, PodSize, players));
+            //AddItem(new Pod(mapInfo.Scale, 0, PodSize, PodSize, players));
+            //AddItem(new Pod(mapInfo.Scale * 4, 0, PodSize, PodSize, players));
+            AddItem(new Pod(mapInfo.Scale * 7, 0, PodSize, PodSize, players));
+            //AddItem(new Pod(mapInfo.Scale * 10, 0, PodSize, PodSize, players));
+            //AddItem(new Pod(mapInfo.Scale * 13, 0, PodSize, PodSize, players));
 
-            Pod.AllPodsOccupied += () => GameOverEvent?.Invoke();
+            Pod.AllPodsOccupied += LevelFinished;
 
             rowPosition = mapInfo.Scale;
             movement = (int)difficulty;
@@ -103,7 +109,7 @@ namespace Frog.Models
         {
             foreach (int x in Xpositions)
             {
-                ItemsOnScreen(new Wood(x, RowPosition,width,height,movement,0,MapWidth,Players));
+                AddItem(new Wood(x, RowPosition, width, height, movement, 0, MapWidth, Players));
             }
 
         }
@@ -111,8 +117,22 @@ namespace Frog.Models
         {
             foreach (int x in Xpositions)
             {
-                ItemsOnScreen(new Car(x, RowPosition, width, height, movement, 0, MapWidth, Players));
+                AddItem(new Car(x, RowPosition, width, height, movement, 0, MapWidth, Players));
             }
+        }
+        void AddItem(PlayableObject item)
+        {
+            ItemsInGame.Add(item);
+            AddItemOnScreen(item);
+        }
+        void LevelFinished()
+        {
+            Pod.AllPodsOccupied -= LevelFinished;
+            foreach (PlayableObject item in ItemsInGame)
+            {
+                item.Die();
+            }
+            LevelFinishedEvent?.Invoke();
         }
 
     }

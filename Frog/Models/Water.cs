@@ -11,16 +11,18 @@ namespace Frog.Models
 {
     class Water: PlayableObject
     {
+        private List<Player> Players { get; set; }
         public Water(int x, int y, int width, int height,List<Player> players):base(x,y,width,height)
         {
+            Players = players;
             ImagePath = "Water.bmp";
             foreach (Player player in players)
             {
-                player.ObjectFinishedMove += (PlayableObject item) => { CheckIfCollisionWith(item); };
+                player.ObjectFinishedMove += CheckIfCollisionWithPlayer; 
             }
         }
-
-        public override bool CheckIfCollisionWith(PlayableObject item)
+      
+        public void CheckIfCollisionWithPlayer(PlayableObject item)
         {
             Player player = item as Player;
             if(!player.IsMoving && !player.IsFlying)
@@ -28,11 +30,19 @@ namespace Frog.Models
                 if (base.CheckIfCollisionWith(item))
                 {
                     player.Die();
-                    return true;
                 }
             }
 
-            return false;
+        }
+        public override void Die()
+        {
+            foreach (Player player in Players)
+            {
+                player.ObjectFinishedMove -= CheckIfCollisionWithPlayer;
+            }
+            Players = null;
+            base.Die();
+            
         }
     }
 }

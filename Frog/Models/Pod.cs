@@ -24,12 +24,12 @@ namespace Frog.Models
             Players = players;
             foreach(Player player in Players)
             {
-                player.ObjectMoved += (PlayableObject item)=> { CheckIfCollisionWith(item); };
+                player.ObjectMoved +=  CheckIfCollisionWithPlayer;
                 player.ObjectTryingToMove += CheckIfPlayerCanGetIn;
                // player.ObjectTryingToMove+=
             }
         }
-        public override bool CheckIfCollisionWith(PlayableObject item)
+        public void CheckIfCollisionWithPlayer(PlayableObject item)
         {
             Player player = item as Player;
             if(!IsChecked)
@@ -39,20 +39,26 @@ namespace Frog.Models
                     IsChecked = true;
                     ImagePath = "PodOccupied.bmp";
                     OccupiedPods++;
+                    player.Score += 100;
                     if (OccupiedPods == CreatedPods)
                     {
                         AllPodsOccupied?.Invoke();
                     }
                     else
-                    {
-                        player.Score += 100;
+                    {                       
                         player.GoToStartPosition();
-
                     }
-                    return true;
                 }               
             }
-            return false;
+        }
+        public override void Die()
+        {
+            foreach (Player player in Players)
+            {
+                player.ObjectMoved -= CheckIfCollisionWithPlayer;
+                player.ObjectTryingToMove -= CheckIfPlayerCanGetIn;
+            }
+            base.Die();
         }
 
         public void CheckIfPlayerCanGetIn(PlayableObject item, Direction direction, Action<bool> action)

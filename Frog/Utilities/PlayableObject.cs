@@ -88,6 +88,11 @@ namespace Frog.Utilities
             else return false;
         }
 
+        public virtual void Die()
+        {
+            timer.Tick -= TimerTick;
+            timer.Stop();
+        }
         public void TryToMove(Direction direction, int value)
         {
             if (IsMoving) return;

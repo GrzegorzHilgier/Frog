@@ -10,31 +10,40 @@ namespace Frog.ViewModels
 {
     class Game : ObservableObject
     {
-
         MapInfo mapInfo = new MapInfo(30, 9, 15);
+        Level ActualLevel { get; set; }
+        private List<Player> players= new List<Player>();
         public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
         public ObservableCollection<PlayableObject> ItemsOnScreen { get; private set; } = new ObservableCollection<PlayableObject>();
        
 
-        public event Action PlayerWonEvent;
-        public event Action PlayerLostEvent;
+        public event Action<int> PlayerLostEvent;
 
-        public Game(Difficulty difficulty, bool twoPlayers = false)
+        public Game(bool twoPlayers = false)
         {
             //TODO add more players
             Players.Add(new Player("Green",3, mapInfo.Scale *7, mapInfo.Scale *8, mapInfo.Scale -1, mapInfo.Scale -1));
-            Players[0].GameOverEvent += () => PlayerLostEvent?.Invoke();
+            Players[0].GameOverEvent += (Score) => PlayerLostEvent?.Invoke(Score);
 
-            List <Player> players = new List<Player>();
             foreach(Player player in Players)
             {
                 players.Add(player);
             }
 
-            Level itemsFactory = new Level(players, difficulty, mapInfo, AddItemOnScreen);
-            itemsFactory.GameOverEvent += () => PlayerWonEvent?.Invoke();
+            ActualLevel = new Level(players, Difficulty.EASY, mapInfo, AddItemOnScreen);
+            ActualLevel.LevelFinishedEvent += LevelFinished;
         }
 
+        void LevelFinished()
+        {
+            //ItemsOnScreen.Clear();
+            ActualLevel.LevelFinishedEvent -= LevelFinished;
+            ActualLevel = null;
+            GC.Collect();
+            GC.WaitForFullGCComplete();
+            //ActualLevel = new Level(players, Difficulty.MEDIUM, mapInfo, AddItemOnScreen);
+
+        }
         public void AddItemOnScreen(PlayableObject item)
         {
             ItemsOnScreen.Add(item);
@@ -59,7 +68,7 @@ namespace Frog.ViewModels
 
         void MoveLeft()
         {
-            if(Players[0].Xcoord >= Players[0].Width)
+            if(Players[0].Xcoord > Players[0].Width)
             {
                 Players[0].TryToMove(Direction.LEFT, mapInfo.Scale);
             }
