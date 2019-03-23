@@ -8,7 +8,7 @@ using System.Windows.Threading;
 
 namespace Frog.Models
 {
-    class Car :DrawableObject
+    class Car :PlayableObject
     {
         private List<Player> Players { get; set; }
         DispatcherTimer timer = new DispatcherTimer();
@@ -21,7 +21,7 @@ namespace Frog.Models
             Players = players;
             foreach(Player player in Players)
             {
-                player.ObjectMoved += (DrawableObject item) => { CheckIfCollisionWith(item); };
+                player.ObjectMoved += (PlayableObject item) => { CheckIfCollisionWith(item); };
             }
             Xmovement = xmovement;
             Ymovement = ymovement;
@@ -30,7 +30,7 @@ namespace Frog.Models
             timer.Interval = TimeSpan.FromSeconds(0.02);
             timer.Start();
         }
-        public override bool CheckIfCollisionWith(DrawableObject item)
+        public override bool CheckIfCollisionWith(PlayableObject item)
         {
             Player player = item as Player;
 

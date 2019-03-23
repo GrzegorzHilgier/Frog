@@ -11,8 +11,12 @@
  
 
     <Grid Name="MainContainer">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO"></RowDefinition>
+            <RowDefinition Height="AUTO"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Views:GameControl   Grid.Row="1"/>
         <Views:BoardControl />
-        <Views:GameControl/>
 
     </Grid>
 

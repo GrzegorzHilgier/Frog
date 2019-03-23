@@ -11,10 +11,11 @@ namespace Frog.Models
 {
     class ItemsFactory
     {
-        private Action<DrawableObject>ItemsOnScreen { get; set; }
+        private Action<PlayableObject>ItemsOnScreen { get; set; }
         private int MapWidth { get; set; }
         private List<Player> Players { get; set; }
-        public ItemsFactory(List<Player> players, Difficulty difficulty, MapInfo mapInfo, Action<DrawableObject> ItemsOnScreen)
+        public event Action GameOverEvent;
+        public ItemsFactory(List<Player> players, Difficulty difficulty, MapInfo mapInfo, Action<PlayableObject> ItemsOnScreen)
         {
 
             this.ItemsOnScreen = ItemsOnScreen;
@@ -34,6 +35,8 @@ namespace Frog.Models
             ItemsOnScreen(new Pod(mapInfo.Scale * 7, 0, PodSize, PodSize, players));
             ItemsOnScreen(new Pod(mapInfo.Scale * 10, 0, PodSize, PodSize, players));
             ItemsOnScreen(new Pod(mapInfo.Scale * 13, 0, PodSize, PodSize, players));
+
+            Pod.AllPodsOccupied += () => GameOverEvent?.Invoke();
 
             rowPosition = mapInfo.Scale;
             movement = (int)difficulty;

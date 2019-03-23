@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Frog.Models;
@@ -12,16 +13,16 @@ namespace Frog.ViewModels
 
         MapInfo mapInfo = new MapInfo(30, 9, 15);
         public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
-        public ObservableCollection<DrawableObject> ItemsOnScreen { get; private set; } = new ObservableCollection<DrawableObject>();
+        public ObservableCollection<PlayableObject> ItemsOnScreen { get; private set; } = new ObservableCollection<PlayableObject>();
+       
+
+        public event Action GameOverEvent;
 
         public Game(Difficulty difficulty, bool twoPlayers = false)
         {
             //TODO add more players
             Players.Add(new Player("Green",3, mapInfo.Scale *7, mapInfo.Scale *8, mapInfo.Scale -1, mapInfo.Scale -1));
-            if(twoPlayers)
-            {
-                Players.Add(new Player("Yellow", 3, mapInfo.Scale * 8, mapInfo.Scale * 8, mapInfo.Scale - 1, mapInfo.Scale - 1));
-            }
+            Players[0].GameOverEvent += () => GameOverEvent?.Invoke();
 
             List <Player> players = new List<Player>();
             foreach(Player player in Players)
@@ -29,11 +30,11 @@ namespace Frog.ViewModels
                 players.Add(player);
             }
 
-
-            ItemsFactory itemsFactory = new ItemsFactory(players,difficulty, mapInfo, AddItemOnScreen);
+            ItemsFactory itemsFactory = new ItemsFactory(players, difficulty, mapInfo, AddItemOnScreen);
+            itemsFactory.GameOverEvent += () => GameOverEvent?.Invoke();
         }
 
-        public void AddItemOnScreen(DrawableObject item)
+        public void AddItemOnScreen(PlayableObject item)
         {
             ItemsOnScreen.Add(item);
         }

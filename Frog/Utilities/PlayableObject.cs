@@ -13,7 +13,7 @@ using System.Windows.Threading;
 namespace Frog.Utilities
 {
     public enum Direction { LEFT, RIGHT, UP,DOWN };
-    class DrawableObject:ObservableObject
+    class PlayableObject:ObservableObject
     {
 
         //global variables required for animation
@@ -59,12 +59,11 @@ namespace Frog.Utilities
         public int StartXcoord { get; set; } = 0;
         public int StartYcoord { get; set; } = 0;
 
-        public event Action<DrawableObject> ObjectMoved;
-        public event Action<DrawableObject> ObjectFinishedMove;
-        public event Action<DrawableObject, Direction, Action<bool>> ObjectTryingToMove;
+        public event Action<PlayableObject> ObjectMoved;
+        public event Action<PlayableObject> ObjectFinishedMove;
+        public event Action<PlayableObject, Direction, Action<bool>> ObjectTryingToMove;
 
-
-        public DrawableObject( int x, int y, int width, int height)
+        public PlayableObject( int x, int y, int width, int height)
         {           
             Width = width;
             Height = height;
@@ -76,7 +75,7 @@ namespace Frog.Utilities
             timer.Interval = TimeSpan.FromSeconds(0.01);
         }
 
-        public virtual bool CheckIfCollisionWith(DrawableObject item)
+        public virtual bool CheckIfCollisionWith(PlayableObject item)
         {
             double opacity = item.Width*0.3;
 

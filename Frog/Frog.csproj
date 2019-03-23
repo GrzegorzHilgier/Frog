@@ -65,7 +65,7 @@
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Pod.cs" />
     <Compile Include="Models\Water.cs" />
-    <Compile Include="Utilities\DrawableObject.cs" />
+    <Compile Include="Utilities\PlayableObject.cs" />
     <Compile Include="Utilities\ObservableObject.cs" />
     <Compile Include="Utilities\SimpleCommad.cs" />
     <Compile Include="ViewModels\Init.cs" />

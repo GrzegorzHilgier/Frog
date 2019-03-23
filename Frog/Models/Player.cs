@@ -6,9 +6,11 @@ using Frog.Utilities;
 
 namespace Frog.Models
 {
-    class Player: DrawableObject
+    class Player: PlayableObject
     {
         public string Name { get; private set; }
+
+        public event Action GameOverEvent;
         private ushort lives;
         public ushort Lives
         {
@@ -30,8 +32,6 @@ namespace Frog.Models
             }
         } 
        
-
-
         public Player(string name, ushort lives, int x, int y, int width, int height):base(x,y,width,height)
         {
             Lives = lives;
@@ -41,9 +41,14 @@ namespace Frog.Models
 
 
         }
+
         public void Die()
         {
             Lives -= 1;
+            if(Lives==0)
+            {
+                GameOverEvent?.Invoke();
+            }
             GoToStartPosition();
         }
        

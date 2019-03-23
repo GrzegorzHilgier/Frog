@@ -8,18 +8,18 @@ using Frog.Models;
 
 namespace Frog.Models
 {
-    class Water: DrawableObject
+    class Water: PlayableObject
     {
         public Water(int x, int y, int width, int height,List<Player> players):base(x,y,width,height)
         {
             ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/Water.bmp";
             foreach (Player player in players)
             {
-                player.ObjectFinishedMove += (DrawableObject item) => { CheckIfCollisionWith(item); };
+                player.ObjectFinishedMove += (PlayableObject item) => { CheckIfCollisionWith(item); };
             }
         }
 
-        public override bool CheckIfCollisionWith(DrawableObject item)
+        public override bool CheckIfCollisionWith(PlayableObject item)
         {
             Player player = item as Player;
             if(!player.IsMoving && !player.IsFlying)

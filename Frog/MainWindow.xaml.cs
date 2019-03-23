@@ -22,12 +22,25 @@ namespace Frog
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        private Game game;
+        private Difficulty difficulty;
         public MainWindow()
         {
             InitializeComponent();
+            difficulty = Difficulty.EASY;
+            game = new Game(difficulty);
+            DataContext = game;
+            game.GameOverEvent += GameOver;
+            
+        }
 
-            DataContext = new Game(Difficulty.EASY);       
+        void GameOver()
+        {
+            MessageBox.Show("GameOver", "GameOver");
+            difficulty++;
+            game = new Game(difficulty);
+            DataContext = game;
+            game.GameOverEvent += GameOver;
         }
     }
 }
