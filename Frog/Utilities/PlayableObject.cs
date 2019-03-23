@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,6 +74,7 @@ namespace Frog.Utilities
             StartYcoord = y;
             timer.Tick += TimerTick;
             timer.Interval = TimeSpan.FromSeconds(0.01);
+            ImagePath = $"{Directory.GetCurrentDirectory().Replace("\\","/")}/resources/";
         }
 
         public virtual bool CheckIfCollisionWith(PlayableObject item)

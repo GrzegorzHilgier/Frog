@@ -17,7 +17,7 @@ namespace Frog.Models
             public int MapWidth { get; private set; }
             public Wood(int x, int y, int width, int height, int xmovement, int ymovement, int mapWidth, List<Player> players) : base(x, y, width, height)
             {
-                ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/Wood.bmp";
+                ImagePath += "Wood.bmp";
                 Players = players;
                 foreach (Player player in Players)
                 {

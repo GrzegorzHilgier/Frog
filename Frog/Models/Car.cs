@@ -17,7 +17,7 @@ namespace Frog.Models
         public int MapWidth { get; private set; }
         public Car(int x, int y, int width, int height, int xmovement, int ymovement, int mapWidth, List<Player>players ) :base(x,y,width,height)
         {
-            ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/Car.bmp";
+            ImagePath += "Car.bmp";
             Players = players;
             foreach(Player player in Players)
             {

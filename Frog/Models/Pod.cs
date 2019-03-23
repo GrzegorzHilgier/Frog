@@ -20,7 +20,7 @@ namespace Frog.Models
         public Pod(int x, int y, int width, int height, List<Player> players):base(x,y,width,height)
         {
             CreatedPods ++;
-            ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/PodEmpty.bmp";
+            ImagePath += "PodEmpty.bmp";
             Players = players;
             foreach(Player player in Players)
             {
@@ -37,7 +37,7 @@ namespace Frog.Models
                 if (base.CheckIfCollisionWith(item))
                 {
                     IsChecked = true;
-                    ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/PodOccupied.bmp";
+                    ImagePath += "PodOccupied.bmp";
                     OccupiedPods++;
                     RaisePropertyChangedEvent("ImagePath");
                     if (OccupiedPods == CreatedPods)

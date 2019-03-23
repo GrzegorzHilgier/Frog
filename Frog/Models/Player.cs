@@ -37,7 +37,7 @@ namespace Frog.Models
             Lives = lives;
             Score = 0;
             Name = name;
-            ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/FrogImg.png";
+            ImagePath += "FrogImg.png";
 
 
         }

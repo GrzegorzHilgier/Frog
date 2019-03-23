@@ -11,38 +11,38 @@ namespace Frog.ViewModels
 
     class Init:ObservableObject
     {
-        Difficulty difficulty;
-        bool twoPlayers;
+        //Difficulty difficulty;
+        //bool twoPlayers;
 
-        private string choosenDifficulty;
-        public string ChoosenDifficulty
-        {
-            get => choosenDifficulty;
-            private set
-            {
-                choosenDifficulty = value;
-                RaisePropertyChangedEvent("ChoosenDifficulty");
-            }
-        }
-        private string players;
-        public string Players
-        {
-            get => players;
-            private set
-            {
-                players = value;
-                RaisePropertyChangedEvent("Players");
-            }
-        }
+        //private string choosenDifficulty;
+        //public string ChoosenDifficulty
+        //{
+        //    get => choosenDifficulty;
+        //    private set
+        //    {
+        //        choosenDifficulty = value;
+        //        RaisePropertyChangedEvent("ChoosenDifficulty");
+        //    }
+        //}
+        //private string players;
+        //public string Players
+        //{
+        //    get => players;
+        //    private set
+        //    {
+        //        players = value;
+        //        RaisePropertyChangedEvent("Players");
+        //    }
+        //}
 
 
-        public Init()
-        {
-            Players = "Oneplayer";
-            twoPlayers = false;
-            ChoosenDifficulty = "Easy";
-            difficulty = Difficulty.EASY;
-        }
+        //public Init()
+        //{
+        //    Players = "Oneplayer";
+        //    twoPlayers = false;
+        //    ChoosenDifficulty = "Easy";
+        //    difficulty = Difficulty.EASY;
+        //}
 
     }
 }
