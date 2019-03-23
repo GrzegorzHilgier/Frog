@@ -60,7 +60,7 @@ namespace Frog.Models
             Xposittions.Clear();
             Xposittions.Add(mapInfo.Scale * 2);
             Xposittions.Add(mapInfo.Scale * 10);
-            GenerateWoodRow(rowPosition, movement, width, height, Xposittions);
+            GenerateWoodSunkRow(rowPosition, movement, width, height, Xposittions);
 
             rowPosition = mapInfo.Scale * 3;
             movement = (int)difficulty;
@@ -120,6 +120,13 @@ namespace Frog.Models
                 AddItem(new Car(x, RowPosition, width, height, movement, 0, MapWidth, Players));
             }
         }
+        void GenerateWoodSunkRow(int RowPosition, int movement, int width, int height, List<int> Xpositions)
+        {
+            foreach (int x in Xpositions)
+            {
+                AddItem(new WoodSunk(x, RowPosition, width, height, movement, 0, MapWidth, Players));
+            }
+        }
         void AddItem(PlayableObject item)
         {
             ItemsInGame.Add(item);
@@ -132,7 +139,9 @@ namespace Frog.Models
             {
                 item.Die();
             }
+            ItemsInGame.Clear();
             LevelFinishedEvent?.Invoke();
+            Players.Clear();
         }
 
     }

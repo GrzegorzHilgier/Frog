@@ -26,7 +26,7 @@ namespace Frog.Models
             {
                 player.ObjectMoved +=  CheckIfCollisionWithPlayer;
                 player.ObjectTryingToMove += CheckIfPlayerCanGetIn;
-               // player.ObjectTryingToMove+=
+
             }
         }
         public void CheckIfCollisionWithPlayer(PlayableObject item)
@@ -55,10 +55,11 @@ namespace Frog.Models
         {
             foreach (Player player in Players)
             {
-                player.ObjectMoved -= CheckIfCollisionWithPlayer;
+                player.ObjectFinishedMove -= CheckIfCollisionWithPlayer;
                 player.ObjectTryingToMove -= CheckIfPlayerCanGetIn;
             }
-            base.Die();
+            Players.Clear();
+
         }
 
         public void CheckIfPlayerCanGetIn(PlayableObject item, Direction direction, Action<bool> action)

@@ -11,7 +11,7 @@ namespace Frog.Models
         class Wood : PlayableObject
         {
             private List<Player> Players { get; set; }
-            DispatcherTimer timer = new DispatcherTimer();
+            protected DispatcherTimer timer = new DispatcherTimer();
             public int Xmovement { get; private set; }
             public int Ymovement { get; private set; }
             public int MapWidth { get; private set; }
@@ -26,12 +26,12 @@ namespace Frog.Models
                 Xmovement = xmovement;
                 Ymovement = ymovement;
                 MapWidth = mapWidth;
-                timer.Tick += TimerTick;
+                timer.Tick += MoveOnTick;
                 timer.Interval = TimeSpan.FromSeconds(0.02);
                 timer.Start();
             }
 
-            public void CheckIfCollisionWithPlayer(PlayableObject item)
+            public virtual void CheckIfCollisionWithPlayer(PlayableObject item)
             {
                 Player player = item as Player;
 
@@ -51,7 +51,7 @@ namespace Frog.Models
                 }
             }
 
-            protected override void TimerTick(object sender, EventArgs e)
+            protected void MoveOnTick(object sender, EventArgs e)
             {
                 Xcoord += Xmovement;
                 Ycoord += Ymovement;
@@ -62,16 +62,17 @@ namespace Frog.Models
                     CheckIfCollisionWithPlayer(player);
                 }
             }
+
         public override void Die()
         {
-            timer.Tick -= TimerTick;
+            timer.Tick -= MoveOnTick;
             timer.Stop();
             foreach (Player player in Players)
             {
                 player.ObjectMoved -= CheckIfCollisionWithPlayer;
             }
-            Players = null;
-            base.Die();
+            Players.Clear();
+
         }
     }
     

@@ -32,7 +32,6 @@ namespace Frog.Models
                     player.Die();
                 }
             }
-
         }
         public override void Die()
         {
@@ -40,8 +39,7 @@ namespace Frog.Models
             {
                 player.ObjectFinishedMove -= CheckIfCollisionWithPlayer;
             }
-            Players = null;
-            base.Die();
+            Players.Clear();
             
         }
     }

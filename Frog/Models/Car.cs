@@ -39,7 +39,7 @@ namespace Frog.Models
                 player.Die();
             }
         }
-        protected override void TimerTick(object sender, EventArgs e)
+        protected  void TimerTick(object sender, EventArgs e)
         {
             Xcoord += Xmovement;
             Ycoord += Ymovement;
@@ -58,8 +58,7 @@ namespace Frog.Models
             {
                 player.ObjectMoved -= CheckIfCollisionWithPlayer;
             }
-            Players = null;
-            base.Die();
+            Players.Clear();
         }
     }
 }

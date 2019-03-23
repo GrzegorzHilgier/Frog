@@ -60,6 +60,7 @@
     <Compile Include="Models\Car.cs" />
     <Compile Include="Models\Level.cs" />
     <Compile Include="Models\Wood.cs" />
+    <Compile Include="Models\WoodSunk.cs" />
     <Compile Include="Utilities\Difficulty.cs" />
     <Compile Include="Utilities\Map.cs" />
     <Compile Include="Models\Player.cs" />

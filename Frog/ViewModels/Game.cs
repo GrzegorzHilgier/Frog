@@ -12,6 +12,7 @@ namespace Frog.ViewModels
     {
         MapInfo mapInfo = new MapInfo(30, 9, 15);
         Level ActualLevel { get; set; }
+        Difficulty ActualDifficulty { get; set; } = Difficulty.EASY;
         private List<Player> players= new List<Player>();
         public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
         public ObservableCollection<PlayableObject> ItemsOnScreen { get; private set; } = new ObservableCollection<PlayableObject>();
@@ -30,18 +31,27 @@ namespace Frog.ViewModels
                 players.Add(player);
             }
 
-            ActualLevel = new Level(players, Difficulty.EASY, mapInfo, AddItemOnScreen);
+            ActualLevel = new Level(players, ActualDifficulty, mapInfo, AddItemOnScreen);
             ActualLevel.LevelFinishedEvent += LevelFinished;
         }
 
         void LevelFinished()
         {
-            //ItemsOnScreen.Clear();
+            ItemsOnScreen.Clear();
             ActualLevel.LevelFinishedEvent -= LevelFinished;
             ActualLevel = null;
             GC.Collect();
             GC.WaitForFullGCComplete();
-            //ActualLevel = new Level(players, Difficulty.MEDIUM, mapInfo, AddItemOnScreen);
+            if(ActualDifficulty == Difficulty.HARD)
+            {
+                PlayerLostEvent?.Invoke(players[0].Score);
+            }
+            else
+            {
+                ActualDifficulty++;
+                ActualLevel = new Level(players, ActualDifficulty, mapInfo, AddItemOnScreen);
+                ActualLevel.LevelFinishedEvent += LevelFinished;
+            }
 
         }
         public void AddItemOnScreen(PlayableObject item)
