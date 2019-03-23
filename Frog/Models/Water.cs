@@ -13,7 +13,7 @@ namespace Frog.Models
     {
         public Water(int x, int y, int width, int height,List<Player> players):base(x,y,width,height)
         {
-            ImagePath += "Water.bmp";
+            ImagePath = "Water.bmp";
             foreach (Player player in players)
             {
                 player.ObjectFinishedMove += (PlayableObject item) => { CheckIfCollisionWith(item); };

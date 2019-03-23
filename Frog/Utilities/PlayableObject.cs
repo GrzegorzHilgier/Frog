@@ -30,7 +30,7 @@ namespace Frog.Utilities
             get => imagePath;
             protected set
             {
-                imagePath = value;
+                imagePath = $"{Directory.GetCurrentDirectory().Replace("\\", "/")}/resources/{value}";
                 RaisePropertyChangedEvent("ImagePath");
 
             }
