@@ -23,24 +23,43 @@ namespace Frog
     public partial class MainWindow : Window
     {
         private Game game;
-        private Difficulty difficulty;
+        private Difficulty difficulty = Difficulty.EASY;
         public MainWindow()
         {
             InitializeComponent();
-            difficulty = Difficulty.EASY;
-            game = new Game(difficulty);
-            DataContext = game;
-            game.GameOverEvent += GameOver;
-            
+            InitializeGame();
         }
 
         void GameOver()
         {
-            MessageBox.Show("GameOver", "GameOver");
-            difficulty++;
+            InitializeGame();
+        }
+
+        void NextLevel()
+        {
+            if(difficulty == Difficulty.HARD)
+            {
+                MessageBox.Show("Congratulations, game finished", "Good job");
+            }
+            else
+            {
+                difficulty++;
+            }
+            InitializeGame();
+        }
+
+        void InitializeGame()
+        {
+            if(game!=null)
+            {
+                game.PlayerLostEvent -= GameOver;
+                game.PlayerWonEvent -= NextLevel;
+            }
+            game = null;
             game = new Game(difficulty);
             DataContext = game;
-            game.GameOverEvent += GameOver;
+            game.PlayerLostEvent += GameOver;
+            game.PlayerWonEvent += NextLevel;
         }
     }
 }

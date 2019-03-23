@@ -58,7 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Car.cs" />
-    <Compile Include="Models\ItemsFactory.cs" />
+    <Compile Include="Models\Level.cs" />
     <Compile Include="Models\Wood.cs" />
     <Compile Include="Utilities\Difficulty.cs" />
     <Compile Include="Utilities\Map.cs" />

@@ -16,13 +16,14 @@ namespace Frog.ViewModels
         public ObservableCollection<PlayableObject> ItemsOnScreen { get; private set; } = new ObservableCollection<PlayableObject>();
        
 
-        public event Action GameOverEvent;
+        public event Action PlayerWonEvent;
+        public event Action PlayerLostEvent;
 
         public Game(Difficulty difficulty, bool twoPlayers = false)
         {
             //TODO add more players
             Players.Add(new Player("Green",3, mapInfo.Scale *7, mapInfo.Scale *8, mapInfo.Scale -1, mapInfo.Scale -1));
-            Players[0].GameOverEvent += () => GameOverEvent?.Invoke();
+            Players[0].GameOverEvent += () => PlayerLostEvent?.Invoke();
 
             List <Player> players = new List<Player>();
             foreach(Player player in Players)
@@ -30,8 +31,8 @@ namespace Frog.ViewModels
                 players.Add(player);
             }
 
-            ItemsFactory itemsFactory = new ItemsFactory(players, difficulty, mapInfo, AddItemOnScreen);
-            itemsFactory.GameOverEvent += () => GameOverEvent?.Invoke();
+            Level itemsFactory = new Level(players, difficulty, mapInfo, AddItemOnScreen);
+            itemsFactory.GameOverEvent += () => PlayerWonEvent?.Invoke();
         }
 
         public void AddItemOnScreen(PlayableObject item)

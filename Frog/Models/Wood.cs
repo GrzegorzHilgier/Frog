@@ -30,6 +30,7 @@ namespace Frog.Models
                 timer.Interval = TimeSpan.FromSeconds(0.02);
                 timer.Start();
             }
+
             public override bool CheckIfCollisionWith(PlayableObject item)
             {
                 Player player = item as Player;
@@ -41,11 +42,16 @@ namespace Frog.Models
                         player.IsFlying = true;
                         player.Xcoord += Xmovement;
                         player.Ycoord += Ymovement;
+                        if(player.Xcoord < -player.Width || player.Xcoord> MapWidth)
+                        {
+                            player.Die();
+                        }
                     }
                     return true;
                 }
                 else return false;
             }
+
             protected override void TimerTick(object sender, EventArgs e)
             {
                 Xcoord += Xmovement;

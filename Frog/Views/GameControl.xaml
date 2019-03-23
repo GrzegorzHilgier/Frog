@@ -24,6 +24,11 @@
     </UserControl.InputBindings>
 
     <StackPanel>
+        <WrapPanel>
+            <TextBlock Height="30" Width="80">Time left:</TextBlock>
+            <ProgressBar Height="30" Width="200" Name="TimeLeft" ></ProgressBar>
+        </WrapPanel>
+
         <ItemsControl ItemsSource="{Binding ItemsOnScreen}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -60,6 +65,7 @@
                 </Style>
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
+
     </StackPanel>
 
 </UserControl>

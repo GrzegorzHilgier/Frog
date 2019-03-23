@@ -9,13 +9,13 @@ using System.Windows.Threading;
 
 namespace Frog.Models
 {
-    class ItemsFactory
+    class Level
     {
         private Action<PlayableObject>ItemsOnScreen { get; set; }
         private int MapWidth { get; set; }
         private List<Player> Players { get; set; }
         public event Action GameOverEvent;
-        public ItemsFactory(List<Player> players, Difficulty difficulty, MapInfo mapInfo, Action<PlayableObject> ItemsOnScreen)
+        public Level(List<Player> players, Difficulty difficulty, MapInfo mapInfo, Action<PlayableObject> ItemsOnScreen)
         {
 
             this.ItemsOnScreen = ItemsOnScreen;
