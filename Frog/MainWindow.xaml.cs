@@ -22,11 +22,12 @@ namespace Frog
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new Game(Difficulty.HARD);
-        
+
+            DataContext = new Game(Difficulty.EASY);       
         }
     }
 }

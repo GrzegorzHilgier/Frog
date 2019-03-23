@@ -41,6 +41,11 @@ namespace Frog.Models
 
 
         }
+        public void Die()
+        {
+            Lives -= 1;
+            GoToStartPosition();
+        }
        
     }
 }

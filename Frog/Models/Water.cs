@@ -26,8 +26,7 @@ namespace Frog.Models
             {
                 if (base.CheckIfCollisionWith(item))
                 {
-                    player.Lives -= 1;
-                    player.GoToStartPosition();
+                    player.Die();
                     return true;
                 }
             }

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Frog.ViewModels;
 
 namespace Frog.Views
 {
@@ -23,6 +24,8 @@ namespace Frog.Views
         public DifficultyControl()
         {
             InitializeComponent();
+            Init init = new Init();
+            DataContext = init;
         }
     }
 }
