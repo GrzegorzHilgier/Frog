@@ -8,7 +8,7 @@ using System.Windows.Threading;
 
 namespace Frog.Models
 {
-    class Car :DrawableObject
+    class Car :PlayableObject
     {
         private List<Player> Players { get; set; }
         DispatcherTimer timer = new DispatcherTimer();
@@ -17,11 +17,11 @@ namespace Frog.Models
         public int MapWidth { get; private set; }
         public Car(int x, int y, int width, int height, int xmovement, int ymovement, int mapWidth, List<Player>players ) :base(x,y,width,height)
         {
-            ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/Car.bmp";
+            ImagePath = "Car.bmp";
             Players = players;
             foreach(Player player in Players)
             {
-                player.ObjectMoved += (DrawableObject item) => { CheckIfCollisionWith(item); };
+                player.Moved += CheckIfCollisionWithPlayer;
             }
             Xmovement = xmovement;
             Ymovement = ymovement;
@@ -30,19 +30,16 @@ namespace Frog.Models
             timer.Interval = TimeSpan.FromSeconds(0.02);
             timer.Start();
         }
-        public override bool CheckIfCollisionWith(DrawableObject item)
+        public void CheckIfCollisionWithPlayer(PlayableObject item)
         {
             Player player = item as Player;
 
             if (base.CheckIfCollisionWith(item))
             {
-                player.Lives -= 1;
-                player.GoToStartPosition();
-                return true;
+                player.Die();
             }
-            else return false;
         }
-        protected override void TimerTick(object sender, EventArgs e)
+        protected  void TimerTick(object sender, EventArgs e)
         {
             Xcoord += Xmovement;
             Ycoord += Ymovement;
@@ -50,8 +47,19 @@ namespace Frog.Models
             if (Xcoord > MapWidth) Xcoord = -1 * Width;
             foreach(Player player in Players)
             {
-                CheckIfCollisionWith(player);
+                CheckIfCollisionWithPlayer(player);
             }
+        }
+        public override void Die()
+        {
+            timer.Tick -= TimerTick;
+            timer.Stop();
+            timer = null;
+            foreach (Player player in Players)
+            {
+                player.Moved -= CheckIfCollisionWithPlayer;
+            }
+
         }
     }
 }

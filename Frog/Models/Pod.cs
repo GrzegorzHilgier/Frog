@@ -8,26 +8,29 @@ using Frog.Utilities;
 
 namespace Frog.Models
 {
-    class Pod : DrawableObject
+    class Pod : PlayableObject
     {
         static ushort CreatedPods = 0;
         static ushort OccupiedPods = 0;
         private List<Player> Players { get; set; }
         public bool IsChecked { get; private set; } = false;
-        static event Action AllPodsOccupied;
+
+        public static event Action AllPodsOccupied;
+        public static event Action<Player> PlayerScored;
+
         public Pod(int x, int y, int width, int height, List<Player> players):base(x,y,width,height)
         {
             CreatedPods ++;
-            ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/PodEmpty.bmp";
+            ImagePath = "PodEmpty.bmp";
             Players = players;
             foreach(Player player in Players)
             {
-                player.ObjectMoved += (DrawableObject item)=> { CheckIfCollisionWith(item); };
-                player.ObjectTryingToMove += CheckIfPlayerCanGetIn;
-               // player.ObjectTryingToMove+=
+                player.FinishedMove +=  CheckIfCollisionWithPlayer;
+                player.TryingToMove += CheckIfPlayerCanGetIn;
+
             }
         }
-        public override bool CheckIfCollisionWith(DrawableObject item)
+        public void CheckIfCollisionWithPlayer(PlayableObject item)
         {
             Player player = item as Player;
             if(!IsChecked)
@@ -35,26 +38,31 @@ namespace Frog.Models
                 if (base.CheckIfCollisionWith(item))
                 {
                     IsChecked = true;
-                    ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/PodOccupied.bmp";
+                    ImagePath = "PodOccupied.bmp";
                     OccupiedPods++;
-                    RaisePropertyChangedEvent("ImagePath");
+                    PlayerScored?.Invoke(player);
                     if (OccupiedPods == CreatedPods)
                     {
                         AllPodsOccupied?.Invoke();
                     }
                     else
-                    {
-                        player.Score += 100;
+                    {                       
                         player.GoToStartPosition();
-
                     }
-                    return true;
                 }               
             }
-            return false;
+        }
+        public override void Die()
+        {
+            foreach (Player player in Players)
+            {
+                player.FinishedMove -= CheckIfCollisionWithPlayer;
+                player.TryingToMove -= CheckIfPlayerCanGetIn;
+            }
+
         }
 
-        public void CheckIfPlayerCanGetIn(DrawableObject item, Direction direction, Action<bool> action)
+        public void CheckIfPlayerCanGetIn(PlayableObject item, Direction direction, Action<bool> action)
         {
             switch(direction)
             {

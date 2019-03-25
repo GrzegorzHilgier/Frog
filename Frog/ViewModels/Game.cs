@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Frog.Models;
@@ -10,25 +11,76 @@ namespace Frog.ViewModels
     class Game : ObservableObject
     {
         MapInfo mapInfo = new MapInfo(30, 9, 15);
-        public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
-        public ObservableCollection<DrawableObject> ItemsOnScreen { get; private set; } = new ObservableCollection<DrawableObject>();
+        Level ActualLevel { get; set; }
+        Difficulty ActualDifficulty { get; set; } = Difficulty.EASY;
+        private List<Player> players= new List<Player>();
 
-        public Game()
+        private int levelTime;
+        public int LevelTime
+        {
+            get => levelTime;
+            private set
+            {
+                levelTime = value;
+                RaisePropertyChangedEvent("LevelTime");
+            }
+                
+        }
+        public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
+        public ObservableCollection<PlayableObject> ItemsOnScreen { get; private set; } = new ObservableCollection<PlayableObject>();
+       
+        public event Action<int> GameOver;
+
+        public Game(bool twoPlayers = false)
         {
             //TODO add more players
-            Players.Add(new Player(3, mapInfo.Scale *7, mapInfo.Scale *8, mapInfo.Scale -1, mapInfo.Scale -1));
+            Players.Add(new Player("Green",3, mapInfo.Scale *7, mapInfo.Scale *8, mapInfo.Scale -1, mapInfo.Scale -1));
+            Players[0].OutOfLives += (Score) => GameOver?.Invoke(Score);
 
-            List <Player> players = new List<Player>();
             foreach(Player player in Players)
             {
                 players.Add(player);
             }
 
+            ActualLevel = new Level(players, ActualDifficulty, mapInfo, AddItemOnScreen);
+            ActualLevel.LevelFinishedEvent += LevelFinished;
+            ActualLevel.LevelTimeChangedEvent += LevelTimerTick;
 
-            ItemsFactory itemsFactory = new ItemsFactory(players, AddItemOnScreen, mapInfo);
         }
 
-        public void AddItemOnScreen(DrawableObject item)
+        void LevelTimerTick()
+        {
+            LevelTime = ActualLevel.LevelTime;
+        }
+
+        void LevelFinished(bool PlayerWon)
+        {
+            ItemsOnScreen.Clear();
+            ActualLevel.LevelFinishedEvent -= LevelFinished;
+            ActualLevel.LevelTimeChangedEvent -= LevelTimerTick;
+            ActualLevel = null;
+            GC.Collect();
+            GC.WaitForFullGCComplete();
+            if(PlayerWon)
+            {
+                if (ActualDifficulty == Difficulty.HARD)
+                {
+                    GameOver?.Invoke(players[0].Score);
+                }
+                else
+                {
+                    ActualDifficulty++;
+                    ActualLevel = new Level(players, ActualDifficulty, mapInfo, AddItemOnScreen);
+                    ActualLevel.LevelFinishedEvent += LevelFinished;
+                    ActualLevel.LevelTimeChangedEvent += LevelTimerTick;
+                }
+            }
+            else
+            {
+                GameOver?.Invoke(Players[0].Score);
+            }
+        }
+        public void AddItemOnScreen(PlayableObject item)
         {
             ItemsOnScreen.Add(item);
         }
@@ -52,7 +104,7 @@ namespace Frog.ViewModels
 
         void MoveLeft()
         {
-            if(Players[0].Xcoord >= Players[0].Width)
+            if(Players[0].Xcoord > Players[0].Width)
             {
                 Players[0].TryToMove(Direction.LEFT, mapInfo.Scale);
             }

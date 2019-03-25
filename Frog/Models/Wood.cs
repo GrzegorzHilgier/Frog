@@ -8,29 +8,30 @@ using System.Windows.Threading;
 
 namespace Frog.Models
 {
-        class Wood : DrawableObject
+        class Wood : PlayableObject
         {
             private List<Player> Players { get; set; }
-            DispatcherTimer timer = new DispatcherTimer();
+            protected DispatcherTimer timer = new DispatcherTimer();
             public int Xmovement { get; private set; }
             public int Ymovement { get; private set; }
             public int MapWidth { get; private set; }
             public Wood(int x, int y, int width, int height, int xmovement, int ymovement, int mapWidth, List<Player> players) : base(x, y, width, height)
             {
-                ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/Wood.bmp";
+                ImagePath = "Wood.bmp";
                 Players = players;
                 foreach (Player player in Players)
                 {
-                    player.ObjectMoved += (DrawableObject item) => { CheckIfCollisionWith(item); };
+                    player.Moved +=  CheckIfCollisionWithPlayer; 
                 }
                 Xmovement = xmovement;
                 Ymovement = ymovement;
                 MapWidth = mapWidth;
-                timer.Tick += TimerTick;
+                timer.Tick += MoveOnTick;
                 timer.Interval = TimeSpan.FromSeconds(0.02);
                 timer.Start();
             }
-            public override bool CheckIfCollisionWith(DrawableObject item)
+
+            public virtual void CheckIfCollisionWithPlayer(PlayableObject item)
             {
                 Player player = item as Player;
 
@@ -38,15 +39,19 @@ namespace Frog.Models
                 {
                     if(!player.IsMoving)
                     {
-                        player.IsFlying = true;
+                        player.IsMounted = true;
                         player.Xcoord += Xmovement;
                         player.Ycoord += Ymovement;
+                        if(player.Xcoord < -player.Width || player.Xcoord> MapWidth)
+                        {
+                            player.Die();
+                        }
                     }
-                    return true;
+
                 }
-                else return false;
             }
-            protected override void TimerTick(object sender, EventArgs e)
+
+            protected void MoveOnTick(object sender, EventArgs e)
             {
                 Xcoord += Xmovement;
                 Ycoord += Ymovement;
@@ -54,9 +59,20 @@ namespace Frog.Models
                 if (Xcoord > MapWidth) Xcoord = -1 * Width;
                 foreach (Player player in Players)
                 {
-                    CheckIfCollisionWith(player);
+                    CheckIfCollisionWithPlayer(player);
                 }
             }
+
+        public override void Die()
+        {
+            timer.Tick -= MoveOnTick;
+            timer.Stop();
+            foreach (Player player in Players)
+            {
+                player.Moved -= CheckIfCollisionWithPlayer;
+            }
+
         }
+    }
     
 }

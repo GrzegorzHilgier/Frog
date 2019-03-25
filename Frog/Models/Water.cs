@@ -6,33 +6,40 @@ using System.Threading.Tasks;
 using Frog.Utilities;
 using Frog.Models;
 
+
 namespace Frog.Models
 {
-    class Water: DrawableObject
+    class Water: PlayableObject
     {
+        private List<Player> Players { get; set; }
         public Water(int x, int y, int width, int height,List<Player> players):base(x,y,width,height)
         {
-            ImagePath = "C:/programming/c#/projects/Frog/Frog/Frog/resources/Water.bmp";
+            Players = players;
+            ImagePath = "Water.bmp";
             foreach (Player player in players)
             {
-                player.ObjectFinishedMove += (DrawableObject item) => { CheckIfCollisionWith(item); };
+                player.FinishedMove += CheckIfCollisionWithPlayer; 
             }
         }
-
-        public override bool CheckIfCollisionWith(DrawableObject item)
+      
+        public void CheckIfCollisionWithPlayer(PlayableObject item)
         {
             Player player = item as Player;
-            if(!player.IsMoving && !player.IsFlying)
+            if(!player.IsMoving && !player.IsMounted)
             {
                 if (base.CheckIfCollisionWith(item))
                 {
-                    player.Lives -= 1;
-                    player.GoToStartPosition();
-                    return true;
+                    player.Die();
                 }
             }
-
-            return false;
+        }
+        public override void Die()
+        {
+            foreach (Player player in Players)
+            {
+                player.FinishedMove -= CheckIfCollisionWithPlayer;
+            }
+            
         }
     }
 }

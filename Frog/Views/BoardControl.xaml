@@ -6,24 +6,36 @@
              xmlns:ViewModels="clr-namespace:Frog.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="60"
-             d:DesignWidth="470"
+             d:DesignWidth="460"
              d:DataContext="{d:DesignInstance ViewModels:Game}">
 
-    <Grid>
+    <StackPanel>
+        <WrapPanel>
+            <TextBlock Margin="5" Text="Player"/>
+            <TextBlock Grid.Column="1" Margin="5" Text="lives"/>
+            <TextBlock Grid.Column="2" Margin="5" Text="Score"/>
+        </WrapPanel>
         <ItemsControl ItemsSource="{Binding Players}">
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <WrapPanel>
-                        <TextBlock Margin="5" Text="{Binding Lives}"/>
-                        <TextBlock Margin="5" Text="{Binding Score}"/>
-                        <TextBlock Margin="5" Text="{Binding Xcoord}"/>
-                        <TextBlock Margin="5" Text="{Binding Ycoord}"/>
-                    </WrapPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Margin="5" Text="{Binding Name}"/>
+                        <TextBlock Grid.Column="1" Margin="5" Text="{Binding Lives}"/>
+                        <TextBlock Grid.Column="2" Margin="5" Text="{Binding Score}"/>
+                    </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
            
         </ItemsControl>
-    </Grid>
+    </StackPanel>
 
 </UserControl>

@@ -6,7 +6,9 @@
              xmlns:ViewModels="clr-namespace:Frog.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="100"
-             d:DesignWidth="470">
+             d:DesignWidth="470"
+             d:DataContext="{d:DesignInstance ViewModels:Init}">
+    
     <StackPanel>
         <Label Foreground="Blue" Margin="5,5,5,0">Difficulty</Label>
         <Grid>
@@ -14,10 +16,22 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
             <Button>Easy</Button>
             <Button Grid.Column="1">Medium</Button>
             <Button Grid.Column="2">Hard</Button>
+            <TextBlock Grid.Column="3" Text="{Binding ChoosenDifficulty}"></TextBlock>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Button>One Player</Button>
+            <Button Grid.Column="1">Two Playes</Button>
+            <TextBlock Text="{Binding Players}" Grid.Column="2"></TextBlock>
         </Grid>
     </StackPanel>
 </UserControl>

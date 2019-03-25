@@ -7,15 +7,17 @@
         xmlns:ViewModels="clr-namespace:Frog.ViewModels"
         xmlns:local="clr-namespace:Frog"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="470">
-    <Window.DataContext>
-        <ViewModels:Game/>
-    </Window.DataContext>
+        Title="MainWindow" Height="420" Width="460">
+ 
 
-    <StackPanel>
-        <Views:DifficultyControl></Views:DifficultyControl>
-        <Views:BoardControl></Views:BoardControl>
-        <Views:GameControl/>
-    </StackPanel>
+    <Grid Name="MainContainer">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO"></RowDefinition>
+            <RowDefinition Height="AUTO"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Views:GameControl   Grid.Row="1"/>
+        <Views:BoardControl />
+
+    </Grid>
 
 </Window>

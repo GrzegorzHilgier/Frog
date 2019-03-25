@@ -58,16 +58,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Car.cs" />
-    <Compile Include="Models\ItemsFactory.cs" />
+    <Compile Include="Models\Level.cs" />
     <Compile Include="Models\Wood.cs" />
+    <Compile Include="Models\WoodSunk.cs" />
+    <Compile Include="Utilities\Difficulty.cs" />
     <Compile Include="Utilities\Map.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Pod.cs" />
     <Compile Include="Models\Water.cs" />
-    <Compile Include="Utilities\DrawableObject.cs" />
+    <Compile Include="Utilities\PlayableObject.cs" />
     <Compile Include="Utilities\ObservableObject.cs" />
     <Compile Include="Utilities\SimpleCommad.cs" />
-    <Compile Include="ViewModels\Difficulty.cs" />
+    <Compile Include="ViewModels\Init.cs" />
     <Compile Include="ViewModels\Game.cs" />
     <Compile Include="Views\BoardControl.xaml.cs">
       <DependentUpon>BoardControl.xaml</DependentUpon>
@@ -140,7 +142,24 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="resources\PodEmpty.bmp" />
+    <Resource Include="resources\PodEmpty.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\Car.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\PodOccupied.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\Wood.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

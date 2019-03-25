@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Frog.ViewModels;
+using Frog.Utilities;
 
 namespace Frog
 {
@@ -20,9 +22,29 @@ namespace Frog
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Game game;
         public MainWindow()
         {
             InitializeComponent();
+            InitializeGame();
+        }
+
+        void GameOver(int Score)
+        {
+            MessageBox.Show($"Game over, Your score:{Score} ", "Good job");
+        }
+
+
+        void InitializeGame()
+        {
+            if(game!=null)
+            {
+                game.GameOver -= GameOver;
+            }
+            game = null;
+            game = new Game();
+            DataContext = game;
+            game.GameOver += GameOver;
         }
     }
 }
