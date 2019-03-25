@@ -18,14 +18,14 @@ namespace Frog.Models
             ImagePath = "Water.bmp";
             foreach (Player player in players)
             {
-                player.ObjectFinishedMove += CheckIfCollisionWithPlayer; 
+                player.FinishedMove += CheckIfCollisionWithPlayer; 
             }
         }
       
         public void CheckIfCollisionWithPlayer(PlayableObject item)
         {
             Player player = item as Player;
-            if(!player.IsMoving && !player.IsFlying)
+            if(!player.IsMoving && !player.IsMounted)
             {
                 if (base.CheckIfCollisionWith(item))
                 {
@@ -37,9 +37,8 @@ namespace Frog.Models
         {
             foreach (Player player in Players)
             {
-                player.ObjectFinishedMove -= CheckIfCollisionWithPlayer;
+                player.FinishedMove -= CheckIfCollisionWithPlayer;
             }
-            Players.Clear();
             
         }
     }

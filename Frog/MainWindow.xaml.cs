@@ -31,7 +31,7 @@ namespace Frog
 
         void GameOver(int Score)
         {
-            MessageBox.Show($"Congratulations, game finished Your score:{Score} ", "Good job");
+            MessageBox.Show($"Game over, Your score:{Score} ", "Good job");
         }
 
 

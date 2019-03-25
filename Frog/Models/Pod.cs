@@ -16,6 +16,7 @@ namespace Frog.Models
         public bool IsChecked { get; private set; } = false;
 
         public static event Action AllPodsOccupied;
+        public static event Action<Player> PlayerScored;
 
         public Pod(int x, int y, int width, int height, List<Player> players):base(x,y,width,height)
         {
@@ -24,8 +25,8 @@ namespace Frog.Models
             Players = players;
             foreach(Player player in Players)
             {
-                player.ObjectMoved +=  CheckIfCollisionWithPlayer;
-                player.ObjectTryingToMove += CheckIfPlayerCanGetIn;
+                player.FinishedMove +=  CheckIfCollisionWithPlayer;
+                player.TryingToMove += CheckIfPlayerCanGetIn;
 
             }
         }
@@ -39,7 +40,7 @@ namespace Frog.Models
                     IsChecked = true;
                     ImagePath = "PodOccupied.bmp";
                     OccupiedPods++;
-                    player.Score += 100;
+                    PlayerScored?.Invoke(player);
                     if (OccupiedPods == CreatedPods)
                     {
                         AllPodsOccupied?.Invoke();
@@ -55,10 +56,9 @@ namespace Frog.Models
         {
             foreach (Player player in Players)
             {
-                player.ObjectFinishedMove -= CheckIfCollisionWithPlayer;
-                player.ObjectTryingToMove -= CheckIfPlayerCanGetIn;
+                player.FinishedMove -= CheckIfCollisionWithPlayer;
+                player.TryingToMove -= CheckIfPlayerCanGetIn;
             }
-            Players.Clear();
 
         }
 

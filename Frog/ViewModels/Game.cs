@@ -14,6 +14,17 @@ namespace Frog.ViewModels
         Level ActualLevel { get; set; }
         Difficulty ActualDifficulty { get; set; } = Difficulty.EASY;
         private List<Player> players= new List<Player>();
+        private int levelTime;
+        public int LevelTime
+        {
+            get => levelTime;
+            private set
+            {
+                levelTime = value;
+                RaisePropertyChangedEvent("LevelTime");
+            }
+                
+        }
         public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
         public ObservableCollection<PlayableObject> ItemsOnScreen { get; private set; } = new ObservableCollection<PlayableObject>();
        
@@ -24,7 +35,7 @@ namespace Frog.ViewModels
         {
             //TODO add more players
             Players.Add(new Player("Green",3, mapInfo.Scale *7, mapInfo.Scale *8, mapInfo.Scale -1, mapInfo.Scale -1));
-            Players[0].GameOverEvent += (Score) => PlayerLostEvent?.Invoke(Score);
+            Players[0].OutOfLives += (Score) => PlayerLostEvent?.Invoke(Score);
 
             foreach(Player player in Players)
             {
@@ -33,26 +44,41 @@ namespace Frog.ViewModels
 
             ActualLevel = new Level(players, ActualDifficulty, mapInfo, AddItemOnScreen);
             ActualLevel.LevelFinishedEvent += LevelFinished;
+            ActualLevel.LevelTimeChangedEvent += LevelTimerTick;
+
         }
 
-        void LevelFinished()
+        void LevelTimerTick()
+        {
+            LevelTime = ActualLevel.LevelTime;
+        }
+
+        void LevelFinished(bool PlayerWon)
         {
             ItemsOnScreen.Clear();
             ActualLevel.LevelFinishedEvent -= LevelFinished;
+            ActualLevel.LevelTimeChangedEvent -= LevelTimerTick;
             ActualLevel = null;
             GC.Collect();
             GC.WaitForFullGCComplete();
-            if(ActualDifficulty == Difficulty.HARD)
+            if(PlayerWon)
             {
-                PlayerLostEvent?.Invoke(players[0].Score);
+                if (ActualDifficulty == Difficulty.HARD)
+                {
+                    PlayerLostEvent?.Invoke(players[0].Score);
+                }
+                else
+                {
+                    ActualDifficulty++;
+                    ActualLevel = new Level(players, ActualDifficulty, mapInfo, AddItemOnScreen);
+                    ActualLevel.LevelFinishedEvent += LevelFinished;
+                    ActualLevel.LevelTimeChangedEvent += LevelTimerTick;
+                }
             }
             else
             {
-                ActualDifficulty++;
-                ActualLevel = new Level(players, ActualDifficulty, mapInfo, AddItemOnScreen);
-                ActualLevel.LevelFinishedEvent += LevelFinished;
+                PlayerLostEvent?.Invoke(Players[0].Score);
             }
-
         }
         public void AddItemOnScreen(PlayableObject item)
         {

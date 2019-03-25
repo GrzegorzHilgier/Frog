@@ -60,9 +60,6 @@ namespace Frog.Utilities
             Height = height;
             Xcoord = x;
             Ycoord = y;
-            StartXcoord = x;
-            StartYcoord = y;
-
             ImagePath = $"{Directory.GetCurrentDirectory().Replace("\\","/")}/resources/";
         }
 

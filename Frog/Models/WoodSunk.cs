@@ -10,8 +10,6 @@ namespace Frog.Models
 {
     class WoodSunk : Wood
     {
-
-
         private bool IsUnderwater = false;
         private int TickCounter = 0;
 
@@ -34,7 +32,7 @@ namespace Frog.Models
                     }
                     else
                     {
-                        player.IsFlying = true;
+                        player.IsMounted = true;
                         player.Xcoord += Xmovement;
                         player.Ycoord += Ymovement;
                         if (player.Xcoord < -player.Width || player.Xcoord > MapWidth)
@@ -68,7 +66,6 @@ namespace Frog.Models
                 IsUnderwater = false;
                 TickCounter = 0;
             }
-
         }
 
         public void Blink(object sender, EventArgs e)
@@ -85,8 +82,8 @@ namespace Frog.Models
         }
         public override void Die()
         {
+            timer.Tick -= Blink;
             base.Die();
-
         }
     }
 

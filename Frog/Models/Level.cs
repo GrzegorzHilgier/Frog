@@ -11,13 +11,21 @@ namespace Frog.Models
 {
     class Level
     {
+        private const int LevelMaxTime = 60;
+        public int LevelTime { get; private set; } = LevelMaxTime;
+        private DispatcherTimer LevelTimer { get; set; } = new DispatcherTimer();
+
         private Action<PlayableObject>AddItemOnScreen { get; set; }
         private int MapWidth { get; set; }
         private List<Player> Players { get; set; }
         private List<PlayableObject> ItemsInGame { get; set; } = new List<PlayableObject>();
-        public event Action LevelFinishedEvent;
+
+        public event Action LevelTimeChangedEvent;
+        public event Action<bool> LevelFinishedEvent;
+
         public Level(List<Player> players, Difficulty difficulty, MapInfo mapInfo, Action<PlayableObject> ItemsOnScreen)
         {
+
 
             this.AddItemOnScreen = ItemsOnScreen;
             MapWidth = mapInfo.Width;
@@ -27,7 +35,6 @@ namespace Frog.Models
                 player.GoToStartPosition();
             }
 
-
             List<int> Xposittions = new List<int>();
             int rowPosition ;
             int movement;
@@ -36,13 +43,14 @@ namespace Frog.Models
 
             AddItem(new Water(0, mapInfo.Scale, mapInfo.Width - 1, (mapInfo.Scale * 3) - 1, players));
             int PodSize = mapInfo.Scale - 1;
-            //AddItem(new Pod(mapInfo.Scale, 0, PodSize, PodSize, players));
-            //AddItem(new Pod(mapInfo.Scale * 4, 0, PodSize, PodSize, players));
+            AddItem(new Pod(mapInfo.Scale, 0, PodSize, PodSize, players));
+            AddItem(new Pod(mapInfo.Scale * 4, 0, PodSize, PodSize, players));
             AddItem(new Pod(mapInfo.Scale * 7, 0, PodSize, PodSize, players));
-            //AddItem(new Pod(mapInfo.Scale * 10, 0, PodSize, PodSize, players));
-            //AddItem(new Pod(mapInfo.Scale * 13, 0, PodSize, PodSize, players));
+            AddItem(new Pod(mapInfo.Scale * 10, 0, PodSize, PodSize, players));
+            AddItem(new Pod(mapInfo.Scale * 13, 0, PodSize, PodSize, players));
 
             Pod.AllPodsOccupied += LevelFinished;
+            Pod.PlayerScored += GivePoints; 
 
             rowPosition = mapInfo.Scale;
             movement = (int)difficulty;
@@ -104,6 +112,10 @@ namespace Frog.Models
             Xposittions.Add(mapInfo.Scale * 12);
             GenerateCarRow(rowPosition, movement, width, height, Xposittions);
 
+            LevelTimer.Interval = TimeSpan.FromSeconds(1);
+            LevelTimer.Tick += TimerTick;
+            LevelTimer.Start();
+
         }
         void GenerateWoodRow(int RowPosition, int movement, int width, int height, List<int> Xpositions)
         {
@@ -135,13 +147,36 @@ namespace Frog.Models
         void LevelFinished()
         {
             Pod.AllPodsOccupied -= LevelFinished;
+            Pod.PlayerScored -= GivePoints;
             foreach (PlayableObject item in ItemsInGame)
             {
                 item.Die();
             }
+            LevelTimer.Tick -= TimerTick;
+            LevelTimer.Stop();
+            LevelTimer = null;
             ItemsInGame.Clear();
-            LevelFinishedEvent?.Invoke();
-            Players.Clear();
+            RaiseLevelFinishedEvent(true);
+
+        }
+        void RaiseLevelFinishedEvent(bool PlayerWon)
+        {
+            LevelFinishedEvent?.Invoke(PlayerWon);
+        }
+
+        void TimerTick(object sender, EventArgs e)
+        {
+
+            LevelTime--;
+            if (LevelTime == 0)
+            {
+                RaiseLevelFinishedEvent(false);
+            }
+            LevelTimeChangedEvent?.Invoke();           
+        }
+        void GivePoints(Player player)
+        {
+            player.Score += LevelTime * 10;
         }
 
     }

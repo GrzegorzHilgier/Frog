@@ -25,7 +25,7 @@
 
     <StackPanel>
         <WrapPanel>
-            <TextBlock Height="30" Width="80">Time left:</TextBlock>
+            <TextBlock Height="30" Width="80" Text="{Binding LevelTime}"></TextBlock>
             <ProgressBar Height="30" Width="200" Name="TimeLeft" ></ProgressBar>
         </WrapPanel>
 

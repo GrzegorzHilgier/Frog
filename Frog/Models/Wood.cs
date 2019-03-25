@@ -21,7 +21,7 @@ namespace Frog.Models
                 Players = players;
                 foreach (Player player in Players)
                 {
-                    player.ObjectMoved +=  CheckIfCollisionWithPlayer; 
+                    player.Moved +=  CheckIfCollisionWithPlayer; 
                 }
                 Xmovement = xmovement;
                 Ymovement = ymovement;
@@ -39,7 +39,7 @@ namespace Frog.Models
                 {
                     if(!player.IsMoving)
                     {
-                        player.IsFlying = true;
+                        player.IsMounted = true;
                         player.Xcoord += Xmovement;
                         player.Ycoord += Ymovement;
                         if(player.Xcoord < -player.Width || player.Xcoord> MapWidth)
@@ -69,9 +69,8 @@ namespace Frog.Models
             timer.Stop();
             foreach (Player player in Players)
             {
-                player.ObjectMoved -= CheckIfCollisionWithPlayer;
+                player.Moved -= CheckIfCollisionWithPlayer;
             }
-            Players.Clear();
 
         }
     }

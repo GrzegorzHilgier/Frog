@@ -10,15 +10,11 @@ namespace Frog.Models
 {
     class Player: PlayableObject
     {
-        public string Name { get; private set; }
 
-        public event Action<int> GameOverEvent;
-        //global variables required for animation
-        DispatcherTimer timer = new DispatcherTimer();
         Direction actualDirection;
         int distanceToDestination = 0;
         public bool IsMoving { get; private set; } = false;
-        public bool IsFlying { get; set; } = false;
+        public bool IsMounted { get; set; } = false;
 
         private ushort lives;
         public ushort Lives
@@ -40,10 +36,14 @@ namespace Frog.Models
                 RaisePropertyChangedEvent("Score");
             }
         }
+        public string Name { get; private set; }
 
-        public event Action<PlayableObject> ObjectFinishedMove;
-        public event Action<PlayableObject, Direction, Action<bool>> ObjectTryingToMove;
-        public event Action<PlayableObject> ObjectMoved;
+        DispatcherTimer timer = new DispatcherTimer();
+
+        public event Action<int> OutOfLives;
+        public event Action<PlayableObject> FinishedMove;
+        public event Action<PlayableObject, Direction, Action<bool>> TryingToMove;
+        public event Action<PlayableObject> Moved;
 
         public Player(string name, ushort lives, int x, int y, int width, int height):base(x,y,width,height)
         {
@@ -52,7 +52,10 @@ namespace Frog.Models
             Name = name;
             ImagePath = "FrogImg.png";
             timer.Tick += TimerTick;
-            timer.Interval = TimeSpan.FromSeconds(0.01);
+            StartXcoord = x;
+            StartYcoord = y;
+            timer.Interval = TimeSpan.FromSeconds(0.02);
+
         }
 
         public override void Die()
@@ -61,17 +64,18 @@ namespace Frog.Models
             Lives -= 1;
             if(Lives==0)
             {
-                GameOverEvent?.Invoke(Score);
+                OutOfLives?.Invoke(Score);
             }
             GoToStartPosition();
         }
+
         public void TryToMove(Direction direction, int value)
         {
             if (IsMoving) return;
             bool finalResult = true;
             //checks if any subscriber will block movement
             var results = new List<bool>();
-            ObjectTryingToMove?.Invoke(this, direction, val => results.Add(val));
+            TryingToMove?.Invoke(this, direction, val => results.Add(val));
             foreach (bool result in results)
             {
                 if (!result)
@@ -90,7 +94,7 @@ namespace Frog.Models
         private void GoToPosition(Direction direction, int value)
         {
             IsMoving = true;
-            IsFlying = false;
+            IsMounted = false;
             actualDirection = direction;
             distanceToDestination = value;
             timer.Start();
@@ -98,7 +102,7 @@ namespace Frog.Models
 
         protected virtual void TimerTick(object sender, EventArgs e)
         {
-            ushort stepDistance = 5;
+            ushort stepDistance = 10;
             if (distanceToDestination > 0)
             {
                 switch (actualDirection)
@@ -117,14 +121,14 @@ namespace Frog.Models
                         break;
                 }
                 distanceToDestination -= stepDistance;
-                ObjectMoved?.Invoke(this);
+                Moved?.Invoke(this);
             }
             else
             {
                 timer.Stop();
                 IsMoving = false;
-                ObjectMoved?.Invoke(this);
-                ObjectFinishedMove?.Invoke(this);
+                Moved?.Invoke(this);
+                FinishedMove?.Invoke(this);
             }
         }
 
@@ -132,7 +136,7 @@ namespace Frog.Models
         {
             timer.Stop();
             IsMoving = false;
-            IsFlying = false;
+            IsMounted = false;
             Xcoord = StartXcoord;
             Ycoord = StartYcoord;
         }

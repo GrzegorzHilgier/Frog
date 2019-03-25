@@ -21,7 +21,7 @@ namespace Frog.Models
             Players = players;
             foreach(Player player in Players)
             {
-                player.ObjectMoved += CheckIfCollisionWithPlayer;
+                player.Moved += CheckIfCollisionWithPlayer;
             }
             Xmovement = xmovement;
             Ymovement = ymovement;
@@ -54,11 +54,12 @@ namespace Frog.Models
         {
             timer.Tick -= TimerTick;
             timer.Stop();
+            timer = null;
             foreach (Player player in Players)
             {
-                player.ObjectMoved -= CheckIfCollisionWithPlayer;
+                player.Moved -= CheckIfCollisionWithPlayer;
             }
-            Players.Clear();
+
         }
     }
 }
