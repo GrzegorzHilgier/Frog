@@ -12,14 +12,16 @@ namespace Frog.Models
     class Level
     {
         private const int LevelMaxTime = 60;
-        public int LevelTime { get; private set; } = LevelMaxTime;
+        private int MapWidth { get; set; }
+
         private DispatcherTimer LevelTimer { get; set; } = new DispatcherTimer();
 
-        private Action<PlayableObject>AddItemOnScreen { get; set; }
-        private int MapWidth { get; set; }
         private List<Player> Players { get; set; }
         private List<PlayableObject> ItemsInGame { get; set; } = new List<PlayableObject>();
 
+        private Action<PlayableObject> AddItemOnScreen { get; set; }
+
+        public int LevelTime { get; private set; } = LevelMaxTime;
         public event Action LevelTimeChangedEvent;
         public event Action<bool> LevelFinishedEvent;
 

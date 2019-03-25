@@ -39,12 +39,12 @@ namespace Frog
         {
             if(game!=null)
             {
-                game.PlayerLostEvent -= GameOver;
+                game.GameOver -= GameOver;
             }
             game = null;
             game = new Game();
             DataContext = game;
-            game.PlayerLostEvent += GameOver;
+            game.GameOver += GameOver;
         }
     }
 }

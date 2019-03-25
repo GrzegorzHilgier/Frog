@@ -14,6 +14,7 @@ namespace Frog.ViewModels
         Level ActualLevel { get; set; }
         Difficulty ActualDifficulty { get; set; } = Difficulty.EASY;
         private List<Player> players= new List<Player>();
+
         private int levelTime;
         public int LevelTime
         {
@@ -28,14 +29,13 @@ namespace Frog.ViewModels
         public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
         public ObservableCollection<PlayableObject> ItemsOnScreen { get; private set; } = new ObservableCollection<PlayableObject>();
        
-
-        public event Action<int> PlayerLostEvent;
+        public event Action<int> GameOver;
 
         public Game(bool twoPlayers = false)
         {
             //TODO add more players
             Players.Add(new Player("Green",3, mapInfo.Scale *7, mapInfo.Scale *8, mapInfo.Scale -1, mapInfo.Scale -1));
-            Players[0].OutOfLives += (Score) => PlayerLostEvent?.Invoke(Score);
+            Players[0].OutOfLives += (Score) => GameOver?.Invoke(Score);
 
             foreach(Player player in Players)
             {
@@ -65,7 +65,7 @@ namespace Frog.ViewModels
             {
                 if (ActualDifficulty == Difficulty.HARD)
                 {
-                    PlayerLostEvent?.Invoke(players[0].Score);
+                    GameOver?.Invoke(players[0].Score);
                 }
                 else
                 {
@@ -77,7 +77,7 @@ namespace Frog.ViewModels
             }
             else
             {
-                PlayerLostEvent?.Invoke(Players[0].Score);
+                GameOver?.Invoke(Players[0].Score);
             }
         }
         public void AddItemOnScreen(PlayableObject item)
