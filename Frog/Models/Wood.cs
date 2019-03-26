@@ -8,7 +8,7 @@ using System.Windows.Threading;
 
 namespace Frog.Models
 {
-        class Wood : PlayableObject
+        class Wood : DrawableObject
         {
             private List<Player> Players { get; set; }
             protected DispatcherTimer timer = new DispatcherTimer();
@@ -31,7 +31,7 @@ namespace Frog.Models
                 timer.Start();
             }
 
-            public virtual void CheckIfCollisionWithPlayer(PlayableObject item)
+            public virtual void CheckIfCollisionWithPlayer(DrawableObject item)
             {
                 Player player = item as Player;
 

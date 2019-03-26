@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Frog.Models
 {
-    class Player: PlayableObject
+    class Player: DrawableObject
     {
 
         Direction actualDirection;
@@ -42,9 +42,9 @@ namespace Frog.Models
         DispatcherTimer timer = new DispatcherTimer();
 
         public event Action<int> OutOfLives;
-        public event Action<PlayableObject> FinishedMove;
-        public event Action<PlayableObject, Direction, Action<bool>> TryingToMove;
-        public event Action<PlayableObject> Moved;
+        public event Action<DrawableObject> FinishedMove;
+        public event Action<DrawableObject, Direction, Action<bool>> TryingToMove;
+        public event Action<DrawableObject> Moved;
 
         public Player(string name, ushort lives, int x, int y, int width, int height):base(x,y,width,height)
         {

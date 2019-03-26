@@ -27,7 +27,7 @@ namespace Frog.ViewModels
                 
         }
         public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
-        public ObservableCollection<PlayableObject> ItemsOnScreen { get; private set; } = new ObservableCollection<PlayableObject>();
+        public ObservableCollection<DrawableObject> ItemsOnScreen { get; private set; } = new ObservableCollection<DrawableObject>();
        
         public event Action GameOver;
 
@@ -79,7 +79,7 @@ namespace Frog.ViewModels
                 GameOver?.Invoke();
             }
         }
-        public void AddItemOnScreen(PlayableObject item)
+        public void AddItemOnScreen(DrawableObject item)
         {
             ItemsOnScreen.Add(item);
         }

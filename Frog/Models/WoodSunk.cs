@@ -18,7 +18,7 @@ namespace Frog.Models
             timer.Tick += SinkOnTick;
         }
 
-        public override void CheckIfCollisionWithPlayer(PlayableObject item)
+        public override void CheckIfCollisionWithPlayer(DrawableObject item)
         {
             Player player = item as Player;
 

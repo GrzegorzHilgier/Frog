@@ -17,15 +17,15 @@ namespace Frog.Models
         private DispatcherTimer LevelTimer { get; set; } = new DispatcherTimer();
 
         private List<Player> Players { get; set; }
-        private List<PlayableObject> ItemsInGame { get; set; } = new List<PlayableObject>();
+        private List<DrawableObject> ItemsInGame { get; set; } = new List<DrawableObject>();
 
-        private Action<PlayableObject> AddItemOnScreen { get; set; }
+        private Action<DrawableObject> AddItemOnScreen { get; set; }
 
         public int LevelTime { get; private set; } = LevelMaxTime;
         public event Action LevelTimeChangedEvent;
         public event Action<bool> LevelFinishedEvent;
 
-        public Level(List<Player> players, Difficulty difficulty, MapInfo mapInfo, Action<PlayableObject> ItemsOnScreen)
+        public Level(List<Player> players, Difficulty difficulty, MapInfo mapInfo, Action<DrawableObject> ItemsOnScreen)
         {
 
 
@@ -146,7 +146,7 @@ namespace Frog.Models
                 AddItem(new WoodSunk(x, RowPosition, width, height, movement, 0, MapWidth, Players));
             }
         }
-        void AddItem(PlayableObject item)
+        void AddItem(DrawableObject item)
         {
             ItemsInGame.Add(item);
             AddItemOnScreen(item);
@@ -155,7 +155,7 @@ namespace Frog.Models
         {
             Pod.AllPodsOccupied -= LevelFinished;
             Pod.PlayerScored -= GivePoints;
-            foreach (PlayableObject item in ItemsInGame)
+            foreach (DrawableObject item in ItemsInGame)
             {
                 item.Die();
             }

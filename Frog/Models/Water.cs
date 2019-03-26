@@ -9,7 +9,7 @@ using Frog.Models;
 
 namespace Frog.Models
 {
-    class Water: PlayableObject
+    class Water: DrawableObject
     {
         private List<Player> Players { get; set; }
         public Water(int x, int y, int width, int height,List<Player> players):base(x,y,width,height)
@@ -22,7 +22,7 @@ namespace Frog.Models
             }
         }
       
-        public void CheckIfCollisionWithPlayer(PlayableObject item)
+        public void CheckIfCollisionWithPlayer(DrawableObject item)
         {
             Player player = item as Player;
             if(!player.IsMoving && !player.IsMounted)

@@ -7,7 +7,7 @@ using Frog.Utilities;
 
 namespace Frog.Models
 {
-    class Backgroud : PlayableObject
+    class Backgroud : DrawableObject
     {   
         public  enum Type{GRASS, ROAD }
         public Backgroud(int x, int y, int width, int height, Type type) : base(x, y, width, height)

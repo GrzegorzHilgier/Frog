@@ -8,7 +8,7 @@ using Frog.Utilities;
 
 namespace Frog.Models
 {
-    class Pod : PlayableObject
+    class Pod : DrawableObject
     {
         static ushort CreatedPods = 0;
         static ushort OccupiedPods = 0;
@@ -30,7 +30,7 @@ namespace Frog.Models
 
             }
         }
-        public void CheckIfCollisionWithPlayer(PlayableObject item)
+        public void CheckIfCollisionWithPlayer(DrawableObject item)
         {
             Player player = item as Player;
             if(!IsChecked)
@@ -62,7 +62,7 @@ namespace Frog.Models
 
         }
 
-        public void CheckIfPlayerCanGetIn(PlayableObject item, Direction direction, Action<bool> action)
+        public void CheckIfPlayerCanGetIn(DrawableObject item, Direction direction, Action<bool> action)
         {
             switch(direction)
             {

@@ -8,7 +8,7 @@ using System.Windows.Threading;
 
 namespace Frog.Models
 {
-    class Car :PlayableObject
+    class Car :DrawableObject
     {
         private List<Player> Players { get; set; }
         DispatcherTimer timer = new DispatcherTimer();
@@ -30,7 +30,7 @@ namespace Frog.Models
             timer.Interval = TimeSpan.FromSeconds(0.02);
             timer.Start();
         }
-        public void CheckIfCollisionWithPlayer(PlayableObject item)
+        public void CheckIfCollisionWithPlayer(DrawableObject item)
         {
             Player player = item as Player;
 

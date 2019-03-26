@@ -14,7 +14,7 @@ using System.Windows.Threading;
 namespace Frog.Utilities
 {
     public enum Direction { LEFT, RIGHT, UP,DOWN };
-    abstract class PlayableObject:ObservableObject
+    abstract class DrawableObject:ObservableObject
     {
 
         private string imagePath;
@@ -54,7 +54,7 @@ namespace Frog.Utilities
         public int StartXcoord { get; set; } = 0;
         public int StartYcoord { get; set; } = 0;
 
-        public PlayableObject( int x, int y, int width, int height)
+        public DrawableObject( int x, int y, int width, int height)
         {           
             Width = width;
             Height = height;
@@ -63,7 +63,7 @@ namespace Frog.Utilities
             ImagePath = $"{Directory.GetCurrentDirectory().Replace("\\","/")}/resources/";
         }
 
-        public virtual bool CheckIfCollisionWith(PlayableObject item)
+        public virtual bool CheckIfCollisionWith(DrawableObject item)
         {
             double opacity = item.Width*0.3;
 
