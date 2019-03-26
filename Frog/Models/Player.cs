@@ -13,11 +13,12 @@ namespace Frog.Models
 
         Direction actualDirection;
         int distanceToDestination = 0;
+        public static int PlayersInGame = 0;
         public bool IsMoving { get; private set; } = false;
         public bool IsMounted { get; set; } = false;
 
-        private ushort lives;
-        public ushort Lives
+        private int lives;
+        public int Lives
         {
             get => lives;
             set
@@ -48,6 +49,7 @@ namespace Frog.Models
         public Player(string name, ushort lives, int x, int y, int width, int height):base(x,y,width,height)
         {
             Lives = lives;
+            PlayersInGame++;
             Score = 0;
             Name = name;
             ImagePath = "FrogImg.png";
@@ -60,37 +62,42 @@ namespace Frog.Models
 
         public override void Die()
         {
-            timer.Stop();
             Lives -= 1;
-            if(Lives==0)
+            GoToStartPosition();
+            if (Lives==0)
             {
+                PlayersInGame--;
+                timer.Tick -= TimerTick;
                 OutOfLives?.Invoke(Score);
             }
-            GoToStartPosition();
+            
         }
 
         public void TryToMove(Direction direction, int value)
         {
-            if (IsMoving) return;
-            bool finalResult = true;
-            //checks if any subscriber will block movement
-            var results = new List<bool>();
-            TryingToMove?.Invoke(this, direction, val => results.Add(val));
-            foreach (bool result in results)
-            {
-                if (!result)
-                {
-                    finalResult = false;
-                    break;
-                }
 
-            }
-            if (finalResult)
-            {
-                GoToPosition(direction, value);
-            }
+                if (IsMoving) return;
+                bool finalResult = true;
+                //checks if any subscriber will block movement
+                var results = new List<bool>();
+                TryingToMove?.Invoke(this, direction, val => results.Add(val));
+                foreach (bool result in results)
+                {
+                    if (!result)
+                    {
+                        finalResult = false;
+                        break;
+                    }
+
+                }
+                if (finalResult)
+                {
+                    GoToPosition(direction, value);
+                }
+            
 
         }
+
         private void GoToPosition(Direction direction, int value)
         {
             IsMoving = true;
@@ -100,7 +107,7 @@ namespace Frog.Models
             timer.Start();
         }
 
-        protected virtual void TimerTick(object sender, EventArgs e)
+        private void TimerTick(object sender, EventArgs e)
         {
             ushort stepDistance = 10;
             if (distanceToDestination > 0)

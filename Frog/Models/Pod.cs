@@ -21,7 +21,7 @@ namespace Frog.Models
         public Pod(int x, int y, int width, int height, List<Player> players):base(x,y,width,height)
         {
             CreatedPods ++;
-            ImagePath = "PodEmpty.bmp";
+            ImagePath = "PodEmpty.png";
             Players = players;
             foreach(Player player in Players)
             {
@@ -38,7 +38,7 @@ namespace Frog.Models
                 if (base.CheckIfCollisionWith(item))
                 {
                     IsChecked = true;
-                    ImagePath = "PodOccupied.bmp";
+                    ImagePath = "PodOccupied.png";
                     OccupiedPods++;
                     PlayerScored?.Invoke(player);
                     if (OccupiedPods == CreatedPods)

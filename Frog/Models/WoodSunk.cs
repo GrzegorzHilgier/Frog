@@ -62,7 +62,7 @@ namespace Frog.Models
             }
             else if (TickCounter == 300)
             {
-                ImagePath = "Wood.bmp";
+                ImagePath = "Wood.png";
                 IsUnderwater = false;
                 TickCounter = 0;
             }
@@ -76,7 +76,7 @@ namespace Frog.Models
             }
             else if(TickCounter % 10 == 0)
             {
-                ImagePath = "Wood.bmp";
+                ImagePath = "Wood.png";
             }
             
         }

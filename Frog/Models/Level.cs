@@ -35,21 +35,26 @@ namespace Frog.Models
             foreach(Player player in Players)
             {
                 player.GoToStartPosition();
+                player.OutOfLives += PlayerLost;
             }
 
             List<int> Xposittions = new List<int>();
-            int rowPosition ;
+            int rowPosition;
             int movement;
             int width;
             int height;
 
             AddItem(new Water(0, mapInfo.Scale, mapInfo.Width - 1, (mapInfo.Scale * 3) - 1, players));
+            AddItem(new Backgroud(0, 0, mapInfo.Width - 1, mapInfo.Scale  - 1, Backgroud.Type.GRASS));
+            AddItem(new Backgroud(0, mapInfo.Scale * 5, mapInfo.Width - 1, mapInfo.Scale, Backgroud.Type.ROAD));
+            AddItem(new Backgroud(0, mapInfo.Scale * 6, mapInfo.Width - 1, mapInfo.Scale, Backgroud.Type.ROAD));
+            AddItem(new Backgroud(0, mapInfo.Scale * 7, mapInfo.Width - 1, mapInfo.Scale, Backgroud.Type.ROAD));
             int PodSize = mapInfo.Scale - 1;
-            AddItem(new Pod(mapInfo.Scale, 0, PodSize, PodSize, players));
+            //AddItem(new Pod(mapInfo.Scale, 0, PodSize, PodSize, players));
             AddItem(new Pod(mapInfo.Scale * 4, 0, PodSize, PodSize, players));
             AddItem(new Pod(mapInfo.Scale * 7, 0, PodSize, PodSize, players));
-            AddItem(new Pod(mapInfo.Scale * 10, 0, PodSize, PodSize, players));
-            AddItem(new Pod(mapInfo.Scale * 13, 0, PodSize, PodSize, players));
+           //AddItem(new Pod(mapInfo.Scale * 10, 0, PodSize, PodSize, players));
+            //AddItem(new Pod(mapInfo.Scale * 13, 0, PodSize, PodSize, players));
 
             Pod.AllPodsOccupied += LevelFinished;
             Pod.PlayerScored += GivePoints; 
@@ -179,6 +184,14 @@ namespace Frog.Models
         void GivePoints(Player player)
         {
             player.Score += LevelTime * 10;
+        }
+        void PlayerLost(int Score)
+        {
+            if(Player.PlayersInGame==0)
+            {
+                RaiseLevelFinishedEvent(false);
+            }
+
         }
 
     }

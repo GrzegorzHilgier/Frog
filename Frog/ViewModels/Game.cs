@@ -29,13 +29,12 @@ namespace Frog.ViewModels
         public ObservableCollection<Player> Players { get; private set; } = new ObservableCollection<Player>();
         public ObservableCollection<PlayableObject> ItemsOnScreen { get; private set; } = new ObservableCollection<PlayableObject>();
        
-        public event Action<int> GameOver;
+        public event Action GameOver;
 
         public Game(bool twoPlayers = false)
         {
             //TODO add more players
             Players.Add(new Player("Green",3, mapInfo.Scale *7, mapInfo.Scale *8, mapInfo.Scale -1, mapInfo.Scale -1));
-            Players[0].OutOfLives += (Score) => GameOver?.Invoke(Score);
 
             foreach(Player player in Players)
             {
@@ -45,7 +44,6 @@ namespace Frog.ViewModels
             ActualLevel = new Level(players, ActualDifficulty, mapInfo, AddItemOnScreen);
             ActualLevel.LevelFinishedEvent += LevelFinished;
             ActualLevel.LevelTimeChangedEvent += LevelTimerTick;
-
         }
 
         void LevelTimerTick()
@@ -55,17 +53,18 @@ namespace Frog.ViewModels
 
         void LevelFinished(bool PlayerWon)
         {
-            ItemsOnScreen.Clear();
-            ActualLevel.LevelFinishedEvent -= LevelFinished;
-            ActualLevel.LevelTimeChangedEvent -= LevelTimerTick;
-            ActualLevel = null;
-            GC.Collect();
-            GC.WaitForFullGCComplete();
+
             if(PlayerWon)
             {
+                ItemsOnScreen.Clear();
+                ActualLevel.LevelFinishedEvent -= LevelFinished;
+                ActualLevel.LevelTimeChangedEvent -= LevelTimerTick;
+                ActualLevel = null;
+                GC.Collect();
+                GC.WaitForFullGCComplete();
                 if (ActualDifficulty == Difficulty.HARD)
                 {
-                    GameOver?.Invoke(players[0].Score);
+                    GameOver?.Invoke();
                 }
                 else
                 {
@@ -77,7 +76,7 @@ namespace Frog.ViewModels
             }
             else
             {
-                GameOver?.Invoke(Players[0].Score);
+                GameOver?.Invoke();
             }
         }
         public void AddItemOnScreen(PlayableObject item)

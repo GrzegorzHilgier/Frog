@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Frog.ViewModels;
 using Frog.Utilities;
 
+
 namespace Frog
 {
     /// <summary>
@@ -29,11 +30,19 @@ namespace Frog
             InitializeGame();
         }
 
-        void GameOver(int Score)
+        void GameOver()
         {
-            MessageBox.Show($"Game over, Your score:{Score} ", "Good job");
-        }
+            //TODO add message for all players
+            string message = string.Empty;
+            for(int i = 0; i< game.Players.Count; i++)
+            {
+                message += $"{game.Players[i].Name} Score: {game.Players[i].Score} \n";
+            }
 
+            MessageBox.Show(message);
+            InitializeGame();
+           
+        }
 
         void InitializeGame()
         {

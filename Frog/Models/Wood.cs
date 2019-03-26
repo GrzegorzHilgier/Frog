@@ -17,7 +17,7 @@ namespace Frog.Models
             public int MapWidth { get; private set; }
             public Wood(int x, int y, int width, int height, int xmovement, int ymovement, int mapWidth, List<Player> players) : base(x, y, width, height)
             {
-                ImagePath = "Wood.bmp";
+                ImagePath = "Wood.png";
                 Players = players;
                 foreach (Player player in Players)
                 {
@@ -63,16 +63,16 @@ namespace Frog.Models
                 }
             }
 
-        public override void Die()
-        {
-            timer.Tick -= MoveOnTick;
-            timer.Stop();
-            foreach (Player player in Players)
+            public override void Die()
             {
-                player.Moved -= CheckIfCollisionWithPlayer;
-            }
+                timer.Tick -= MoveOnTick;
+                timer.Stop();
+                foreach (Player player in Players)
+                {
+                    player.Moved -= CheckIfCollisionWithPlayer;
+                }
 
+            }
         }
-    }
     
 }

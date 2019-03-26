@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Backgroud.cs" />
     <Compile Include="Models\Car.cs" />
     <Compile Include="Models\Level.cs" />
     <Compile Include="Models\Wood.cs" />
@@ -142,22 +143,25 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="resources\PodEmpty.bmp">
+    <Folder Include="Levels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\Car.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="resources\Car.bmp">
+    <Resource Include="resources\Grass.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="resources\PodOccupied.bmp">
+    <Resource Include="resources\Wood.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="resources\Wood.bmp">
+    <Resource Include="resources\PodEmpty.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
