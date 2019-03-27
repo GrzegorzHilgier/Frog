@@ -54,7 +54,6 @@ namespace Frog
                 game.GameOver -= GameOver;
                 game = null;
                 this.DataContext = null;
-
             }
 
             game = new Game();

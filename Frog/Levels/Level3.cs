@@ -31,9 +31,9 @@ namespace Frog.Levels
             AddItem(new Wood(Scale * 6, mapInfo.Scale, Scale, height, 1, 0, mapInfo, Players));
             AddItem(new Wood(Scale * 12, mapInfo.Scale, Scale * 3, height, 1, 0, mapInfo, Players));
 
-            AddItem(new Wood(Scale, Scale * 2, Scale * 3, height, -1, 0, mapInfo, Players));
-            AddItem(new WoodSunk(Scale * 6, Scale * 2, Scale, height, -1, 0, mapInfo, Players));
-            AddItem(new Wood(Scale * 12, Scale * 2, Scale * 3, height, -1, 0, mapInfo, Players));
+            AddItem(new Wood(Scale, Scale * 2, Scale * 3, height, -2, 0, mapInfo, Players));
+            AddItem(new WoodSunk(Scale * 6, Scale * 2, Scale, height, -2, 0, mapInfo, Players));
+            AddItem(new Wood(Scale * 12, Scale * 2, Scale * 3, height, -2, 0, mapInfo, Players));
 
             AddItem(new WoodSunk(Scale, Scale * 3, Scale * 2, height, 1, 0, mapInfo, Players));
             AddItem(new Wood(Scale * 5, Scale * 3, Scale * 2, height, 1, 0, mapInfo, Players));

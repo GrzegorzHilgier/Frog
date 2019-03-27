@@ -15,6 +15,18 @@ namespace Frog.ViewModels
         
         private List<Player> players= new List<Player>();
 
+        private int levelsLeft;
+        public int LevelsLeft
+        {
+            get => levelsLeft;
+            private set
+            {
+                levelsLeft = value;
+                RaisePropertyChangedEvent("LevelsLeft");
+            }
+        }
+
+
         private int levelTime;
         public int LevelTime
         {
@@ -42,6 +54,7 @@ namespace Frog.ViewModels
             }
 
             LevelFactory.LoadLevels(LevelList);
+            LevelsLeft = LevelList.Count;
             LevelList[0].Init(players, mapInfo, AddItemOnScreen);
             LevelList[0].LevelFinishedEvent += LevelFinished;
             LevelList[0].LevelTimeChanged += LevelTimerTick;
@@ -58,6 +71,7 @@ namespace Frog.ViewModels
             LevelList[0].LevelFinishedEvent -= LevelFinished;
             LevelList[0].LevelTimeChanged -= LevelTimerTick;
             LevelList.RemoveAt(0);
+            LevelsLeft = LevelList.Count;
             GC.Collect();
             GC.WaitForFullGCComplete();
 
@@ -83,7 +97,7 @@ namespace Frog.ViewModels
         public void AddItemOnScreen(DrawableObject item)
         {
             ItemsOnScreen.Add(item);
-        }
+        }       
 
  
         public ICommand MoveLeftCommand

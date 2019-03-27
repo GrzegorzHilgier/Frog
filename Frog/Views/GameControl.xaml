@@ -27,6 +27,8 @@
         <WrapPanel>
             <TextBlock Height="30" Width="AUTO" Text="Time left: "></TextBlock>
             <TextBlock Height="30" Width="80" Text="{Binding LevelTime}"></TextBlock>
+            <TextBlock Height="30" Width="AUTO" Text="Levels left: "/>
+            <TextBlock Height="30" Width="AUTO" Text="{Binding LevelsLeft}"/>
         </WrapPanel>
 
         <ItemsControl ItemsSource="{Binding ItemsOnScreen}">
