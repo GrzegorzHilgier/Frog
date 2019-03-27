@@ -11,7 +11,7 @@ namespace Frog.ViewModels
     class Game : ObservableObject
     {
         MapInfo mapInfo = new MapInfo(30, 9, 15);
-        List<Level> LevelList { get; set; } = new List<Level>();
+        Queue<Level> LevelQueue { get; set; } = new Queue<Level>();
         
         private List<Player> players= new List<Player>();
 
@@ -43,6 +43,18 @@ namespace Frog.ViewModels
        
         public event Action GameOver;
 
+        private void Init(Level level)
+        {
+            level.Init(players, mapInfo, AddItemOnScreen);
+            level.LevelFinishedEvent += LevelFinished;
+            level.LevelTimeChanged += LevelTimerTick;
+        }
+        private void Clear(Level level)
+        {
+            level.LevelFinishedEvent -= LevelFinished;
+            level.LevelTimeChanged -= LevelTimerTick;
+        }
+
         public Game(bool twoPlayers = false)
         {
             //TODO add more players
@@ -53,40 +65,36 @@ namespace Frog.ViewModels
                 players.Add(player);
             }
 
-            LevelFactory.LoadLevels(LevelList);
-            LevelsLeft = LevelList.Count;
-            LevelList[0].Init(players, mapInfo, AddItemOnScreen);
-            LevelList[0].LevelFinishedEvent += LevelFinished;
-            LevelList[0].LevelTimeChanged += LevelTimerTick;
+            LevelFactory.LoadLevels(LevelQueue);
+            LevelsLeft = LevelQueue.Count;
+            Init(LevelQueue.Peek());
         }
 
         void LevelTimerTick()
         {
-            LevelTime = LevelList[0].LevelTime;
+            LevelTime = LevelQueue.Peek().LevelTime;
         }
+
 
         void LevelFinished(bool PlayerWon)
         {
             ItemsOnScreen.Clear();
-            LevelList[0].LevelFinishedEvent -= LevelFinished;
-            LevelList[0].LevelTimeChanged -= LevelTimerTick;
-            LevelList.RemoveAt(0);
-            LevelsLeft = LevelList.Count;
+
+            Clear((LevelQueue.Dequeue()));
+            LevelsLeft = LevelQueue.Count;
             GC.Collect();
             GC.WaitForFullGCComplete();
 
             if (PlayerWon)
             {
 
-                if (LevelList.Count==0)
+                if (LevelQueue.Count==0)
                 {
                     GameOver?.Invoke();
                 }
                 else
                 {
-                    LevelList[0].Init(players, mapInfo, AddItemOnScreen);
-                    LevelList[0].LevelFinishedEvent += LevelFinished;
-                    LevelList[0].LevelTimeChanged += LevelTimerTick;
+                    Init(LevelQueue.Peek());
                 }
             }
             else
@@ -94,10 +102,17 @@ namespace Frog.ViewModels
                 GameOver?.Invoke();
             }
         }
+
         public void AddItemOnScreen(DrawableObject item)
         {
             ItemsOnScreen.Add(item);
-        }       
+        }
+        
+        public void Clear()
+        {
+            Players.Clear();
+            ItemsOnScreen.Clear();
+        }
 
  
         public ICommand MoveLeftCommand

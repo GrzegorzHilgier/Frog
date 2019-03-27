@@ -7,11 +7,13 @@ namespace Frog.Utilities
 {
     static class LevelFactory
     {
-        public static void LoadLevels(List<Level> LevelList)
+        public static void LoadLevels(Queue<Level> LevelQueue)
         {
-            LevelList.Add(new Level1());
-            LevelList.Add(new Level2());
-            LevelList.Add(new Level3());
+            LevelQueue.Enqueue(new Level1());
+            LevelQueue.Enqueue(new Level2());
+            LevelQueue.Enqueue(new Level3());
+            LevelQueue.Enqueue(new Level4());
+
         }
     }
 }

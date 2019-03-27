@@ -60,6 +60,7 @@
     <Compile Include="Levels\Level1.cs" />
     <Compile Include="Levels\Level2.cs" />
     <Compile Include="Levels\Level3.cs" />
+    <Compile Include="Levels\Level4.cs" />
     <Compile Include="Models\Backgroud.cs" />
     <Compile Include="Models\Car.cs" />
     <Compile Include="Utilities\LevelFactory.cs" />

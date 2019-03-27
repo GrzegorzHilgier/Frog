@@ -28,7 +28,7 @@ namespace Frog
         public MainWindow()
         {
             InitializeComponent();
-            InitializeGame();
+            RestartGame();
         }
 
         void GameOver()
@@ -40,20 +40,18 @@ namespace Frog
                 message += $"{game.Players[i].Name} Score: {game.Players[i].Score} \n";
             }
 
-
             MessageBox.Show(message);
-            InitializeGame();
+            RestartGame();
         }
 
-        void InitializeGame()
+        void RestartGame()
         {
             if (game != null)
             {
-                game.Players.Clear();
-                game.ItemsOnScreen.Clear();
+                game.Clear();                
                 game.GameOver -= GameOver;
                 game = null;
-                this.DataContext = null;
+                DataContext = null;
             }
 
             game = new Game();

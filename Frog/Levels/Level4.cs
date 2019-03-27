@@ -8,7 +8,7 @@ using Frog.Models;
 
 namespace Frog.Levels
 {
-    class Level3 : Level
+    class Level4 : Level
     {
         public override void Init(List<Player> players, MapInfo mapInfo, Action<DrawableObject> addItemToGame)
         {
