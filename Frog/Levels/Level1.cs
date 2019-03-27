@@ -21,9 +21,9 @@ namespace Frog.Levels
             AddItem(new Backgroud(0, mapInfo.Scale * 7, mapInfo.Width - 1, mapInfo.Scale, Backgroud.Type.ROAD));
             int PodSize = mapInfo.Scale - 1;
 
-            AddItem(new Pod(mapInfo.Scale * 4, 0, PodSize, PodSize, players));
+           //AddItem(new Pod(mapInfo.Scale * 4, 0, PodSize, PodSize, players));
             AddItem(new Pod(mapInfo.Scale * 7, 0, PodSize, PodSize, players));
-            AddItem(new Pod(mapInfo.Scale * 10, 0, PodSize, PodSize, players));
+           //AddItem(new Pod(mapInfo.Scale * 10, 0, PodSize, PodSize, players));
 
             Pod.AllPodsOccupied += LevelFinished;
             Pod.PlayerScored += GivePoints;

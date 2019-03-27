@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Frog.ViewModels;
 
 namespace Frog.Views
 {
@@ -20,15 +21,16 @@ namespace Frog.Views
     /// </summary>
     public partial class GameControl : UserControl
     {
+
+
         public GameControl()
         {
             InitializeComponent();
-            
         }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.Focus();
         }
+
     }
 }

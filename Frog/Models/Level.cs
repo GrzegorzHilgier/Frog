@@ -33,19 +33,6 @@ namespace Frog.Models
 
         protected virtual void LevelFinished()
         {
-
-            foreach (DrawableObject item in ItemsInGame)
-            {
-                item.Die();
-            }
-            foreach (Player player in Players)
-            {
-                player.OutOfLives -= PlayerGameOver;
-                player.LostLife -= PlayerLostLife;
-            }
-            LevelTimer.Tick -= TimerTick;
-            LevelTimer.Stop();
-            ItemsInGame.Clear();
             RaiseLevelFinishedEvent(true);
         }
 
@@ -54,7 +41,7 @@ namespace Frog.Models
             player.GoToStartPosition();
             ResetTime();
         }
-        void PlayerGameOver(int Score)
+        void PlayerGameOver(Player player)
         {
             if (Player.PlayersInGame == 0)
             {
@@ -65,6 +52,21 @@ namespace Frog.Models
 
         void RaiseLevelFinishedEvent(bool PlayerWon)
         {
+
+            foreach (DrawableObject item in ItemsInGame)
+            {
+                item.Die();
+            }
+
+            foreach (Player player in Players)
+            {
+                player.OutOfLives -= PlayerGameOver;
+                player.LostLife -= PlayerLostLife;
+            }
+            LevelTimer.Tick -= TimerTick;
+            LevelTimer.Stop();
+            ItemsInGame.Clear();
+
             LevelFinishedEvent?.Invoke(PlayerWon);
         }
 

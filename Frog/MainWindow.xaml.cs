@@ -24,6 +24,7 @@ namespace Frog
     public partial class MainWindow : Window
     {
         private Game game;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,33 +33,34 @@ namespace Frog
 
         void GameOver()
         {
-            //TODO add message for all players
+
             string message = string.Empty;
-            for(int i = 0; i< game.Players.Count; i++)
+            for (int i = 0; i < game.Players.Count; i++)
             {
                 message += $"{game.Players[i].Name} Score: {game.Players[i].Score} \n";
             }
 
+
             MessageBox.Show(message);
             InitializeGame();
-           
         }
 
         void InitializeGame()
         {
-            if(game!=null)
+            if (game != null)
             {
                 game.Players.Clear();
                 game.ItemsOnScreen.Clear();
                 game.GameOver -= GameOver;
                 game = null;
                 this.DataContext = null;
-                
+
             }
 
             game = new Game();
             DataContext = game;
             game.GameOver += GameOver;
         }
+
     }
 }
