@@ -11,11 +11,12 @@ namespace Frog.Models
         class Wood : DrawableObject
         {
             private List<Player> Players { get; set; }
+            protected MapInfo mapInfo { get; set; }
             protected DispatcherTimer timer = new DispatcherTimer();
             public int Xmovement { get; private set; }
             public int Ymovement { get; private set; }
-            public int MapWidth { get; private set; }
-            public Wood(int x, int y, int width, int height, int xmovement, int ymovement, int mapWidth, List<Player> players) : base(x, y, width, height)
+     
+            public Wood(int x, int y, int width, int height, int xmovement, int ymovement, MapInfo mapInfo, List<Player> players) : base(x, y, width, height)
             {
                 ImagePath = "Wood.png";
                 Players = players;
@@ -25,7 +26,7 @@ namespace Frog.Models
                 }
                 Xmovement = xmovement;
                 Ymovement = ymovement;
-                MapWidth = mapWidth;
+                this.mapInfo = mapInfo;
                 timer.Tick += MoveOnTick;
                 timer.Interval = TimeSpan.FromSeconds(0.02);
                 timer.Start();
@@ -42,7 +43,7 @@ namespace Frog.Models
                         player.IsMounted = true;
                         player.Xcoord += Xmovement;
                         player.Ycoord += Ymovement;
-                        if(player.Xcoord < -player.Width || player.Xcoord> MapWidth)
+                        if(player.Xcoord < -player.Width || player.Xcoord> mapInfo.Width)
                         {
                             player.Die();
                         }
@@ -55,8 +56,8 @@ namespace Frog.Models
             {
                 Xcoord += Xmovement;
                 Ycoord += Ymovement;
-                if (Xcoord < -1 * Width) Xcoord = MapWidth;
-                if (Xcoord > MapWidth) Xcoord = -1 * Width;
+                if (Xcoord < -mapInfo.MaxObjectWidth) Xcoord = mapInfo.Width;
+                if (Xcoord > mapInfo.Width ) Xcoord = -mapInfo.MaxObjectWidth;
                 foreach (Player player in Players)
                 {
                     CheckIfCollisionWithPlayer(player);

@@ -48,9 +48,14 @@ namespace Frog
         {
             if(game!=null)
             {
+                game.Players.Clear();
+                game.ItemsOnScreen.Clear();
                 game.GameOver -= GameOver;
+                game = null;
+                this.DataContext = null;
+                
             }
-            game = null;
+
             game = new Game();
             DataContext = game;
             game.GameOver += GameOver;

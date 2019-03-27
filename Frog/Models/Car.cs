@@ -10,12 +10,14 @@ namespace Frog.Models
 {
     class Car :DrawableObject
     {
+        protected MapInfo mapInfo;
         private List<Player> Players { get; set; }
         DispatcherTimer timer = new DispatcherTimer();
         public int Xmovement { get; private set; }
         public int Ymovement { get; private set; }
-        public int MapWidth { get; private set; }
-        public Car(int x, int y, int width, int height, int xmovement, int ymovement, int mapWidth, List<Player>players ) :base(x,y,width,height)
+ 
+        
+        public Car(int x, int y, int width, int height, int xmovement, int ymovement, MapInfo mapInfo, List<Player>players ) :base(x,y,width,height)
         {
             ImagePath = "Car.png";
             Players = players;
@@ -25,7 +27,7 @@ namespace Frog.Models
             }
             Xmovement = xmovement;
             Ymovement = ymovement;
-            MapWidth = mapWidth;
+            this.mapInfo = mapInfo;
             timer.Tick += TimerTick;
             timer.Interval = TimeSpan.FromSeconds(0.02);
             timer.Start();
@@ -43,8 +45,8 @@ namespace Frog.Models
         {
             Xcoord += Xmovement;
             Ycoord += Ymovement;
-            if (Xcoord < -1 * Width) Xcoord = MapWidth;
-            if (Xcoord > MapWidth) Xcoord = -1 * Width;
+            if (Xcoord < -mapInfo.MaxObjectWidth) Xcoord = mapInfo.Width;
+            if (Xcoord > mapInfo.Width) Xcoord = -mapInfo.MaxObjectWidth;
             foreach(Player player in Players)
             {
                 CheckIfCollisionWithPlayer(player);
@@ -54,7 +56,6 @@ namespace Frog.Models
         {
             timer.Tick -= TimerTick;
             timer.Stop();
-            timer = null;
             foreach (Player player in Players)
             {
                 player.Moved -= CheckIfCollisionWithPlayer;

@@ -11,8 +11,8 @@ namespace Frog.ViewModels
     class Game : ObservableObject
     {
         MapInfo mapInfo = new MapInfo(30, 9, 15);
-        Level ActualLevel { get; set; }
-        Difficulty ActualDifficulty { get; set; } = Difficulty.EASY;
+        List<Level> LevelList { get; set; } = new List<Level>();
+        
         private List<Player> players= new List<Player>();
 
         private int levelTime;
@@ -41,14 +41,15 @@ namespace Frog.ViewModels
                 players.Add(player);
             }
 
-            ActualLevel = new Level(players, ActualDifficulty, mapInfo, AddItemOnScreen);
-            ActualLevel.LevelFinishedEvent += LevelFinished;
-            ActualLevel.LevelTimeChangedEvent += LevelTimerTick;
+            LevelFactory.LoadLevels(LevelList);
+            LevelList[0].Init(players, mapInfo, AddItemOnScreen);
+            LevelList[0].LevelFinishedEvent += LevelFinished;
+            LevelList[0].LevelTimeChangedEvent += LevelTimerTick;
         }
 
         void LevelTimerTick()
         {
-            LevelTime = ActualLevel.LevelTime;
+            LevelTime = LevelList[0].LevelTime;
         }
 
         void LevelFinished(bool PlayerWon)
@@ -57,21 +58,20 @@ namespace Frog.ViewModels
             if(PlayerWon)
             {
                 ItemsOnScreen.Clear();
-                ActualLevel.LevelFinishedEvent -= LevelFinished;
-                ActualLevel.LevelTimeChangedEvent -= LevelTimerTick;
-                ActualLevel = null;
+                LevelList[0].LevelFinishedEvent -= LevelFinished;
+                LevelList[0].LevelTimeChangedEvent -= LevelTimerTick;
+                LevelList.RemoveAt(0);
                 GC.Collect();
                 GC.WaitForFullGCComplete();
-                if (ActualDifficulty == Difficulty.HARD)
+                if (LevelList.Count==0)
                 {
                     GameOver?.Invoke();
                 }
                 else
                 {
-                    ActualDifficulty++;
-                    ActualLevel = new Level(players, ActualDifficulty, mapInfo, AddItemOnScreen);
-                    ActualLevel.LevelFinishedEvent += LevelFinished;
-                    ActualLevel.LevelTimeChangedEvent += LevelTimerTick;
+                    LevelList[0].Init(players, mapInfo, AddItemOnScreen);
+                    LevelList[0].LevelFinishedEvent += LevelFinished;
+                    LevelList[0].LevelTimeChangedEvent += LevelTimerTick;
                 }
             }
             else
@@ -84,6 +84,7 @@ namespace Frog.ViewModels
             ItemsOnScreen.Add(item);
         }
 
+ 
         public ICommand MoveLeftCommand
         {
             get { return new SimpleCommand(MoveLeft); }

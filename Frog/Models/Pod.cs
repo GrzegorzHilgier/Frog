@@ -45,10 +45,6 @@ namespace Frog.Models
                     {
                         AllPodsOccupied?.Invoke();
                     }
-                    else
-                    {                       
-                        player.GoToStartPosition();
-                    }
                 }               
             }
         }

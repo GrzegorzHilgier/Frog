@@ -7,7 +7,8 @@
         xmlns:ViewModels="clr-namespace:Frog.ViewModels"
         xmlns:local="clr-namespace:Frog"
         mc:Ignorable="d"
-        Title="MainWindow" Height="420" Width="460">
+        Title="MainWindow" Height="420" Width="460"
+        ResizeMode="NoResize">
  
 
     <Grid Name="MainContainer">
@@ -15,8 +16,8 @@
             <RowDefinition Height="AUTO"></RowDefinition>
             <RowDefinition Height="AUTO"></RowDefinition>
         </Grid.RowDefinitions>
-        <Views:GameControl   Grid.Row="1"/>
         <Views:BoardControl />
+        <Views:GameControl   Grid.Row="1"/>
 
     </Grid>
 

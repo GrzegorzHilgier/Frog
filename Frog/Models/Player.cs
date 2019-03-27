@@ -42,6 +42,7 @@ namespace Frog.Models
         DispatcherTimer timer = new DispatcherTimer();
 
         public event Action<int> OutOfLives;
+        public event Action <Player> LostLife;
         public event Action<DrawableObject> FinishedMove;
         public event Action<DrawableObject, Direction, Action<bool>> TryingToMove;
         public event Action<DrawableObject> Moved;
@@ -63,8 +64,11 @@ namespace Frog.Models
         public override void Die()
         {
             Lives -= 1;
-            GoToStartPosition();
-            if (Lives==0)
+            if (Lives>0)
+            {
+                LostLife?.Invoke(this);
+            }
+            else
             {
                 PlayersInGame--;
                 timer.Tick -= TimerTick;

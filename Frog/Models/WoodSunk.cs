@@ -13,8 +13,8 @@ namespace Frog.Models
         private bool IsUnderwater = false;
         private int TickCounter = 0;
 
-        public WoodSunk(int x, int y, int width, int height, int xmovement, int ymovement, int mapWidth, List<Player> players) : base(x, y, width, height,xmovement,ymovement,mapWidth,players)
-        {
+        public WoodSunk(int x, int y, int width, int height, int xmovement, int ymovement, MapInfo mapInfo, List<Player> players): base(x, y, width, height, xmovement, ymovement, mapInfo, players)
+        {           
             timer.Tick += SinkOnTick;
         }
 
@@ -35,7 +35,7 @@ namespace Frog.Models
                         player.IsMounted = true;
                         player.Xcoord += Xmovement;
                         player.Ycoord += Ymovement;
-                        if (player.Xcoord < -player.Width || player.Xcoord > MapWidth)
+                        if (player.Xcoord < -player.Width || player.Xcoord > mapInfo.Width)
                         {
                             player.Die();
                         }
