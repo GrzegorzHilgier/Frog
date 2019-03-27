@@ -9,14 +9,14 @@ using System.Windows.Threading;
 namespace Frog.Models
 {
     class Car :DrawableObject
-    {
-        protected MapInfo mapInfo;
+    {       
         private List<Player> Players { get; set; }
-        DispatcherTimer timer = new DispatcherTimer();
+        protected DispatcherTimer timer = new DispatcherTimer();
+        protected MapInfo mapInfo;
         public int Xmovement { get; private set; }
         public int Ymovement { get; private set; }
- 
-        
+
+
         public Car(int x, int y, int width, int height, int xmovement, int ymovement, MapInfo mapInfo, List<Player>players ) :base(x,y,width,height)
         {
             ImagePath = "Car.png";
@@ -32,16 +32,18 @@ namespace Frog.Models
             timer.Interval = TimeSpan.FromSeconds(0.02);
             timer.Start();
         }
-        public void CheckIfCollisionWithPlayer(DrawableObject item)
+
+        private void CheckIfCollisionWithPlayer(DrawableObject item)
         {
             Player player = item as Player;
 
             if (base.CheckIfCollisionWith(item))
             {
-                player.Die();
+                player?.Die();
             }
         }
-        protected  void TimerTick(object sender, EventArgs e)
+
+        private  void TimerTick(object sender, EventArgs e)
         {
             Xcoord += Xmovement;
             Ycoord += Ymovement;

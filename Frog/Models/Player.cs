@@ -10,10 +10,13 @@ namespace Frog.Models
 {
     class Player: DrawableObject
     {
+        public static int PlayersInGame = 0;
+
+        DispatcherTimer timer = new DispatcherTimer();
 
         Direction actualDirection;
         int distanceToDestination = 0;
-        public static int PlayersInGame = 0;
+
         public bool IsMoving { get; private set; } = false;
         public bool IsMounted { get; set; } = false;
 
@@ -21,12 +24,13 @@ namespace Frog.Models
         public int Lives
         {
             get => lives;
-            set
+            private set
             {
                 lives = value;
                 RaisePropertyChangedEvent("Lives");
             }
         }
+
         private int score;
         public int Score
         {
@@ -37,15 +41,15 @@ namespace Frog.Models
                 RaisePropertyChangedEvent("Score");
             }
         }
+
         public string Name { get; private set; }
 
-        DispatcherTimer timer = new DispatcherTimer();
-
+        public event Action<Player> LostLife;
         public event Action<Player> OutOfLives;
-        public event Action <Player> LostLife;
-        public event Action<DrawableObject> FinishedMove;
+
         public event Action<DrawableObject, Direction, Action<bool>> TryingToMove;
         public event Action<DrawableObject> Moved;
+        public event Action<DrawableObject> FinishedMove;
 
         public Player(string name, ushort lives, int x, int y, int width, int height):base(x,y,width,height)
         {
@@ -58,7 +62,6 @@ namespace Frog.Models
             StartXcoord = x;
             StartYcoord = y;
             timer.Interval = TimeSpan.FromSeconds(0.02);
-
         }
 
         public override void Die()
@@ -72,6 +75,7 @@ namespace Frog.Models
             {
                 PlayersInGame--;
                 timer.Tick -= TimerTick;
+                ImagePath = string.Empty;
                 OutOfLives?.Invoke(this);
             }
             
@@ -97,8 +101,7 @@ namespace Frog.Models
                 if (finalResult)
                 {
                     GoToPosition(direction, value);
-                }
-            
+                }         
 
         }
 

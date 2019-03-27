@@ -80,9 +80,11 @@ namespace Frog.Models
             }
             
         }
+
         public override void Die()
         {
             timer.Tick -= Blink;
+            timer.Tick -= SinkOnTick;
             base.Die();
         }
     }

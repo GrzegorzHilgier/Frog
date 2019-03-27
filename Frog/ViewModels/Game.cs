@@ -44,7 +44,7 @@ namespace Frog.ViewModels
             LevelFactory.LoadLevels(LevelList);
             LevelList[0].Init(players, mapInfo, AddItemOnScreen);
             LevelList[0].LevelFinishedEvent += LevelFinished;
-            LevelList[0].LevelTimeChangedEvent += LevelTimerTick;
+            LevelList[0].LevelTimeChanged += LevelTimerTick;
         }
 
         void LevelTimerTick()
@@ -54,15 +54,16 @@ namespace Frog.ViewModels
 
         void LevelFinished(bool PlayerWon)
         {
+            ItemsOnScreen.Clear();
+            LevelList[0].LevelFinishedEvent -= LevelFinished;
+            LevelList[0].LevelTimeChanged -= LevelTimerTick;
+            LevelList.RemoveAt(0);
+            GC.Collect();
+            GC.WaitForFullGCComplete();
 
-            if(PlayerWon)
+            if (PlayerWon)
             {
-                ItemsOnScreen.Clear();
-                LevelList[0].LevelFinishedEvent -= LevelFinished;
-                LevelList[0].LevelTimeChangedEvent -= LevelTimerTick;
-                LevelList.RemoveAt(0);
-                GC.Collect();
-                GC.WaitForFullGCComplete();
+
                 if (LevelList.Count==0)
                 {
                     GameOver?.Invoke();
@@ -71,7 +72,7 @@ namespace Frog.ViewModels
                 {
                     LevelList[0].Init(players, mapInfo, AddItemOnScreen);
                     LevelList[0].LevelFinishedEvent += LevelFinished;
-                    LevelList[0].LevelTimeChangedEvent += LevelTimerTick;
+                    LevelList[0].LevelTimeChanged += LevelTimerTick;
                 }
             }
             else

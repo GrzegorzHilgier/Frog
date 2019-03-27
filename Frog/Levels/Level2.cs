@@ -23,8 +23,8 @@ namespace Frog.Levels
             int PodSize = mapInfo.Scale - 1;
             //AddItem(new Pod(mapInfo.Scale, 0, PodSize, PodSize, players));
             //AddItem(new Pod(mapInfo.Scale * 4, 0, PodSize, PodSize, players));
-            AddItem(new Pod(mapInfo.Scale * 7, 0, PodSize, PodSize, players));
-           //AddItem(new Pod(mapInfo.Scale * 10, 0, PodSize, PodSize, players));
+            //AddItem(new Pod(mapInfo.Scale * 7, 0, PodSize, PodSize, players));
+           AddItem(new Pod(mapInfo.Scale * 10, 0, PodSize, PodSize, players));
             //AddItem(new Pod(mapInfo.Scale * 13, 0, PodSize, PodSize, players));
 
             Pod.AllPodsOccupied += LevelFinished;

@@ -10,13 +10,13 @@ namespace Frog.Models
 {
         class Wood : DrawableObject
         {
-            private List<Player> Players { get; set; }
-            protected MapInfo mapInfo { get; set; }
-            protected DispatcherTimer timer = new DispatcherTimer();
-            public int Xmovement { get; private set; }
-            public int Ymovement { get; private set; }
-     
-            public Wood(int x, int y, int width, int height, int xmovement, int ymovement, MapInfo mapInfo, List<Player> players) : base(x, y, width, height)
+                private List<Player> Players { get; set; }
+                protected DispatcherTimer timer = new DispatcherTimer();
+                protected MapInfo mapInfo;
+                public int Xmovement { get; private set; }
+                public int Ymovement { get; private set; }
+
+        public Wood(int x, int y, int width, int height, int xmovement, int ymovement, MapInfo mapInfo, List<Player> players) : base(x, y, width, height)
             {
                 ImagePath = "Wood.png";
                 Players = players;

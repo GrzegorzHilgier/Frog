@@ -7,40 +7,35 @@ namespace Frog.Models
 {
     abstract class Level
     {
-        protected virtual int LevelMaxTime { get; set; } = 20;
+
         private DispatcherTimer LevelTimer { get; set; } = new DispatcherTimer();
         private List<DrawableObject> ItemsInGame { get; set; } = new List<DrawableObject>();
         private Action<DrawableObject> AddItemToGame { get; set; }
+
         protected List<Player> Players { get; set; }
-        private int levelTime { get; set; }
+
+        protected virtual int LevelMaxTime { get; set; } = 20;
+        private int levelTime;
         public int LevelTime
         {
             get=>levelTime;
             protected set
             {
                 levelTime = value;
-                LevelTimeChangedEvent?.Invoke();
+                LevelTimeChanged?.Invoke();
             }
         } 
-        public event Action LevelTimeChangedEvent;
+
+        public event Action LevelTimeChanged;
         public event Action<bool> LevelFinishedEvent;
-
-        protected void AddItem(DrawableObject item)
-        {
-            ItemsInGame.Add(item);
-            AddItemToGame(item);
-        }
-
-        protected virtual void LevelFinished()
-        {
-            RaiseLevelFinishedEvent(true);
-        }
+        //True => player won, false => player lost
 
         void PlayerLostLife(Player player)
         {
             player.GoToStartPosition();
             ResetTime();
         }
+
         void PlayerGameOver(Player player)
         {
             if (Player.PlayersInGame == 0)
@@ -66,6 +61,7 @@ namespace Frog.Models
             LevelTimer.Tick -= TimerTick;
             LevelTimer.Stop();
             ItemsInGame.Clear();
+            AddItemToGame = null;
 
             LevelFinishedEvent?.Invoke(PlayerWon);
         }
@@ -87,11 +83,23 @@ namespace Frog.Models
         {
             levelTime = LevelMaxTime;
         }
+
         protected virtual void GivePoints(Player player)
         {
             player.Score += LevelTime * 10;
             player.GoToStartPosition();
             ResetTime();
+        }
+
+        protected void AddItem(DrawableObject item)
+        {
+            ItemsInGame.Add(item);
+            AddItemToGame(item);
+        }
+
+        protected virtual void LevelFinished()
+        {
+            RaiseLevelFinishedEvent(true);
         }
 
         public virtual void Init(List<Player> players, MapInfo mapInfo, Action<DrawableObject> addItemToGame)

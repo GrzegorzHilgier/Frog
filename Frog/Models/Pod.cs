@@ -13,7 +13,7 @@ namespace Frog.Models
         static ushort CreatedPods = 0;
         static ushort OccupiedPods = 0;
         private List<Player> Players { get; set; }
-        public bool IsChecked { get; private set; } = false;
+        public bool IsOccupied { get; private set; } = false;
 
         public static event Action AllPodsOccupied;
         public static event Action<Player> PlayerScored;
@@ -27,17 +27,16 @@ namespace Frog.Models
             {
                 player.FinishedMove +=  CheckIfCollisionWithPlayer;
                 player.TryingToMove += CheckIfPlayerCanGetIn;
-
             }
         }
         public void CheckIfCollisionWithPlayer(DrawableObject item)
         {
             Player player = item as Player;
-            if(!IsChecked)
+            if(!IsOccupied)
             {
                 if (base.CheckIfCollisionWith(item))
                 {
-                    IsChecked = true;
+                    IsOccupied = true;
                     ImagePath = "PodOccupied.png";
                     OccupiedPods++;
                     PlayerScored?.Invoke(player);
@@ -48,12 +47,18 @@ namespace Frog.Models
                 }               
             }
         }
+
         public override void Die()
         {
             foreach (Player player in Players)
             {
                 player.FinishedMove -= CheckIfCollisionWithPlayer;
                 player.TryingToMove -= CheckIfPlayerCanGetIn;
+            }
+            CreatedPods--;
+            if(IsOccupied)
+            {
+                OccupiedPods--;
             }
 
         }

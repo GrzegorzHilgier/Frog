@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Frog.Utilities;
 
 namespace Frog.Models
@@ -20,6 +16,9 @@ namespace Frog.Models
                 case Type.ROAD:
                     ImagePath = "Road.png";
                     break;
+                default:
+                    throw (new ArgumentOutOfRangeException($"Type {type} not recognized"));
+                    
             }
         }
         public override void Die()
