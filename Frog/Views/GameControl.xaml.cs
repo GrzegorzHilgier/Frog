@@ -28,7 +28,10 @@ namespace Frog.Views
 
         private void StartNewGame_Click(object sender, RoutedEventArgs e)
         {
+            StartNewGame.IsEnabled = false;
+            game.Clear();
             game.Start();
+
         }
 
         private void GameOver()
@@ -42,8 +45,8 @@ namespace Frog.Views
 
             MessageBox.Show(message);
 
-            game.Clear();
-            
+            StartNewGame.IsEnabled = true;
+
         }
 
     }

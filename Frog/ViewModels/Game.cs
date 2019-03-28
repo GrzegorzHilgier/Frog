@@ -44,21 +44,11 @@ namespace Frog.ViewModels
        
         public event Action GameOver;
 
-        private void Init(Level level)
-        {
-            level.Init(players, mapInfo, AddItemOnScreen);
-            level.LevelFinishedEvent += LevelFinished;
-            level.LevelTimeChanged += LevelTimerTick;
-        }
-        private void Clear(Level level)
-        {
-            level.LevelFinishedEvent -= LevelFinished;
-            level.LevelTimeChanged -= LevelTimerTick;
-        }
+
 
         public void Start(bool twoPlayers = false)
         {
-
+            
             //TODO add more players
             Players.Add(new Player("Green", 3, mapInfo.Scale * 7, mapInfo.Scale * 8, mapInfo.Scale - 1, mapInfo.Scale - 1));
 
@@ -73,21 +63,42 @@ namespace Frog.ViewModels
             Init(ActualLevel);
         }
 
-        void LevelTimerTick()
+        public void AddItemOnScreen(DrawableObject item)
+        {
+            ItemsOnScreen.Add(item);
+        }
+
+        public void Clear()
+        {
+            Players.Clear();
+            players.Clear();
+            ItemsOnScreen.Clear();
+            LevelQueue.Clear();
+        }
+
+        private void Init(Level level)
+        {
+            level.Init(players, mapInfo, AddItemOnScreen);
+            level.LevelFinishedEvent += LevelFinished;
+            level.LevelTimeChanged += LevelTimerTick;
+        }
+        private void Clear(Level level)
+        {
+            level.LevelFinishedEvent -= LevelFinished;
+            level.LevelTimeChanged -= LevelTimerTick;
+        }
+        private void LevelTimerTick()
         {
             LevelTime = ActualLevel.LevelTime;
         }
 
-        void LevelFinished(bool PlayerWon)
+        private void LevelFinished(bool PlayerWon)
         {
             ItemsOnScreen.Clear();
-
             Clear(ActualLevel);
-
 
             if (PlayerWon)
             {
-
                 if (LevelQueue.Count==0)
                 {
                     GameOver?.Invoke();
@@ -105,22 +116,6 @@ namespace Frog.ViewModels
             }
         }
 
-        public void AddItemOnScreen(DrawableObject item)
-        {
-            ItemsOnScreen.Add(item);
-        }
-        
-        public void Clear()
-        {
-            Players.Clear();
-            players.Clear();
-            ItemsOnScreen.Clear();
-            LevelQueue.Clear();
-
-
-        }
-
- 
         public ICommand MoveLeftCommand
         {
             get { return new SimpleCommand(MoveLeft); }
@@ -138,7 +133,7 @@ namespace Frog.ViewModels
             get { return new SimpleCommand(MoveDown); }
         }
 
-        void MoveLeft()
+        private void MoveLeft()
         {
             if(Players[0].Xcoord > Players[0].Width)
             {
@@ -146,7 +141,7 @@ namespace Frog.ViewModels
             }
         }
 
-        void MoveRight()
+        private void MoveRight()
         {
             if(Players[0].Xcoord < mapInfo.Width-mapInfo.Scale)
             {
@@ -155,7 +150,7 @@ namespace Frog.ViewModels
 
         }
 
-        void MoveUp()
+        private void MoveUp()
         {
             if(Players[0].Ycoord >= Players[0].Height)
             {
@@ -164,7 +159,7 @@ namespace Frog.ViewModels
 
         }
 
-        void MoveDown()
+        private void MoveDown()
         {
             if (Players[0].Ycoord < mapInfo.Height- mapInfo.Scale)
             {
