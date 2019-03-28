@@ -1,31 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
-using System.Windows.Media.Imaging;
-using System.Drawing;
-using System.Windows.Threading;
-
-
-
+﻿
+using System.Windows.Media;
 namespace Frog.Utilities
 {
-    public enum Direction { LEFT, RIGHT, UP,DOWN };
-    abstract class DrawableObject:ObservableObject
+
+    abstract class DrawableObject : ObservableObject
     {
+        private bool isVisible = true;
+        public bool IsVisible
+        {
+            get => isVisible;
+            protected set
+            {
+                isVisible = value;
+                RaisePropertyChangedEvent(nameof(IsVisible));
+            }
+        }
+
+        private ImageSource image;
+        public ImageSource Image
+        {
+            get => image;
+            protected set
+            {
+                image = value;
+                RaisePropertyChangedEvent(nameof(Image));
+            }
+        }
 
         private string imagePath;
-        public String ImagePath
+        public string ImagePath
         {
             get => imagePath;
             protected set
             {
-                imagePath = $"{Directory.GetCurrentDirectory().Replace("\\", "/")}/resources/{value}";
-                RaisePropertyChangedEvent("ImagePath");
-
+                imagePath = value;
+                RaisePropertyChangedEvent(nameof(ImagePath));
             }
         }
 
@@ -36,7 +45,7 @@ namespace Frog.Utilities
             set
             {
                     xcoord = value;
-                    RaisePropertyChangedEvent("Xcoord");
+                    RaisePropertyChangedEvent(nameof(Xcoord));
             }
         }
         private int ycoord;
@@ -46,7 +55,7 @@ namespace Frog.Utilities
             set
             {
                 ycoord = value;
-                RaisePropertyChangedEvent("Ycoord");
+                RaisePropertyChangedEvent(nameof(Ycoord));
             }
         }
         public int Width { get; set; }
@@ -60,7 +69,7 @@ namespace Frog.Utilities
             Height = height;
             Xcoord = x;
             Ycoord = y;
-            ImagePath = $"{Directory.GetCurrentDirectory().Replace("\\","/")}/resources/";
+
         }
 
         public virtual bool CheckIfCollisionWith(DrawableObject item)

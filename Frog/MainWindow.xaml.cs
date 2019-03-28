@@ -23,40 +23,9 @@ namespace Frog
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Game game;
-
         public MainWindow()
         {
             InitializeComponent();
-            RestartGame();
-        }
-
-        void GameOver()
-        {
-
-            string message = string.Empty;
-            for (int i = 0; i < game.Players.Count; i++)
-            {
-                message += $"{game.Players[i].Name} Score: {game.Players[i].Score} \n";
-            }
-
-            MessageBox.Show(message);
-            RestartGame();
-        }
-
-        void RestartGame()
-        {
-            if (game != null)
-            {
-                game.Clear();                
-                game.GameOver -= GameOver;
-                game = null;
-                DataContext = null;
-            }
-
-            game = new Game();
-            DataContext = game;
-            game.GameOver += GameOver;
         }
 
     }

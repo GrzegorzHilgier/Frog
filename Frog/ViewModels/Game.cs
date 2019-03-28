@@ -22,10 +22,9 @@ namespace Frog.ViewModels
             private set
             {
                 levelsLeft = value;
-                RaisePropertyChangedEvent("LevelsLeft");
+                RaisePropertyChangedEvent(nameof(LevelsLeft));
             }
         }
-
 
         private int levelTime;
         public int LevelTime
@@ -34,7 +33,7 @@ namespace Frog.ViewModels
             private set
             {
                 levelTime = value;
-                RaisePropertyChangedEvent("LevelTime");
+                RaisePropertyChangedEvent(nameof(LevelTime));
             }
                 
         }
@@ -55,12 +54,13 @@ namespace Frog.ViewModels
             level.LevelTimeChanged -= LevelTimerTick;
         }
 
-        public Game(bool twoPlayers = false)
+        public void Start(bool twoPlayers = false)
         {
-            //TODO add more players
-            Players.Add(new Player("Green",3, mapInfo.Scale *7, mapInfo.Scale *8, mapInfo.Scale -1, mapInfo.Scale -1));
 
-            foreach(Player player in Players)
+            //TODO add more players
+            Players.Add(new Player("Green", 3, mapInfo.Scale * 7, mapInfo.Scale * 8, mapInfo.Scale - 1, mapInfo.Scale - 1));
+
+            foreach (Player player in Players)
             {
                 players.Add(player);
             }
@@ -82,8 +82,6 @@ namespace Frog.ViewModels
 
             Clear((LevelQueue.Dequeue()));
             LevelsLeft = LevelQueue.Count;
-            GC.Collect();
-            GC.WaitForFullGCComplete();
 
             if (PlayerWon)
             {
@@ -111,7 +109,11 @@ namespace Frog.ViewModels
         public void Clear()
         {
             Players.Clear();
+            players.Clear();
             ItemsOnScreen.Clear();
+            LevelQueue.Clear();
+
+
         }
 
  

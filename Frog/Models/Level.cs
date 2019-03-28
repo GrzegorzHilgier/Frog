@@ -30,13 +30,13 @@ namespace Frog.Models
         public event Action<bool> LevelFinishedEvent;
         //True => player won, false => player lost
 
-        void PlayerLostLife(Player player)
+        private void PlayerLostLife(Player player)
         {
             player.GoToStartPosition();
             ResetTime();
         }
 
-        void PlayerGameOver(Player player)
+        private void PlayerGameOver(Player player)
         {
             if (Player.PlayersInGame == 0)
             {
@@ -45,9 +45,9 @@ namespace Frog.Models
 
         }
 
-        void RaiseLevelFinishedEvent(bool PlayerWon)
+        protected  void RaiseLevelFinishedEvent(bool PlayerWon)
         {
-
+            Clean();
             foreach (DrawableObject item in ItemsInGame)
             {
                 item.Die();
@@ -66,7 +66,7 @@ namespace Frog.Models
             LevelFinishedEvent?.Invoke(PlayerWon);
         }
 
-        void TimerTick(object sender, EventArgs e)
+        private void TimerTick(object sender, EventArgs e)
         {
             LevelTime--;
             if(LevelTime<0)
@@ -97,10 +97,7 @@ namespace Frog.Models
             AddItemToGame(item);
         }
 
-        protected virtual void LevelFinished()
-        {
-            RaiseLevelFinishedEvent(true);
-        }
+        protected abstract void Clean();
 
         public virtual void Init(List<Player> players, MapInfo mapInfo, Action<DrawableObject> addItemToGame)
         {

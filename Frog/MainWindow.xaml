@@ -5,19 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Views="clr-namespace:Frog.Views"
         xmlns:ViewModels="clr-namespace:Frog.ViewModels"
-        xmlns:local="clr-namespace:Frog"
         mc:Ignorable="d"
         Title="MainWindow" Height="420" Width="460"
         ResizeMode="NoResize">
  
 
     <Grid Name="MainContainer">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="AUTO"></RowDefinition>
-            <RowDefinition Height="AUTO"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Views:BoardControl />
-        <Views:GameControl   Grid.Row="1"/>
+
+        <Views:GameControl />
 
     </Grid>
 

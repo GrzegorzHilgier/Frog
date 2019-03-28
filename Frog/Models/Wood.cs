@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Frog.Utilities;
 using System.Windows.Threading;
 
@@ -18,7 +15,7 @@ namespace Frog.Models
 
         public Wood(int x, int y, int width, int height, int xmovement, int ymovement, MapInfo mapInfo, List<Player> players) : base(x, y, width, height)
             {
-                ImagePath = "Wood.png";
+                ImagePath = ResourcesPath.Wood;
                 Players = players;
                 foreach (Player player in Players)
                 {

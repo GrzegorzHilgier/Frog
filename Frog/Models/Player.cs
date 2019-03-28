@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Windows.Media.Imaging;
-using System.Drawing;
 using Frog.Utilities;
 using System.Windows.Threading;
 using System.Collections.Generic;
@@ -12,10 +10,10 @@ namespace Frog.Models
     {
         public static int PlayersInGame = 0;
 
-        DispatcherTimer timer = new DispatcherTimer();
+        private DispatcherTimer timer = new DispatcherTimer();
 
-        Direction actualDirection;
-        int distanceToDestination = 0;
+        private Direction actualDirection;
+        private int distanceToDestination = 0;
 
         public bool IsMoving { get; private set; } = false;
         public bool IsMounted { get; set; } = false;
@@ -27,7 +25,7 @@ namespace Frog.Models
             private set
             {
                 lives = value;
-                RaisePropertyChangedEvent("Lives");
+                RaisePropertyChangedEvent(nameof(Lives));
             }
         }
 
@@ -38,7 +36,7 @@ namespace Frog.Models
             set
             {
                 score = value;
-                RaisePropertyChangedEvent("Score");
+                RaisePropertyChangedEvent(nameof(Score));
             }
         }
 
@@ -57,7 +55,7 @@ namespace Frog.Models
             PlayersInGame++;
             Score = 0;
             Name = name;
-            ImagePath = "FrogImg.png";
+            ImagePath = ResourcesPath.Frog;
             timer.Tick += TimerTick;
             StartXcoord = x;
             StartYcoord = y;
@@ -75,7 +73,7 @@ namespace Frog.Models
             {
                 PlayersInGame--;
                 timer.Tick -= TimerTick;
-                ImagePath = string.Empty;
+                IsVisible = false;
                 OutOfLives?.Invoke(this);
             }
             

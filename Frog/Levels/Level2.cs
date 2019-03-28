@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Frog.Models;
 using Frog.Utilities;
 
@@ -27,7 +24,7 @@ namespace Frog.Levels
             AddItem(new Pod(mapInfo.Scale * 10, 0, PodSize, PodSize, players));
             //AddItem(new Pod(mapInfo.Scale * 13, 0, PodSize, PodSize, players));
 
-            Pod.AllPodsOccupied += LevelFinished;
+            Pod.AllPodsOccupied += LevelCompleted;
             Pod.PlayerScored += GivePoints;
 
             int Scale = mapInfo.Scale;
@@ -57,11 +54,15 @@ namespace Frog.Levels
             AddItem(new Car(Scale * 5, Scale * 7, Scale*2, height, -2, 0, mapInfo, Players));
             AddItem(new Car(Scale * 12, Scale * 7, Scale, height, -2, 0, mapInfo, Players));
         }
-        protected override void LevelFinished()
+        void LevelCompleted()
         {
-            Pod.AllPodsOccupied -= LevelFinished;
+            RaiseLevelFinishedEvent(true);
+        }
+        protected override void Clean()
+        {
+            Pod.AllPodsOccupied -= LevelCompleted;
             Pod.PlayerScored -= GivePoints;
-            base.LevelFinished();
+
         }
     }
 }

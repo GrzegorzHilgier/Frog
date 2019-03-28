@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Frog.Utilities;
-using System.Windows.Threading;
 
 namespace Frog.Models
 {
@@ -57,12 +53,12 @@ namespace Frog.Models
             else if(TickCounter ==200)
             {
                 timer.Tick -= Blink;
-                ImagePath = string.Empty;
+                IsVisible = false;
                 IsUnderwater = true;
             }
             else if (TickCounter == 300)
             {
-                ImagePath = "Wood.png";
+                IsVisible = true;
                 IsUnderwater = false;
                 TickCounter = 0;
             }
@@ -72,11 +68,11 @@ namespace Frog.Models
         {
             if(TickCounter % 20 == 0)
             {
-                ImagePath = string.Empty;
+                IsVisible = false;
             }
             else if(TickCounter % 10 == 0)
             {
-                ImagePath = "Wood.png";
+                IsVisible = true ;
             }
             
         }

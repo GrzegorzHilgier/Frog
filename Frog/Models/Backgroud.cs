@@ -11,10 +11,10 @@ namespace Frog.Models
             switch(type)
             {
                 case Type.GRASS:
-                    ImagePath = "Grass.png";
+                    ImagePath = ResourcesPath.Grass;
                     break;
                 case Type.ROAD:
-                    ImagePath = "Road.png";
+                    ImagePath = ResourcesPath.Road;
                     break;
                 default:
                     throw (new ArgumentOutOfRangeException($"Type {type} not recognized"));
@@ -23,7 +23,7 @@ namespace Frog.Models
         }
         public override void Die()
         {
-           
+            IsVisible = false;
         }
     }
 }

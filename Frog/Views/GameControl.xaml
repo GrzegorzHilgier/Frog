@@ -4,14 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ViewModels="clr-namespace:Frog.ViewModels"
-             xmlns:local="clr-namespace:Frog.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="460"
-             Focusable="True"
-             d:DataContext="{d:DesignInstance ViewModels:Game}"
-             Loaded="UserControl_Loaded">
+             Focusable="True"            
+             Loaded="UserControl_Loaded"
+             d:DataContext="{d:DesignInstance ViewModels:Game}">
 
-    
+
     <UserControl.InputBindings>
         <KeyBinding Key="W" Command="{Binding MoveUpCommand}"/>
         <KeyBinding Key="S" Command="{Binding MoveDownCommand}"/>
@@ -22,15 +21,47 @@
         <KeyBinding Key="Left" Command="{Binding MoveLeftCommand}"/>
         <KeyBinding Key="Right" Command="{Binding MoveRightCommand}"/>
     </UserControl.InputBindings>
+    
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
 
     <StackPanel>
+        
+        <Button Name="StartNewGame"  Click="StartNewGame_Click">Start New Game</Button>
+        <WrapPanel>
+            <TextBlock Margin="5" Text="Player"/>
+            <TextBlock Grid.Column="1" Margin="5" Text="lives"/>
+            <TextBlock Grid.Column="2" Margin="5" Text="Score"/>
+        </WrapPanel>
+
+        <ItemsControl ItemsSource="{Binding Players}">
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Margin="5" Text="{Binding Name}"/>
+                        <TextBlock Grid.Column="1" Margin="5" Text="{Binding Lives}"/>
+                        <TextBlock Grid.Column="2" Margin="5" Text="{Binding Score}"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+        </ItemsControl>
         <WrapPanel>
             <TextBlock Height="30" Width="AUTO" Text="Time left: "></TextBlock>
             <TextBlock Height="30" Width="80" Text="{Binding LevelTime}"></TextBlock>
             <TextBlock Height="30" Width="AUTO" Text="Levels left: "/>
             <TextBlock Height="30" Width="AUTO" Text="{Binding LevelsLeft}"/>
         </WrapPanel>
-
         <ItemsControl ItemsSource="{Binding ItemsOnScreen}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -39,7 +70,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Image Stretch="Fill" Height="{Binding Height}" Width="{Binding Width}" Source="{Binding ImagePath}"/>
+                    <Image Stretch="Fill" Height="{Binding Height}" Width="{Binding Width}" Source="{Binding ImagePath}" Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerStyle>

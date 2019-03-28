@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Frog.Utilities;
 
 
@@ -21,7 +18,7 @@ namespace Frog.Models
         public Pod(int x, int y, int width, int height, List<Player> players):base(x,y,width,height)
         {
             CreatedPods ++;
-            ImagePath = "PodEmpty.png";
+            ImagePath = ResourcesPath.PodEmpty;
             Players = players;
             foreach(Player player in Players)
             {
@@ -37,7 +34,7 @@ namespace Frog.Models
                 if (base.CheckIfCollisionWith(item))
                 {
                     IsOccupied = true;
-                    ImagePath = "PodOccupied.png";
+                    IsVisible = false;
                     OccupiedPods++;
                     PlayerScored?.Invoke(player);
                     if (OccupiedPods == CreatedPods)

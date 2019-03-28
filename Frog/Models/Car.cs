@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Frog.Utilities;
 using System.Windows.Threading;
 
@@ -19,7 +16,8 @@ namespace Frog.Models
 
         public Car(int x, int y, int width, int height, int xmovement, int ymovement, MapInfo mapInfo, List<Player>players ) :base(x,y,width,height)
         {
-            ImagePath = "Car.png";
+            ImagePath = ResourcesPath.Car;
+            //Image = ResourcesPath.BitmapFromUri(new Uri("pack://application:,,,/resources/Car.png"));
             Players = players;
             foreach(Player player in Players)
             {
