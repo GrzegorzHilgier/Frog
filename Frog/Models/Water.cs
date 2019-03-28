@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Frog.Utilities;
+
 
 
 
@@ -12,7 +14,7 @@ namespace Frog.Models
         public Water(int x, int y, int width, int height,List<Player> players):base(x,y,width,height)
         {
             Players = players;
-            ImagePath = ResourcesPath.Water;
+            Image = ResourcesPath.BitmapFromPath(ResourcesPath.WaterPath);
             foreach (Player player in players)
             {
                 player.FinishedMove += CheckIfCollisionWithPlayer; 

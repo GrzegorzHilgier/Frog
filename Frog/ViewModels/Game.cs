@@ -10,8 +10,10 @@ namespace Frog.ViewModels
 {
     class Game : ObservableObject
     {
-        MapInfo mapInfo = new MapInfo(30, 9, 15);
-        Queue<Level> LevelQueue { get; set; } = new Queue<Level>();
+        private MapInfo mapInfo = new MapInfo(30, 9, 15);
+        private Queue<Level> LevelQueue { get; set; } = new Queue<Level>();
+        private Level ActualLevel { get; set; }
+
         
         private List<Player> players= new List<Player>();
 
@@ -66,22 +68,22 @@ namespace Frog.ViewModels
             }
 
             LevelFactory.LoadLevels(LevelQueue);
+            ActualLevel = LevelQueue.Dequeue();
             LevelsLeft = LevelQueue.Count;
-            Init(LevelQueue.Peek());
+            Init(ActualLevel);
         }
 
         void LevelTimerTick()
         {
-            LevelTime = LevelQueue.Peek().LevelTime;
+            LevelTime = ActualLevel.LevelTime;
         }
-
 
         void LevelFinished(bool PlayerWon)
         {
             ItemsOnScreen.Clear();
 
-            Clear((LevelQueue.Dequeue()));
-            LevelsLeft = LevelQueue.Count;
+            Clear(ActualLevel);
+
 
             if (PlayerWon)
             {
@@ -92,7 +94,9 @@ namespace Frog.ViewModels
                 }
                 else
                 {
-                    Init(LevelQueue.Peek());
+                    ActualLevel = LevelQueue.Dequeue();
+                    Init(ActualLevel);
+                    LevelsLeft = LevelQueue.Count;
                 }
             }
             else

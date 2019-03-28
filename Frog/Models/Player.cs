@@ -55,7 +55,7 @@ namespace Frog.Models
             PlayersInGame++;
             Score = 0;
             Name = name;
-            ImagePath = ResourcesPath.Frog;
+            Image = ResourcesPath.BitmapFromPath(ResourcesPath.FrogPath);
             timer.Tick += TimerTick;
             StartXcoord = x;
             StartYcoord = y;

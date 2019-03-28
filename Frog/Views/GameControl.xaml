@@ -70,7 +70,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Image Stretch="Fill" Height="{Binding Height}" Width="{Binding Width}" Source="{Binding ImagePath}" Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <Image Stretch="Fill" Height="{Binding Height}" Width="{Binding Width}" Source="{Binding Image}" Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerStyle>
@@ -88,7 +88,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Image Stretch="Fill" Height="{Binding Height}" Width="{Binding Width}" Source="{Binding ImagePath}"/>
+                    <Image Stretch="Fill" Height="{Binding Height}" Width="{Binding Width}" Source="{Binding Image}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerStyle>

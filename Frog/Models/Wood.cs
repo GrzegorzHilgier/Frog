@@ -15,7 +15,7 @@ namespace Frog.Models
 
         public Wood(int x, int y, int width, int height, int xmovement, int ymovement, MapInfo mapInfo, List<Player> players) : base(x, y, width, height)
             {
-                ImagePath = ResourcesPath.Wood;
+                Image = ResourcesPath.BitmapFromPath(ResourcesPath.WoodPath);
                 Players = players;
                 foreach (Player player in Players)
                 {

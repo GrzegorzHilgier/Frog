@@ -16,8 +16,7 @@ namespace Frog.Models
 
         public Car(int x, int y, int width, int height, int xmovement, int ymovement, MapInfo mapInfo, List<Player>players ) :base(x,y,width,height)
         {
-            ImagePath = ResourcesPath.Car;
-            //Image = ResourcesPath.BitmapFromUri(new Uri("pack://application:,,,/resources/Car.png"));
+            Image = ResourcesPath.BitmapFromPath(ResourcesPath.CarPath);
             Players = players;
             foreach(Player player in Players)
             {

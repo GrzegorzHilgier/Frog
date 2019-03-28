@@ -18,7 +18,7 @@ namespace Frog.Models
         public Pod(int x, int y, int width, int height, List<Player> players):base(x,y,width,height)
         {
             CreatedPods ++;
-            ImagePath = ResourcesPath.PodEmpty;
+            Image = ResourcesPath.BitmapFromPath(ResourcesPath.PodEmptyPath);
             Players = players;
             foreach(Player player in Players)
             {

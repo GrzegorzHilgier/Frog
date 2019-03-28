@@ -11,10 +11,10 @@ namespace Frog.Models
             switch(type)
             {
                 case Type.GRASS:
-                    ImagePath = ResourcesPath.Grass;
+                    Image = ResourcesPath.BitmapFromPath(ResourcesPath.GrassPath);
                     break;
                 case Type.ROAD:
-                    ImagePath = ResourcesPath.Road;
+                    Image = ResourcesPath.BitmapFromPath(ResourcesPath.RoadPath);
                     break;
                 default:
                     throw (new ArgumentOutOfRangeException($"Type {type} not recognized"));
