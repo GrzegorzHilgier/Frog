@@ -45,7 +45,6 @@ namespace Frog.ViewModels
         public event Action GameOver;
 
 
-
         public void Start(bool twoPlayers = false)
         {
             

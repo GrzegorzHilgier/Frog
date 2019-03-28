@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using Frog.Utilities;
 
-
-
-
 namespace Frog.Models
 {
     class Water: DrawableObject

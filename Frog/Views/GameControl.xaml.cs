@@ -31,7 +31,6 @@ namespace Frog.Views
             StartNewGame.IsEnabled = false;
             game.Clear();
             game.Start();
-
         }
 
         private void GameOver()
