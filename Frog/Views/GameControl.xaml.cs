@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using Frog.ViewModels;
+using System.Threading.Tasks;
 
 namespace Frog.Views
 {
@@ -41,12 +42,14 @@ namespace Frog.Views
             {
                 message += $"{game.Players[i].Name} Score: {game.Players[i].Score} \n";
             }
+            Task task = new Task(() => MessageBox.Show(message));
+            task.Start();
 
-            MessageBox.Show(message);
 
             StartNewGame.IsEnabled = true;
 
         }
+
 
     }
 }
